@@ -618,7 +618,12 @@
     <Resource Include="Images\red.png" />
     <Resource Include="Images\yellow.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\FileChangeMode\Deleted.png" />
+    <Resource Include="Images\FileChangeMode\Modified.png" />
+    <Resource Include="Images\FileChangeMode\New.png" />
+    <Resource Include="Images\FileChangeMode\Renamed.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
