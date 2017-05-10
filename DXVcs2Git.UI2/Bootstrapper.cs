@@ -7,6 +7,7 @@ namespace DXVcs2Git.UI2 {
 
         static Bootstrapper(){
             RootContainer.RegisterType<IMainViewModel, MainViewModel>(new ContainerControlledLifetimeManager());
+            RootContainer.RegisterType<IRepositoriesViewModel, RepositoriesViewModel>(new ContainerControlledLifetimeManager());
             RootContainer.RegisterType<IMifRegistrator, RepositoriesViewMifRegistrator>(new ContainerControlledLifetimeManager());
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(RootContainer));
             BuildMif();
