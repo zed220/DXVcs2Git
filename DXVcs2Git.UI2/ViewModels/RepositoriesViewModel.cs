@@ -9,8 +9,7 @@ using DXVcs2Git.Core.Configuration;
 using DXVcs2Git.Core.Git;
 
 namespace DXVcs2Git.UI2 {
-    interface IRepositoriesViewModel {
-
+    public interface IRepositoriesViewModel {
     }
 
     public class RepositoriesViewModel : ViewModelBase, IRepositoriesViewModel {
@@ -22,6 +21,14 @@ namespace DXVcs2Git.UI2 {
         public ObservableCollection<RepositoryViewModel> Repositories {
             get { return GetProperty(() => Repositories); }
             set { SetProperty(() => Repositories, value); }
+        }
+        //public RepositoriesViewModel SelectedRepository {
+        //    get { return GetProperty(() => SelectedRepository); }
+        //    set { SetProperty(() => SelectedRepository, value); }
+        //}
+        public ObservableCollection<BranchViewModel> SelectedBranches {
+            get { return GetProperty(() => SelectedBranches); }
+            set { SetProperty(() => SelectedBranches, value); }
         }
         public RepoConfigsReader RepoConfigs {
             get { return GetProperty(() => RepoConfigs); }
@@ -40,6 +47,7 @@ namespace DXVcs2Git.UI2 {
             IsLoading = true;
             await Task.Run(() => {
                 RepoConfigs = new RepoConfigsReader();
+                SelectedBranches = new ObservableCollection<BranchViewModel>();
                 Repositories = new ObservableCollection<RepositoryViewModel>(mainViewModel.Config.Repositories.With(x => x.Where(IsValidConfig).Select(repo => new RepositoryViewModel(repo.Name, repo, this))));
                 IsLoading = false;
             });

@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
@@ -17,11 +20,38 @@
         </Grid.RowDefinitions>
         <dxdo:DockLayoutManager Grid.Row="1">
             <dxdo:LayoutGroup Orientation="Horizontal">
-                <dxdo:LayoutPanel>
-                    <dxa:AccordionControl ItemsSource="{Binding Repositories}" DisplayMemberPath="Name" ChildrenPath="Branches"/>
+                <dxdo:LayoutPanel ItemWidth="200">
+                    <dxg:TreeListControl ItemsSource="{Binding Repositories}" ShowLoadingPanel="{Binding IsLoading}" ShowBorder="False">
+                        <dxmvvm:Interaction.Behaviors>
+                            <local:SelectBranchBehavior/>
+                        </dxmvvm:Interaction.Behaviors>
+                        <dxg:TreeListControl.Columns>
+                            <dxg:TreeListColumn FieldName="Name" Width="*"/>
+                        </dxg:TreeListControl.Columns>
+                        <dxg:TreeListControl.View>
+                            <dxg:TreeListView ShowColumnHeaders="False" NavigationStyle="Row" ChildNodesPath="Branches" ShowSelectionRectangle="True" ShowIndicator="False" TreeDerivationMode="ChildNodesSelector" TreeLineStyle="None" 
+                                              ShowVerticalLines="False" ShowHorizontalLines="False" AutoExpandAllNodes="True"/>
+                        </dxg:TreeListControl.View>
+                    </dxg:TreeListControl>
                 </dxdo:LayoutPanel>
                 <dxdo:LayoutPanel>
-                    <dx:DXTabControl/>
+                    <local:BranchesDXTabControl ItemsSource="{Binding SelectedBranches}" TabContentCacheMode="None">
+                        <local:BranchesDXTabControl.Resources>
+                            <Style TargetType="{x:Type dx:DXTabItem}">
+                                <Setter Property="Header" Value="{Binding Name}"/>
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <ContentControl Focusable="False" dxb:MergingProperties.ElementMergingBehavior="All"  dxmvvm:UIRegion.Region="{x:Static local:Regions.Branch}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </local:BranchesDXTabControl.Resources>
+                        <local:BranchesDXTabControl.View>
+                            <dx:TabControlMultiLineView NewButtonShowMode="NoWhere" HideButtonShowMode="InAllTabsAndHeaderArea"/>
+                        </local:BranchesDXTabControl.View>
+                    </local:BranchesDXTabControl>
                 </dxdo:LayoutPanel>
             </dxdo:LayoutGroup>
         </dxdo:DockLayoutManager>

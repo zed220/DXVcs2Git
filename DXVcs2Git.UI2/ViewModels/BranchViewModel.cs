@@ -10,7 +10,10 @@ namespace DXVcs2Git.UI2 {
     public class BranchViewModel : ViewModelBase {
         public string Name { get; }
 
+        public RepositoryViewModel Repository { get; }
+
         public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) {
+            Repository = repository;
             Name = branch;
         }
     }

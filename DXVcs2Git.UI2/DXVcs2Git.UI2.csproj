@@ -239,7 +239,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\SelectRepositoryBehavior.cs" />
+    <Compile Include="Views\BranchView.xaml.cs">
+      <DependentUpon>BranchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\MyDXTabControl.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="Mif\RepositoriesViewMifRegistrator.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
@@ -253,6 +258,10 @@
     <Compile Include="Views\RepositoriesView.xaml.cs">
       <DependentUpon>RepositoriesView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\BranchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

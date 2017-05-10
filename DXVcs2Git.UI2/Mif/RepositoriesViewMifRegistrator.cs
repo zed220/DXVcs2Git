@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace DXVcs2Git.UI2 {
     public class RepositoriesViewMifRegistrator : IMifRegistrator {
         public void Dispose() {
-            ModuleManager.DefaultManager.Clear(Regions.Navigation);
-            ModuleManager.DefaultManager.Clear(Regions.Ribbon);
+            ModuleManager.DefaultManager.Clear(Regions.MainView);
+            //ModuleManager.DefaultManager.Clear(Regions.Navigation);
+            //ModuleManager.DefaultManager.Clear(Regions.Ribbon);
             ModuleManager.DefaultManager.Clear(Regions.Content);
             //ModuleManager.DefaultManager.Clear(Regions.Colorizer);
             //ModuleManager.DefaultManager.Clear(Regions.Preview);

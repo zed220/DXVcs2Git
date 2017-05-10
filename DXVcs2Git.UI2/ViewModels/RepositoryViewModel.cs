@@ -21,8 +21,10 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => Branches); }
             set { SetProperty(() => Branches, value); }
         }
+        public RepositoriesViewModel Repositories { get; }
 
         public RepositoryViewModel(string name, TrackRepository trackRepository, RepositoriesViewModel repositories) {
+            Repositories = repositories;
             Name = name;
             TrackRepository = trackRepository;
             GitLabWrapper = new GitLabWrapper(TrackRepository.Server, TrackRepository.Token);

@@ -10,7 +10,6 @@ namespace DXVcs2Git.UI2 {
 
             ModuleManager.DefaultManager.Register(Regions.MainView, new Module(Modules.MainView, ServiceLocator.Current.GetInstance<IMainViewModel>, typeof(MainView)));
             ModuleManager.DefaultManager.Register(Regions.Content, new Module(Modules.RepositoriesViewContent, ServiceLocator.Current.GetInstance<IRepositoriesViewModel>, typeof(RepositoriesView)));
-            //ModuleManager.DefaultManager.Register(Regions.Ribbon, new Module(Modules.RepositoriesViewRibbon, () => new ColorizerRibbonViewModel(), typeof(ColorizerRibbonView)));
         }
 
         public static void Register() {
