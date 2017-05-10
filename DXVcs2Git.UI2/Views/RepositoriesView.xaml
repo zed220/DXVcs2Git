@@ -18,7 +18,7 @@
         <dxdo:DockLayoutManager Grid.Row="1">
             <dxdo:LayoutGroup Orientation="Horizontal">
                 <dxdo:LayoutPanel>
-                    <dxa:AccordionControl ItemsSource="{Binding Repositories}" DisplayMemberPath="Name"/>
+                    <dxa:AccordionControl ItemsSource="{Binding Repositories}" DisplayMemberPath="Name" ChildrenPath="Branches"/>
                 </dxdo:LayoutPanel>
                 <dxdo:LayoutPanel>
                     <dx:DXTabControl/>
