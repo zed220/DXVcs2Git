@@ -42,7 +42,8 @@
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
-                                            <ContentControl Focusable="False" dxb:MergingProperties.ElementMergingBehavior="All"  dxmvvm:UIRegion.Region="{x:Static local:Regions.Branch}" />
+                                            <local:BranchView Focusable="False" dxb:MergingProperties.ElementMergingBehavior="All"/>
+                                            <!--<ContentControl Focusable="False" dxb:MergingProperties.ElementMergingBehavior="All"  dxmvvm:UIRegion.Region="{x:Static local:Regions.Branch}" />-->
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>

@@ -244,7 +244,7 @@
       <DependentUpon>BranchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="Controls\MyDXTabControl.cs" />
+    <Compile Include="Controls\BranchesDXTabControl.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="Mif\RepositoriesViewMifRegistrator.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
