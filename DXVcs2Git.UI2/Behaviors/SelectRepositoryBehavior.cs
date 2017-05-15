@@ -13,20 +13,31 @@ namespace DXVcs2Git.UI2 {
     public class SelectBranchBehavior : Behavior<TreeListControl> {
         protected override void OnAttached() {
             base.OnAttached();
-            AssociatedObject.MouseDoubleClick += AssociatedObject_MouseDoubleClick;
+            //AssociatedObject.MouseDoubleClick += AssociatedObject_MouseDoubleClick;
+            AssociatedObject.SelectedItemChanged += AssociatedObject_SelectedItemChanged;
         }
 
-        void AssociatedObject_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            BranchViewModel selectedBranch = AssociatedObject.SelectedItem as BranchViewModel;
+        void AssociatedObject_SelectedItemChanged(object sender, SelectedItemChangedEventArgs e) {
+            BranchViewModel selectedBranch = e.NewItem as BranchViewModel;
             if(selectedBranch == null)
                 return;
-            if(selectedBranch.Repository.Repositories.SelectedBranches.Contains(selectedBranch))
-                return;
-            selectedBranch.Repository.Repositories.SelectedBranches.Add(selectedBranch);
+            e.Handled = true;
+            selectedBranch.RefreshMergeRequestAsync();
+            //throw new NotImplementedException();
         }
 
+        //void AssociatedObject_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
+        //    BranchViewModel selectedBranch = AssociatedObject.SelectedItem as BranchViewModel;
+        //    if(selectedBranch == null)
+        //        return;
+        //    if(selectedBranch.Repository.Repositories.SelectedBranches.Contains(selectedBranch))
+        //        return;
+        //    selectedBranch.Repository.Repositories.SelectedBranches.Add(selectedBranch);
+        //}
+
         protected override void OnDetaching() {
-            AssociatedObject.MouseDoubleClick -= AssociatedObject_MouseDoubleClick;
+            AssociatedObject.SelectedItemChanged -= AssociatedObject_SelectedItemChanged;
+            //AssociatedObject.MouseDoubleClick -= AssociatedObject_MouseDoubleClick;
             base.OnDetaching();
         }
     }

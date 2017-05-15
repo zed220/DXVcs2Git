@@ -12,6 +12,7 @@ namespace DXVcs2Git.UI2 {
         public static string Navigation => nameof(Navigation);
         public static string Settings => nameof(Settings);
         public static string Branch => nameof(Branch);
+        public static string MergeRequest => nameof(MergeRequest);
     }
 
     public static class Modules {
@@ -19,6 +20,6 @@ namespace DXVcs2Git.UI2 {
         public static string MainView => nameof(MainView);
         public static string RepositoriesViewRibbon => nameof(RepositoriesViewRibbon);
         public static string RepositoriesViewContent => nameof(RepositoriesViewContent);
-        public static string BranchView => nameof(BranchView);
+        public static string MergeRequestView => nameof(MergeRequestView);
     }
 }

@@ -14,8 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DXVcs2Git.UI2 {
-    public partial class BranchView : UserControl {
-        public BranchView() {
+    public partial class MergeRequestView : UserControl {
+        public MergeRequestView() {
             InitializeComponent();
         }
     }

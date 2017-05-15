@@ -36,22 +36,29 @@
                 </dxdo:LayoutPanel>
                 <dxdo:LayoutPanel>
                     <local:BranchesDXTabControl ItemsSource="{Binding SelectedBranches}" TabContentCacheMode="None">
-                        <local:BranchesDXTabControl.Resources>
+                        <local:BranchesDXTabControl.Visibility>
+                            <Binding Path="SelectedBranches.Count">
+                                <Binding.Converter>
+                                    <dxmvvm:ObjectToObjectConverter DefaultTarget="Visible">
+                                        <dxmvvm:MapItem Source="0" Target="Collapsed"/>
+                                    </dxmvvm:ObjectToObjectConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </local:BranchesDXTabControl.Visibility>
+                        <local:BranchesDXTabControl.ItemContainerStyle>
                             <Style TargetType="{x:Type dx:DXTabItem}">
                                 <Setter Property="Header" Value="{Binding Name}"/>
-                                <Setter Property="ContentTemplate">
+                                <Setter Property="dxmvvm:UIRegion.Region">
                                     <Setter.Value>
-                                        <DataTemplate>
-                                            <local:BranchView Focusable="False" dxb:MergingProperties.ElementMergingBehavior="All"/>
-                                            <!--<ContentControl Focusable="False" dxb:MergingProperties.ElementMergingBehavior="All"  dxmvvm:UIRegion.Region="{x:Static local:Regions.Branch}" />-->
-                                        </DataTemplate>
+                                        <Binding Path="MergeRequest">
+                                            <Binding.Converter>
+                                                <local:MergeRequestRegionNameConverter/>
+                                            </Binding.Converter>
+                                        </Binding>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
-                        </local:BranchesDXTabControl.Resources>
-                        <local:BranchesDXTabControl.View>
-                            <dx:TabControlMultiLineView NewButtonShowMode="NoWhere" HideButtonShowMode="InAllTabsAndHeaderArea"/>
-                        </local:BranchesDXTabControl.View>
+                        </local:BranchesDXTabControl.ItemContainerStyle>
                     </local:BranchesDXTabControl>
                 </dxdo:LayoutPanel>
             </dxdo:LayoutGroup>

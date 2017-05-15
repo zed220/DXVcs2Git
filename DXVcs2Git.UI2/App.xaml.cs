@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Core;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,6 +12,10 @@ namespace DXVcs2Git.UI2 {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+        public App() {
+            ApplicationThemeHelper.ApplicationThemeName = "Office2013";
+        }
+
         protected override void OnStartup(StartupEventArgs e) {
             Bootstrapper.Run();
         }

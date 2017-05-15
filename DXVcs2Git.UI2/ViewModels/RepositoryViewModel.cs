@@ -14,6 +14,7 @@ namespace DXVcs2Git.UI2 {
     public class RepositoryViewModel : ViewModelBase {
         public string Name { get; }
         public Project Origin { get; }
+        public Project Upstream { get; }
         GitLabWrapper GitLabWrapper { get; }
         GitReaderWrapper GitReader { get; }
         public TrackRepository TrackRepository { get; }
@@ -30,6 +31,7 @@ namespace DXVcs2Git.UI2 {
             GitLabWrapper = new GitLabWrapper(TrackRepository.Server, TrackRepository.Token);
             GitReader = new GitReaderWrapper(trackRepository.LocalPath);
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
+            Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
             LoadBranches();
         }
 
