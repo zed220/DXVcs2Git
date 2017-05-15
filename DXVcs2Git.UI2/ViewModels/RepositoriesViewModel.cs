@@ -77,10 +77,10 @@ namespace DXVcs2Git.UI2 {
                 mergeRequest = branch.GitLabWrapper.GetMergeRequests(branch.Repository.Upstream, x => x.SourceProjectId == branch.Repository.Origin.Id && x.SourceBranch == branch.Name).FirstOrDefault();
             });
             if(mergeRequest != null) {
+                if(SelectedBranches.Contains(branch))
+                    return;
                 branch.MergeRequest = mergeRequest;
-                //MergeRequest = new MergeRequestViewModel(this, mergeRequest);
                 SelectedBranches.Add(branch);
-                //ModuleManager.DefaultManager.Clear(Regions.MergeRequest);
                 ModuleManager.DefaultManager.Register(Regions.MergeRequest + mergeRequest.Id, new Module(Modules.MergeRequestView, ServiceLocator.Current.GetInstance<IMergeRequestViewModel>, typeof(MergeRequestView)));
                 ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest + mergeRequest.Id, Modules.MergeRequestView, new MergeParameter(branch, mergeRequest));
             }
@@ -88,7 +88,6 @@ namespace DXVcs2Git.UI2 {
                 if(SelectedBranches.Contains(branch)) {
                     ModuleManager.DefaultManager.Unregister(Regions.MergeRequest + mergeRequest.Id, Modules.MergeRequestView);
                     SelectedBranches.Remove(branch);
-                    //ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest, Modules.MergeRequestView, mergeRequest);
                     branch.MergeRequest = null;
                 }
                 //MergeRequest = null;

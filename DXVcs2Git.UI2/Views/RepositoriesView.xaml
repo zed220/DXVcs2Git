@@ -35,7 +35,7 @@
                     </dxg:TreeListControl>
                 </dxdo:LayoutPanel>
                 <dxdo:LayoutPanel>
-                    <local:BranchesDXTabControl ItemsSource="{Binding SelectedBranches}" TabContentCacheMode="None">
+                    <local:BranchesDXTabControl ItemsSource="{Binding SelectedBranches}" TabContentCacheMode="None" SelectedItem="{Binding SelectedBranch, Mode=TwoWay}">
                         <local:BranchesDXTabControl.Visibility>
                             <Binding Path="SelectedBranches.Count">
                                 <Binding.Converter>
@@ -48,15 +48,7 @@
                         <local:BranchesDXTabControl.ItemContainerStyle>
                             <Style TargetType="{x:Type dx:DXTabItem}">
                                 <Setter Property="Header" Value="{Binding Name}"/>
-                                <Setter Property="dxmvvm:UIRegion.Region">
-                                    <Setter.Value>
-                                        <Binding Path="MergeRequest">
-                                            <Binding.Converter>
-                                                <local:MergeRequestRegionNameConverter/>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter Property="dxmvvm:UIRegion.Region" Value="{Binding MergeRequest, Converter={local:MergeRequestRegionNameConverter}}"/>
                             </Style>
                         </local:BranchesDXTabControl.ItemContainerStyle>
                     </local:BranchesDXTabControl>
