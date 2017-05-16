@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/controls"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
@@ -26,7 +28,16 @@
                             <local:SelectBranchBehavior/>
                         </dxmvvm:Interaction.Behaviors>
                         <dxg:TreeListControl.Columns>
-                            <dxg:TreeListColumn FieldName="Name" Width="*"/>
+                            <dxg:TreeListColumn FieldName="Name" Width="*">
+                                <dxg:TreeListColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Value}"/>
+                                            <TextBlock Text="(Loading)" Margin="4,0,0,0" Visibility="{Binding Path=RowData.Row.IsLoading, Converter={dxmvvm:BooleanToVisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxg:TreeListColumn.CellTemplate>
+                            </dxg:TreeListColumn>
                         </dxg:TreeListControl.Columns>
                         <dxg:TreeListControl.View>
                             <dxg:TreeListView ShowColumnHeaders="False" NavigationStyle="Row" ChildNodesPath="Branches" ShowSelectionRectangle="True" ShowIndicator="False" TreeDerivationMode="ChildNodesSelector" TreeLineStyle="None" 

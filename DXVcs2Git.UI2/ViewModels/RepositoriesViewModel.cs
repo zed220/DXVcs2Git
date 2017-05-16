@@ -90,7 +90,6 @@ namespace DXVcs2Git.UI2 {
                     SelectedBranches.Remove(branch);
                     branch.MergeRequest = null;
                 }
-                //MergeRequest = null;
             }
         }
     }
