@@ -72,25 +72,36 @@ namespace DXVcs2Git.UI2 {
         }
 
         public async Task SelectBranch(BranchViewModel branch) {
+            if(SelectedBranches.Contains(branch))
+                return;
             MergeRequest mergeRequest = null;
             await Task.Run(() => {
-                mergeRequest = branch.GitLabWrapper.GetMergeRequests(branch.Repository.Upstream, x => x.SourceProjectId == branch.Repository.Origin.Id && x.SourceBranch == branch.Name).FirstOrDefault();
+                mergeRequest = branch.Repository.GitLabWrapper.GetMergeRequests(branch.Repository.Upstream, x => x.SourceProjectId == branch.Repository.Origin.Id && x.SourceBranch == branch.Name).FirstOrDefault();
             });
             if(mergeRequest != null) {
                 if(SelectedBranches.Contains(branch))
                     return;
                 branch.MergeRequest = mergeRequest;
                 SelectedBranches.Add(branch);
-                ModuleManager.DefaultManager.Register(Regions.MergeRequest + mergeRequest.Id, new Module(Modules.MergeRequestView, ServiceLocator.Current.GetInstance<IMergeRequestViewModel>, typeof(MergeRequestView)));
-                ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest + mergeRequest.Id, Modules.MergeRequestView, new MergeParameter(branch, mergeRequest));
+                ModuleManager.DefaultManager.Register(Regions.MergeRequest + branch.Repository.Name + branch.Name, new Module(Modules.MergeRequestView, ServiceLocator.Current.GetInstance<IMergeRequestViewModel>, typeof(MergeRequestView)));
+                ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest + branch.Repository.Name + branch.Name, Modules.MergeRequestView, new MergeParameter(branch, mergeRequest));
             }
             else {
                 if(SelectedBranches.Contains(branch)) {
-                    ModuleManager.DefaultManager.Unregister(Regions.MergeRequest + mergeRequest.Id, Modules.MergeRequestView);
-                    SelectedBranches.Remove(branch);
+                    if(SelectedBranches.Contains(branch))
+                        SelectedBranches.Remove(branch);
+                    ModuleManager.DefaultManager.Unregister(Regions.MergeRequest + branch.Repository.Name + branch.Name, Modules.MergeRequestView);
                     branch.MergeRequest = null;
                 }
             }
+        }
+        public void UnselectBranch(BranchViewModel branch) {
+            if(!SelectedBranches.Contains(branch))
+                return;
+            ModuleManager.DefaultManager.Unregister(Regions.MergeRequest + branch.Repository.Name + branch.Name, Modules.MergeRequestView);
+            SelectedBranches.Remove(branch);
+            branch.MergeRequest = null;
+            SelectedBranches.Remove(branch);
         }
     }
 

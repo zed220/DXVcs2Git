@@ -18,24 +18,24 @@
             <dxl:LayoutGroup Orientation="Horizontal">
                 <dxl:LayoutGroup Orientation="Vertical">
                     <dxl:LayoutItem Label="Selected Repository:">
-                        <TextBlock Text="{Binding Path=Branch.Repository.Name}"/>
+                        <TextBlock Text="{Binding Path=Branch.Repository.Name}" FontWeight="Bold"/>
                     </dxl:LayoutItem>
                     <dxl:LayoutItem Label="Merge request:">
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontWeight="Bold"/>
                     </dxl:LayoutItem>
                     <dxl:LayoutItem Label="Sync task status:">
-                        <TextBlock Text=""/>
+                        <TextBlock Text="" FontWeight="Bold"/>
                     </dxl:LayoutItem>
                 </dxl:LayoutGroup>
                 <dxl:LayoutGroup Orientation="Vertical">
                     <dxl:LayoutItem Label="Selected branch:">
-                        <TextBlock Text="{Binding Branch.Name}"/>
+                        <TextBlock Text="{Binding Branch.Name}" FontWeight="Bold"/>
                     </dxl:LayoutItem>
                     <dxl:LayoutItem Label="Merge request author:">
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{Binding Author}" FontWeight="Bold"/>
                     </dxl:LayoutItem>
                     <dxl:LayoutItem Label="Merge request assignee:">
-                        <TextBlock Text=""/>
+                        <TextBlock Text="{Binding Assignee}" FontWeight="Bold"/>
                     </dxl:LayoutItem>
                 </dxl:LayoutGroup>
             </dxl:LayoutGroup>

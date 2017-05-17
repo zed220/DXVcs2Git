@@ -9,19 +9,26 @@ using DXVcs2Git.Git;
 using NGitLab.Models;
 using System.Collections.ObjectModel;
 using LibGit2Sharp;
+using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace DXVcs2Git.UI2 {
     public class RepositoryViewModel : ViewModelBase {
         public string Name { get; }
         public Project Origin { get; }
         public Project Upstream { get; }
-        GitLabWrapper GitLabWrapper { get; }
+        public GitLabWrapper GitLabWrapper { get; }
         GitReaderWrapper GitReader { get; }
         public TrackRepository TrackRepository { get; }
         public ObservableCollection<BranchViewModel> Branches {
             get { return GetProperty(() => Branches); }
             set { SetProperty(() => Branches, value); }
         }
+        public bool IsLoading {
+            get { return GetProperty(() => IsLoading); }
+            set { SetProperty(() => IsLoading, value); }
+        }
+        
         public RepositoriesViewModel Repositories { get; }
 
         public RepositoryViewModel(string name, TrackRepository trackRepository, RepositoriesViewModel repositories) {
@@ -32,20 +39,43 @@ namespace DXVcs2Git.UI2 {
             GitReader = new GitReaderWrapper(trackRepository.LocalPath);
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
-            LoadBranches();
         }
 
-        void LoadBranches() {
+        public async Task LoadBranchesAsync() {
             if(Origin == null) {
                 //Log.Error("Can`t find project");
                 return;
             }
-
+            await Task.Run(() => {
+                IsLoading = true;
+                LoadBranches();
+                IsLoading = false;
+            });
+        }
+        void LoadBranches() {
             var branches = this.GitLabWrapper.GetBranches(Origin).ToList();
             var localBranches = GitReader.GetLocalBranches();
-            Branches = new ObservableCollection<BranchViewModel>(branches.Where(x => !x.Protected && localBranches.Any(local => local.FriendlyName == x.Name))
+            var branchesVms = new ObservableCollection<BranchViewModel>(branches.Where(x => !x.Protected && localBranches.Any(local => local.FriendlyName == x.Name))
                 .Select(x => new BranchViewModel(GitLabWrapper, this, x.Name)));
-
+            if(Branches == null)
+                Branches = new ObservableCollection<BranchViewModel>();
+            List<BranchViewModel> addedBranches = new List<BranchViewModel>();
+            List<BranchViewModel> removedBranches = new List<BranchViewModel>();
+            foreach(var branch in Branches) {
+                if(!branchesVms.Contains(branch))
+                    removedBranches.Add(branch);
+            }
+            foreach(var branch in removedBranches) {
+                Repositories.UnselectBranch(branch);
+                Branches.Remove(branch);
+                continue;
+            }
+            foreach(var branch in branchesVms) {
+                if(!Branches.Contains(branch))
+                    addedBranches.Add(branch);
+            }
+            foreach(var branch in addedBranches)
+                Branches.Add(branch);
         }
     }
 }
