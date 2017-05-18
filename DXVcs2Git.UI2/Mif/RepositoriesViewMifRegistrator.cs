@@ -29,7 +29,6 @@ namespace DXVcs2Git.UI2 {
 
             //ModuleManager.DefaultManager.InjectOrNavigate(Regions.Ribbon, Modules.RepositoriesViewRibbon);
             ModuleManager.DefaultManager.InjectOrNavigate(Regions.Content, Modules.RepositoriesViewContent);
-            //ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest, Modules.MergeRequestView);
         }
 
         public bool LoadState(string logicalstate, string visualState) {

@@ -47,28 +47,25 @@
                     </dxg:TreeListControl>
                 </dxdo:LayoutPanel>
                 <dxdo:LayoutPanel>
-                    <local:BranchesDXTabControl ItemsSource="{Binding SelectedBranches}" TabContentCacheMode="None">
-                        <local:BranchesDXTabControl.Visibility>
-                            <Binding Path="SelectedBranches.Count">
+                    <dx:DXTabControl TabContentCacheMode="None" dxmvvm:UIRegion.Region="{x:Static local:Regions.MergeRequest}">
+                        <dx:DXTabControl.Visibility>
+                            <Binding Path="ItemsSource.Count" RelativeSource="{RelativeSource Self}">
                                 <Binding.Converter>
                                     <dxmvvm:ObjectToObjectConverter DefaultTarget="Visible">
                                         <dxmvvm:MapItem Source="0" Target="Collapsed"/>
                                     </dxmvvm:ObjectToObjectConverter>
                                 </Binding.Converter>
                             </Binding>
-                        </local:BranchesDXTabControl.Visibility>
-                        <local:BranchesDXTabControl.ItemContainerStyle>
+                        </dx:DXTabControl.Visibility>
+                        <dx:DXTabControl.ItemContainerStyle>
                             <Style TargetType="{x:Type dx:DXTabItem}">
-                                <Setter Property="CloseCommand" Value="{Binding HideCommand}"/>
-                                <Setter Property="Header" Value="{Binding Name}"/>
-                                <Setter Property="Visibility" Value="Visible"/>
-                                <Setter Property="dxmvvm:UIRegion.Region" Value="{Binding Converter={local:MergeRequestRegionNameConverter}}"/>
+                                <Setter Property="Header" Value="{Binding Path=SourceBranch}"/>
                             </Style>
-                        </local:BranchesDXTabControl.ItemContainerStyle>
-                        <local:BranchesDXTabControl.View>
-                            <dx:TabControlScrollView HideButtonShowMode="InAllTabs"/>
-                        </local:BranchesDXTabControl.View>
-                    </local:BranchesDXTabControl>
+                        </dx:DXTabControl.ItemContainerStyle>
+                        <dx:DXTabControl.View>
+                            <dx:TabControlScrollView HideButtonShowMode="InAllTabs" RemoveTabItemsOnHiding="True"/>
+                        </dx:DXTabControl.View>
+                    </dx:DXTabControl>
                 </dxdo:LayoutPanel>
             </dxdo:LayoutGroup>
         </dxdo:DockLayoutManager>

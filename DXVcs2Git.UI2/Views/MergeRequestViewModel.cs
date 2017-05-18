@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.ModuleInjection;
 using NGitLab.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Windows.Input;
 namespace DXVcs2Git.UI2 {
     public interface IMergeRequestViewModel { }
 
-    public class MergeRequestViewModel : BindableBase, IMergeRequestViewModel, ISupportParameter {
+    public class MergeRequestViewModel : ViewModelBase, IMergeRequestViewModel {
         public MergeRequest MergeRequest { get; private set; }
         public BranchViewModel Branch { get; private set; }
         public string Title { get; private set; }
@@ -18,9 +19,8 @@ namespace DXVcs2Git.UI2 {
         public string TargetBranch { get; private set; }
         public string Author { get; private set; }
         public string Assignee { get; private set; }
-        public object Parameter {
-            get { return GetProperty(() => Parameter); }
-            set { SetProperty(() => Parameter, value, UpdateMergeRequest); }
+        protected override void OnParameterChanged(object parameter) {
+            UpdateMergeRequest();
         }
         public MergeParameter MergeParameter { get { return Parameter as MergeParameter; } }
 

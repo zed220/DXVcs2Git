@@ -40,7 +40,6 @@ namespace DXVcs2Git.UI2 {
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
             Branches = new ObservableCollection<BranchViewModel>();
-            //LoadBranchesAsync();
         }
 
         public async void LoadBranchesAsync() {
@@ -49,9 +48,7 @@ namespace DXVcs2Git.UI2 {
                 return;
             }
             await Task.Run(() => {
-                
                 LoadBranches();
-                
             });
         }
         public void LoadBranches() {
