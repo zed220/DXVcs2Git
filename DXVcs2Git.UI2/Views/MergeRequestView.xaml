@@ -49,14 +49,15 @@
                         <dxlc:LayoutItem VerticalAlignment="Top" Label="Title">
                             <dxe:TextEdit ValidateOnTextInput="True" EditValue="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutGroup Header="Description" VerticalAlignment="Stretch">
-                            <dxe:TextEdit VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" ValidateOnTextInput="True"  
+                        <dxlc:LayoutGroup Header="Description" VerticalAlignment="Stretch" View="GroupBox">
+                            <dxe:TextEdit VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" ValidateOnTextInput="True" NullText="Almost never used"
                                           EditValue="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" AcceptsReturn="True"/>
                         </dxlc:LayoutGroup>
-                        <!--<dxlc:LayoutItem Visibility="{Binding Path=SupportsTesting, Converter={dxmvvm:BooleanToVisibilityConverter}}">
-                            <dxe:CheckEdit Content="Test commit on farm" EditValue="{Binding Path=PerformTesting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxlc:LayoutItem Visibility="{Binding Path=SupportsTesting, Converter={dxmvvm:BooleanToVisibilityConverter}}">
+                            <dxe:CheckEdit Content="Test commit on farm" />
+                            <!--EditValue="{Binding Path=PerformTesting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutItem>
+                        <!--<dxlc:LayoutItem>
                             <dxe:CheckEdit ValidateOnTextInput="True" Content="{Binding Path=PerformTesting, Converter={StaticResource ShowAssignedToServiceMessageConverter}}" EditValue="{Binding Path=AssignedToService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </dxlc:LayoutItem>-->
                         <dxlc:LayoutItem>

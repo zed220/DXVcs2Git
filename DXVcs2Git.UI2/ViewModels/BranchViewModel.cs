@@ -27,11 +27,13 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => IsLoading); }
             private set { SetProperty(() => IsLoading, value); }
         }
+        public bool SupportsTesting { get; }
 
         public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) {
             GitLabWrapper = gitLabWrapper;
             Repository = repository;
             Name = branch;
+            SupportsTesting = ServiceLocator.Current.GetInstance<IMainViewModel>().Config.SupportsTesting && Repository.RepoConfig.SupportsTesting;
         }
 
         public async void RefreshMergeRequestAsync() {

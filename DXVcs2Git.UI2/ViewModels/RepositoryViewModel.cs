@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using LibGit2Sharp;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace DXVcs2Git.UI2 {
     public class RepositoryViewModel : ViewModelBase {
@@ -20,6 +21,7 @@ namespace DXVcs2Git.UI2 {
         public GitLabWrapper GitLabWrapper { get; }
         GitReaderWrapper GitReader { get; }
         public TrackRepository TrackRepository { get; }
+        public RepoConfig RepoConfig { get; private set; }
         public ObservableCollection<BranchViewModel> Branches {
             get { return GetProperty(() => Branches); }
             set { SetProperty(() => Branches, value); }
@@ -29,9 +31,10 @@ namespace DXVcs2Git.UI2 {
             set { SetProperty(() => IsLoading, value); }
         }
 
-        public RepositoryViewModel(string name, TrackRepository trackRepository) {
+        public RepositoryViewModel(string name, TrackRepository trackRepository, RepoConfig repoConfig) {
             Name = name;
             TrackRepository = trackRepository;
+            RepoConfig = repoConfig;
             GitLabWrapper = new GitLabWrapper(TrackRepository.Server, TrackRepository.Token);
             GitReader = new GitReaderWrapper(trackRepository.LocalPath);
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
