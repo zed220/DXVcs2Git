@@ -48,7 +48,9 @@ namespace DXVcs2Git.UI2 {
                 List<Task> loadBranchesTaskList = new List<Task>();
                 foreach(var repo in mainViewModel.Config.Repositories.With(x => x.Where(IsValidConfig).Select(repo => new RepositoryViewModel(repo.Name, repo)))) {
                     Repositories.Add(repo);
-                    loadBranchesTaskList.Add(Task.Factory.StartNew(repo.LoadBranches));
+                    loadBranchesTaskList.Add(Task.Run(new Action(repo.LoadBranches)));
+
+                    //loadBranchesTaskList.Add(Task.Factory.StartNew(repo.LoadBranches));
                 }
                 Task.WaitAll(loadBranchesTaskList.ToArray());
             });

@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:dxl="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -14,34 +16,55 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <dxl:LayoutControl>
-            <dxl:LayoutGroup Orientation="Horizontal">
-                <dxl:LayoutGroup Orientation="Vertical">
-                    <dxl:LayoutItem Label="Selected Repository:">
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup Orientation="Horizontal">
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Selected Repository:">
                         <TextBlock Text="{Binding Path=Branch.Repository.Name}" FontWeight="Bold"/>
-                    </dxl:LayoutItem>
-                    <dxl:LayoutItem Label="Merge request:">
+                    </dxlc:LayoutItem>
+                    <!--<dxlc:LayoutItem Label="Merge request:">
                         <TextBlock Text="{Binding Title}" TextWrapping="Wrap" FontWeight="Bold"/>
-                    </dxl:LayoutItem>
-                    <dxl:LayoutItem Label="Sync task status:">
+                    </dxlc:LayoutItem>-->
+                    <dxlc:LayoutItem Label="Sync task status:">
                         <TextBlock Text="" FontWeight="Bold"/>
-                    </dxl:LayoutItem>
-                </dxl:LayoutGroup>
-                <dxl:LayoutGroup Orientation="Vertical">
-                    <dxl:LayoutItem Label="Selected branch:">
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="Selected branch:">
                         <TextBlock Text="{Binding Branch.Name}" FontWeight="Bold"/>
-                    </dxl:LayoutItem>
-                    <dxl:LayoutItem Label="Merge request author:">
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Merge request author:">
                         <TextBlock Text="{Binding Author}" FontWeight="Bold"/>
-                    </dxl:LayoutItem>
-                    <dxl:LayoutItem Label="Merge request assignee:">
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Merge request assignee:">
                         <TextBlock Text="{Binding Assignee}" FontWeight="Bold"/>
-                    </dxl:LayoutItem>
-                </dxl:LayoutGroup>
-            </dxl:LayoutGroup>
-        </dxl:LayoutControl>
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
         <dx:DXTabControl Grid.Row="1">
-            <dx:DXTabItem Header="Merge request settings"/>
+            <dx:DXTabItem Header="Merge request settings">
+                <dxlc:LayoutControl Margin="0" Padding="0">
+                    <dxlc:LayoutGroup Orientation="Vertical" VerticalAlignment="Stretch">
+                        <dxlc:LayoutItem VerticalAlignment="Top" Label="Title">
+                            <dxe:TextEdit ValidateOnTextInput="True" EditValue="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutGroup Header="Description" VerticalAlignment="Stretch">
+                            <dxe:TextEdit VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto" ValidateOnTextInput="True"  
+                                          EditValue="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" AcceptsReturn="True"/>
+                        </dxlc:LayoutGroup>
+                        <!--<dxlc:LayoutItem Visibility="{Binding Path=SupportsTesting, Converter={dxmvvm:BooleanToVisibilityConverter}}">
+                            <dxe:CheckEdit Content="Test commit on farm" EditValue="{Binding Path=PerformTesting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem>
+                            <dxe:CheckEdit ValidateOnTextInput="True" Content="{Binding Path=PerformTesting, Converter={StaticResource ShowAssignedToServiceMessageConverter}}" EditValue="{Binding Path=AssignedToService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </dxlc:LayoutItem>-->
+                        <dxlc:LayoutItem>
+                            <Button Content="Apply" Command="{DXCommand Execute='Apply()'}" IsEnabled="{Binding IsModified}"/>
+                        </dxlc:LayoutItem>
+                    </dxlc:LayoutGroup>
+                </dxlc:LayoutControl>
+            </dx:DXTabItem>
             <dx:DXTabItem Header="Merge request changes"/>
         </dx:DXTabControl>
     </Grid>
