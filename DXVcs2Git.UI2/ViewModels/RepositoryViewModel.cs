@@ -56,6 +56,7 @@ namespace DXVcs2Git.UI2 {
                     removedBranches.Add(branch);
             }
             foreach(var branch in removedBranches) {
+                BranchViewModel.UnselectBranch(branch);
                 Branches.Remove(branch);
                 continue;
             }

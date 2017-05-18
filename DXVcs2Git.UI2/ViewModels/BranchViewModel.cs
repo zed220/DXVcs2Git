@@ -78,7 +78,7 @@ namespace DXVcs2Git.UI2 {
             return false;
         }
 
-        static void UnselectBranch(BranchViewModel branch) {
+        public static void UnselectBranch(BranchViewModel branch) {
             if(ModuleManager.DefaultManager.GetModule(Regions.MergeRequest, branch.Repository.Name + branch.Name) != null)
                 ModuleManager.DefaultManager.Unregister(Regions.MergeRequest, branch.Repository.Name + branch.Name);
             branch.MergeRequest = null;
