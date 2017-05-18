@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm.UI.Interactivity;
 using DevExpress.Xpf.Accordion;
 using DevExpress.Xpf.Grid;
+using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid.TreeList;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,9 @@ namespace DXVcs2Git.UI2 {
             RepositoryViewModel selectedRepository = e.NewItem as RepositoryViewModel;
             if(selectedRepository != null) {
                 e.Handled = true;
-                await selectedRepository.LoadBranchesAsync();
+                //await selectedRepository.LoadBranchesAsync();
                 AssociatedObject.View.GetNodeByContent(selectedRepository).IsExpanded = true;
+
                 return;
             }
             BranchViewModel selectedBranch = e.NewItem as BranchViewModel;
@@ -30,7 +32,6 @@ namespace DXVcs2Git.UI2 {
                 return;
             e.Handled = true;
             selectedBranch.RefreshMergeRequestAsync();
-            //throw new NotImplementedException();
         }
 
         //void AssociatedObject_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {

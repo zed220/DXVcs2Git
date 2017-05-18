@@ -28,7 +28,7 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => IsLoading); }
             set { SetProperty(() => IsLoading, value); }
         }
-        
+
         public RepositoriesViewModel Repositories { get; }
 
         public RepositoryViewModel(string name, TrackRepository trackRepository, RepositoriesViewModel repositories) {
@@ -39,26 +39,27 @@ namespace DXVcs2Git.UI2 {
             GitReader = new GitReaderWrapper(trackRepository.LocalPath);
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
+            Branches = new ObservableCollection<BranchViewModel>();
+            //LoadBranchesAsync();
         }
 
-        public async Task LoadBranchesAsync() {
+        public async void LoadBranchesAsync() {
             if(Origin == null) {
                 //Log.Error("Can`t find project");
                 return;
             }
             await Task.Run(() => {
-                IsLoading = true;
+                
                 LoadBranches();
-                IsLoading = false;
+                
             });
         }
-        void LoadBranches() {
+        public void LoadBranches() {
+            IsLoading = true;
             var branches = this.GitLabWrapper.GetBranches(Origin).ToList();
             var localBranches = GitReader.GetLocalBranches();
             var branchesVms = new ObservableCollection<BranchViewModel>(branches.Where(x => !x.Protected && localBranches.Any(local => local.FriendlyName == x.Name))
                 .Select(x => new BranchViewModel(GitLabWrapper, this, x.Name)));
-            if(Branches == null)
-                Branches = new ObservableCollection<BranchViewModel>();
             List<BranchViewModel> addedBranches = new List<BranchViewModel>();
             List<BranchViewModel> removedBranches = new List<BranchViewModel>();
             foreach(var branch in Branches) {
@@ -66,7 +67,6 @@ namespace DXVcs2Git.UI2 {
                     removedBranches.Add(branch);
             }
             foreach(var branch in removedBranches) {
-                Repositories.UnselectBranch(branch);
                 Branches.Remove(branch);
                 continue;
             }
@@ -76,6 +76,7 @@ namespace DXVcs2Git.UI2 {
             }
             foreach(var branch in addedBranches)
                 Branches.Add(branch);
+            IsLoading = false;
         }
     }
 }

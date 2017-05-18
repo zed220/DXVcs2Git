@@ -11,6 +11,7 @@ using NGitLab.Models;
 using DevExpress.Mvvm.ModuleInjection;
 using Microsoft.Practices.ServiceLocation;
 using System;
+using System.Collections.Specialized;
 
 namespace DXVcs2Git.UI2 {
     public interface IRepositoriesViewModel {
@@ -52,9 +53,23 @@ namespace DXVcs2Git.UI2 {
             await Task.Run(() => {
                 RepoConfigs = new RepoConfigsReader();
                 SelectedBranches = new ObservableCollection<BranchViewModel>();
-                Repositories = new ObservableCollection<RepositoryViewModel>(mainViewModel.Config.Repositories.With(x => x.Where(IsValidConfig).Select(repo => new RepositoryViewModel(repo.Name, repo, this))));
-                IsLoading = false;
+                Repositories = new ObservableCollection<RepositoryViewModel>();
+                List<Task> loadBranchesTaskList = new List<Task>();
+                foreach(var repo in mainViewModel.Config.Repositories.With(x => x.Where(IsValidConfig).Select(repo => new RepositoryViewModel(repo.Name, repo, this)))) {
+                    repo.Branches.CollectionChanged += Branches_CollectionChanged;
+                    Repositories.Add(repo);
+                    loadBranchesTaskList.Add(Task.Factory.StartNew(repo.LoadBranches));
+                }
+                Task.WaitAll(loadBranchesTaskList.ToArray());
             });
+            IsLoading = false;
+        }
+
+        void Branches_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if(e.Action == NotifyCollectionChangedAction.Remove) {
+                foreach(var branch in e.OldItems.Cast<BranchViewModel>())
+                    UnselectBranch(branch);
+            }
         }
 
         bool IsValidConfig(TrackRepository repo) {
