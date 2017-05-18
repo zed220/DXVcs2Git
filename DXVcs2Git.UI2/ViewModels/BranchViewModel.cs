@@ -1,5 +1,8 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.ModuleInjection;
+using DevExpress.Xpf.Layout.Core;
 using DXVcs2Git.Git;
+using Microsoft.Practices.ServiceLocation;
 using NGitLab.Models;
 using System;
 using System.Collections.Generic;
@@ -25,23 +28,60 @@ namespace DXVcs2Git.UI2 {
             private set { SetProperty(() => IsLoading, value); }
         }
 
-        public ICommand HideCommand { get; }
-
         public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) {
-            HideCommand = new DelegateCommand(Hide);
             GitLabWrapper = gitLabWrapper;
             Repository = repository;
             Name = branch;
         }
 
         public async void RefreshMergeRequestAsync() {
+            if(TrySelectBranch())
+                return;
             IsLoading = true;
-            await Repository.Repositories.SelectBranch(this);
+            MergeRequest mergeRequest = null;
+            await Task.Run(() => {
+                mergeRequest = GitLabWrapper.GetMergeRequests(Repository.Upstream, x => x.SourceProjectId == Repository.Origin.Id && x.SourceBranch == Name).FirstOrDefault();
+            });
+            if(mergeRequest != null) {
+                if(!TrySelectBranch()) {
+                    MergeRequest = mergeRequest;
+                    ModuleManager.DefaultManager.Register(Regions.MergeRequest, new Module(Repository.Name + Name, ServiceLocator.Current.GetInstance<IMergeRequestViewModel>, typeof(MergeRequestView)));
+                    ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest, Repository.Name + Name, new MergeParameter(this, mergeRequest));
+                    SubscribeViewModelRemovedEvent();
+                }
+            }
+            else {
+                UnselectBranch(this);
+            }
             IsLoading = false;
         }
 
-        void Hide() {
-            Repository.Repositories.UnselectBranch(this);
+        static bool eventsSubscribed = false;
+        
+        static void SubscribeViewModelRemovedEvent() {
+            if(eventsSubscribed)
+                return;
+            eventsSubscribed = true;
+            ModuleManager.DefaultManager.GetEvents(Regions.MergeRequest).ViewModelRemoved += RepositoriesViewModel_ViewModelRemoved;
+        }
+
+        static void RepositoriesViewModel_ViewModelRemoved(object sender, ViewModelRemovedEventArgs e) {
+            MergeRequestViewModel vm = e.ViewModel as MergeRequestViewModel;
+            UnselectBranch(vm.Branch);
+        }
+
+        bool TrySelectBranch() {
+            if(ModuleManager.DefaultManager.GetModule(Regions.MergeRequest, Repository.Name + Name) != null) {
+                ModuleManager.DefaultManager.Navigate(Regions.MergeRequest, Repository.Name + Name);
+                return true;
+            }
+            return false;
+        }
+
+        static void UnselectBranch(BranchViewModel branch) {
+            if(ModuleManager.DefaultManager.GetModule(Regions.MergeRequest, branch.Repository.Name + branch.Name) != null)
+                ModuleManager.DefaultManager.Unregister(Regions.MergeRequest, branch.Repository.Name + branch.Name);
+            branch.MergeRequest = null;
         }
 
         protected bool Equals(BranchViewModel other) {

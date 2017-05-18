@@ -29,10 +29,7 @@ namespace DXVcs2Git.UI2 {
             set { SetProperty(() => IsLoading, value); }
         }
 
-        public RepositoriesViewModel Repositories { get; }
-
-        public RepositoryViewModel(string name, TrackRepository trackRepository, RepositoriesViewModel repositories) {
-            Repositories = repositories;
+        public RepositoryViewModel(string name, TrackRepository trackRepository) {
             Name = name;
             TrackRepository = trackRepository;
             GitLabWrapper = new GitLabWrapper(TrackRepository.Server, TrackRepository.Token);
@@ -42,16 +39,11 @@ namespace DXVcs2Git.UI2 {
             Branches = new ObservableCollection<BranchViewModel>();
         }
 
-        public async void LoadBranchesAsync() {
+        public void LoadBranches() {
             if(Origin == null) {
                 //Log.Error("Can`t find project");
                 return;
             }
-            await Task.Run(() => {
-                LoadBranches();
-            });
-        }
-        public void LoadBranches() {
             IsLoading = true;
             var branches = this.GitLabWrapper.GetBranches(Origin).ToList();
             var localBranches = GitReader.GetLocalBranches();
