@@ -21,5 +21,6 @@ namespace DXVcs2Git.UI2 {
         public static string RepositoriesViewRibbon => nameof(RepositoriesViewRibbon);
         public static string RepositoriesViewContent => nameof(RepositoriesViewContent);
         public static string MergeRequestView => nameof(MergeRequestView);
+        public static string SettingsView => nameof(SettingsView);
     }
 }

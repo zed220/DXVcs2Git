@@ -11,6 +11,16 @@
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <dxmvvm:Interaction.Behaviors>
+        <!--<dxmvvm:WindowService x:Name="settingsService" AllowSetWindowOwner="True" WindowShowMode="Dialog">
+            <dxmvvm:WindowService.ViewTemplate>
+                <DataTemplate>
+                    <ContentControl dxmvvm:UIRegion.Region="{x:Static local:Regions.Settings}"/>
+                </DataTemplate>
+            </dxmvvm:WindowService.ViewTemplate>
+        </dxmvvm:WindowService>-->
+        <dxmvvm:UIWindowRegion x:Name="settingsService" RegionName="{x:Static local:Regions.Settings}" WindowShowMode="Dialog" SetWindowOwner="True"/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,11 +32,22 @@
             Focusable="False" 
             dxmvvm:UIRegion.Region="{x:Static local:Regions.Ribbon}" 
             dxb:MergingProperties.ElementMergingBehavior="All" />
-        <dxr:RibbonControl 
-            Grid.Row="0" 
-            RibbonStyle="Office2010" 
-            AsyncMergingEnabled="True"  
-            ToolbarShowMode="ShowAbove" />
+        <dxr:RibbonControl Grid.Row="0" ToolbarShowMode="Hide" AllowCustomization="False" MinimizationButtonVisibility="Collapsed" RibbonHeaderVisibility="Collapsed" 
+                           RibbonStyle="Office2010" AsyncMergingEnabled="True">
+            <dxr:RibbonDefaultPageCategory>
+                <dxr:RibbonPage Caption="Main">
+                    <dxr:RibbonPageGroup Caption="Settings">
+                        <dxb:BarButtonItem
+                            RibbonStyle="Large" 
+                            GlyphSize="Large" 
+                            Content="Settings"
+                            Command="{DXCommand Execute='ShowSettings()'}"
+                            LargeGlyph="{dx:DXImageOffice2013 Image=Properties_32x32.png}">
+                        </dxb:BarButtonItem>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
         <ContentControl 
             Grid.Row="1" 
             Focusable="False"

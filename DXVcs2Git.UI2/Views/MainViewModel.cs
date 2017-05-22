@@ -1,4 +1,7 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.ModuleInjection;
+using DevExpress.Mvvm.UI;
 using DXVcs2Git.Core.Configuration;
 
 namespace DXVcs2Git.UI2{
@@ -11,6 +14,10 @@ namespace DXVcs2Git.UI2{
 
         public MainViewModel() {
             Config = ConfigSerializer.GetConfig();
+        }
+
+        public void ShowSettings() {
+            ModuleManager.DefaultWindowManager.Show(Regions.Settings, Modules.SettingsView);
         }
     }
 }

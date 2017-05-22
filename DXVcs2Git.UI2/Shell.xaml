@@ -8,7 +8,11 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         xmlns:local="clr-namespace:DXVcs2Git.UI2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        ShowActivated="True"
+        UseLayoutRounding="True"
+        AllowDrop="True"
+        Icon="Icon.ico"
+        Title="Git Tools Ex v0.0" Height="800" Width="1024">
     <Grid>
         <ContentControl x:Name="content" dxmvvm:UIRegion.Region="{x:Static local:Regions.MainView}"/>
     </Grid>
