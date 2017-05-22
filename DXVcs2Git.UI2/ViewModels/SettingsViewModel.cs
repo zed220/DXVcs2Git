@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.ModuleInjection;
 using DevExpress.Xpf.Core;
 using DXVcs2Git.Core.Configuration;
+using DXVcs2Git.Core.Git;
 using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace DXVcs2Git.UI2 {
 
     public class SettingsViewModel : ViewModelBase, ISettingsViewModel {
         readonly Config Config;
+        readonly RepoConfigsReader ConfigsReader;
 
         #region Properties
         public string DefaultTheme {
@@ -72,7 +74,24 @@ namespace DXVcs2Git.UI2 {
 
         public SettingsViewModel(IMainViewModel mainViewModel) {
             Config = mainViewModel.Config.Clone();
+            ConfigsReader = new RepoConfigsReader();
+            InitializeDefaults();
             ModuleManager.DefaultManager.GetEvents(this).ViewModelRemoving += SettingsViewModel_ViewModelRemoving;
+        }
+
+        void InitializeDefaults() {
+            KeyGesture = Config.KeyGesture;
+            SupportsTesting = Config.SupportsTesting;
+            DefaultTheme = Config.DefaultTheme;
+            ScrollBarMode = (ScrollBarMode)Config.ScrollBarMode;
+            //Configs = ConfigsReader.RegisteredConfigs;
+            //CommonXaml = GetWpf2SlKey("Common");
+            //DiagramXaml = GetWpf2SlKey("Diagram");
+            //XPFGITXaml = GetWpf2SlKey("XPF");
+            //Repositories = CreateEditRepositories(config);
+            //Repositories.CollectionChanged += RepositoriesOnCollectionChanged;
+            AlwaysSure4 = AlwaysSure3 = AlwaysSure2 = AlwaysSure1 = Config.AlwaysSure;
+            TestByDefault = Config.TestByDefault;
         }
 
         void SettingsViewModel_ViewModelRemoving(object sender, ViewModelRemovingEventArgs e) {
