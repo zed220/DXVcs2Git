@@ -239,7 +239,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Behaviors\SelectRepositoryBehavior.cs" />
+    <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
+    <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
     <Compile Include="Views\MergeRequestViewModel.cs">
       <DependentUpon>MergeRequestView.xaml</DependentUpon>

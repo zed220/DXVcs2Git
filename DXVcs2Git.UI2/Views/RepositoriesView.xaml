@@ -26,7 +26,7 @@
                 <dxdo:LayoutPanel ItemWidth="200">
                     <dxg:TreeListControl ItemsSource="{Binding Repositories}" ShowLoadingPanel="{Binding IsLoading}" ShowBorder="False">
                         <dxmvvm:Interaction.Behaviors>
-                            <local:SelectBranchBehavior/>
+                            <local:TreeListControlSelectionBehavior/>
                         </dxmvvm:Interaction.Behaviors>
                         <dxg:TreeListControl.Columns>
                             <dxg:TreeListColumn FieldName="Name" Width="*">
@@ -42,7 +42,11 @@
                         </dxg:TreeListControl.Columns>
                         <dxg:TreeListControl.View>
                             <dxg:TreeListView ShowColumnHeaders="False" NavigationStyle="Row" ChildNodesPath="Branches" AllowChildNodeSourceUpdates="True" ShowSelectionRectangle="True" ShowIndicator="False" TreeDerivationMode="ChildNodesSelector" TreeLineStyle="None" 
-                                              ShowVerticalLines="False" ShowHorizontalLines="False" AutoExpandAllNodes="True"/>
+                                              ShowVerticalLines="False" ShowHorizontalLines="False" AutoExpandAllNodes="True">
+                                <dxmvvm:Interaction.Behaviors>
+                                    <local:TreeListViewExpandFocusedNodeBehavior/>
+                                </dxmvvm:Interaction.Behaviors>
+                            </dxg:TreeListView>
                         </dxg:TreeListControl.View>
                     </dxg:TreeListControl>
                 </dxdo:LayoutPanel>

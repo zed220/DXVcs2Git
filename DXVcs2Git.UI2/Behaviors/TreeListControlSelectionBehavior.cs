@@ -9,12 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DevExpress.Data.TreeList;
 
 namespace DXVcs2Git.UI2 {
-    public class SelectBranchBehavior : Behavior<TreeListControl> {
+    public class TreeListControlSelectionBehavior : Behavior<TreeListControl> {
         protected override void OnAttached() {
             base.OnAttached();
-            //AssociatedObject.MouseDoubleClick += AssociatedObject_MouseDoubleClick;
             AssociatedObject.SelectedItemChanged += AssociatedObject_SelectedItemChanged;
         }
 
@@ -22,9 +22,7 @@ namespace DXVcs2Git.UI2 {
             RepositoryViewModel selectedRepository = e.NewItem as RepositoryViewModel;
             if(selectedRepository != null) {
                 e.Handled = true;
-                //await selectedRepository.LoadBranchesAsync();
                 AssociatedObject.View.GetNodeByContent(selectedRepository).IsExpanded = true;
-
                 return;
             }
             BranchViewModel selectedBranch = e.NewItem as BranchViewModel;
@@ -34,18 +32,8 @@ namespace DXVcs2Git.UI2 {
             selectedBranch.RefreshMergeRequestAsync();
         }
 
-        //void AssociatedObject_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-        //    BranchViewModel selectedBranch = AssociatedObject.SelectedItem as BranchViewModel;
-        //    if(selectedBranch == null)
-        //        return;
-        //    if(selectedBranch.Repository.Repositories.SelectedBranches.Contains(selectedBranch))
-        //        return;
-        //    selectedBranch.Repository.Repositories.SelectedBranches.Add(selectedBranch);
-        //}
-
         protected override void OnDetaching() {
             AssociatedObject.SelectedItemChanged -= AssociatedObject_SelectedItemChanged;
-            //AssociatedObject.MouseDoubleClick -= AssociatedObject_MouseDoubleClick;
             base.OnDetaching();
         }
     }
