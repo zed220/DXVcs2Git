@@ -14,67 +14,21 @@
     <dxmvvm:Interaction.Behaviors>
         <dx:DXMessageBoxService x:Name="messageBoxService"/>
     </dxmvvm:Interaction.Behaviors>
-    <dx:DXTabControl>
-        <dx:DXTabItem Header="Application">
-            <dxlc:LayoutControl Orientation="Vertical" VerticalAlignment="Top">
-                <dxlc:LayoutItem Label="Default theme: " VerticalAlignment="Center">
-                    <dxe:ComboBoxEdit 
-                            EditValue="{Binding Path=DefaultTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                            IsTextEditable="False"
-                            NullText="{x:Static dx:Theme.DefaultThemeName}"
-                            ItemsSource="{x:Static dx:Theme.Themes}" 
-                            DisplayMember="FullName" 
-                            ValueMember="Name">
-                    </dxe:ComboBoxEdit>
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="Use touch scrollbars: " VerticalAlignment="Center">
-                    <dxe:CheckEdit>
-                        <dxe:CheckEdit.EditValue>
-                            <Binding Path="ScrollBarMode" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.Converter>
-                                    <dxmvvm:ObjectToObjectConverter DefaultSource="Standard" DefaultTarget="False">
-                                        <dxmvvm:MapItem Source="TouchOverlap" Target="True"/>
-                                    </dxmvvm:ObjectToObjectConverter>
-                                </Binding.Converter>
-                            </Binding>
-                        </dxe:CheckEdit.EditValue>
-                    </dxe:CheckEdit>
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="Run on Windows startup: " VerticalAlignment="Center">
-                    <dxe:CheckEdit EditValue="{Binding Path=StartWithWindows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="Allow testing merge requests: " VerticalAlignment="Center">
-                    <dxe:CheckEdit EditValue="{Binding Path=SupportsTesting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="Allow auto assign merge request to test service: " VerticalAlignment="Center">
-                    <dxe:CheckEdit EditValue="{Binding Path=TestByDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="Are you always sure?" VerticalAlignment="Center">
-                    <dxe:CheckEdit EditValue="{Binding Path=AlwaysSure1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </dxlc:LayoutItem>
-                <dxlc:LayoutGroup Orientation="Vertical" Visibility="{Binding AlwaysSure1, Converter={dxmvvm:BooleanToVisibilityConverter}}">
-                    <dxlc:LayoutItem Label="Really sure?" VerticalAlignment="Center">
-                        <dxe:CheckEdit EditValue="{Binding Path=AlwaysSure2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutGroup Orientation="Vertical" Visibility="{Binding AlwaysSure2, Converter={dxmvvm:BooleanToVisibilityConverter}}">
-                        <dxlc:LayoutItem Label="Sure that always sure?" VerticalAlignment="Center">
-                            <dxe:CheckEdit EditValue="{Binding Path=AlwaysSure3, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </dxlc:LayoutItem>
-                        <dxlc:LayoutGroup Orientation="Vertical" Visibility="{Binding AlwaysSure3, Converter={dxmvvm:BooleanToVisibilityConverter}}">
-                            <dxlc:LayoutItem Label="Okay, this is the last one. Sure?" VerticalAlignment="Center">
-                                <dxe:CheckEdit EditValue="{Binding Path=AlwaysSure4, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </dxlc:LayoutItem>
-                            <TextBlock FontWeight="Bold" Text="Congratulations! Surely you are the guy who is sure that he's always sure!" VerticalAlignment="Center" Visibility="{Binding AlwaysSure4, Converter={dxmvvm:BooleanToVisibilityConverter}}"/>
-                        </dxlc:LayoutGroup>
-                    </dxlc:LayoutGroup>
-                </dxlc:LayoutGroup>
-            </dxlc:LayoutControl>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <dx:DXTabControl dxmvvm:UIRegion.Region="{x:Static local:Regions.SettingsContent}">
+            <!--<dx:DXTabItem Header="Application">
+            
         </dx:DXTabItem>
         <dx:DXTabItem Header="Repositories">
             
         </dx:DXTabItem>
         <dx:DXTabItem Header="Wpf2Sl">
             
-        </dx:DXTabItem>
-    </dx:DXTabControl>
+        </dx:DXTabItem>-->
+        </dx:DXTabControl>
+    </Grid>
 </UserControl>

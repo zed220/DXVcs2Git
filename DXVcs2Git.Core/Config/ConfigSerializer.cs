@@ -28,5 +28,16 @@ namespace DXVcs2Git.Core.Configuration {
             catch {
             }
         }
+        public static bool IsConfigEquals(Config left, Config right) {
+            return GetConfigAsString(left) == GetConfigAsString(right);
+        }
+        static string GetConfigAsString(Config config) {
+            using(MemoryStream stream = new MemoryStream()) {
+                Serializer.Serialize(stream, config);
+                stream.Seek(0, SeekOrigin.Begin);
+                using(StreamReader reader = new StreamReader(stream))
+                    return reader.ReadToEnd();
+            }
+        }
     }
 }

@@ -242,6 +242,7 @@
     <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
     <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
+    <Compile Include="ViewModels\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\MergeRequestViewModel.cs">
       <DependentUpon>MergeRequestView.xaml</DependentUpon>
@@ -266,6 +267,9 @@
     </Compile>
     <Compile Include="Views\RepositoriesView.xaml.cs">
       <DependentUpon>RepositoriesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApplicationSettingsView.xaml.cs">
+      <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -292,6 +296,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\RepositoriesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ApplicationSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

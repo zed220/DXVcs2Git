@@ -3,6 +3,7 @@ using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.ModuleInjection;
 using DevExpress.Mvvm.UI;
 using DXVcs2Git.Core.Configuration;
+using Microsoft.Practices.ServiceLocation;
 
 namespace DXVcs2Git.UI2{
     public interface IMainViewModel {
@@ -18,6 +19,7 @@ namespace DXVcs2Git.UI2{
 
         public void ShowSettings() {
             ModuleManager.DefaultWindowManager.Show(Regions.Settings, Modules.SettingsView);
+            ModuleManager.DefaultWindowManager.Clear(Regions.Settings);
         }
     }
 }

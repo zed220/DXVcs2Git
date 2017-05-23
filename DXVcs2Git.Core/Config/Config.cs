@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -30,14 +32,6 @@ namespace DXVcs2Git.Core.Configuration {
             if (string.IsNullOrEmpty(config.InstallPath))
                 config.InstallPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             return config;                    
-        }
-
-        public Config Clone() {
-            Config cloned = new Config();
-            foreach(var prop in GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public)) {
-                prop.SetValue(cloned, prop.GetValue(this));
-            }
-            return cloned;
         }
     }
 }

@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
@@ -19,7 +19,21 @@
                 </DataTemplate>
             </dxmvvm:WindowService.ViewTemplate>
         </dxmvvm:WindowService>-->
-        <dxmvvm:UIWindowRegion x:Name="settingsService" RegionName="{x:Static local:Regions.Settings}" WindowShowMode="Dialog" SetWindowOwner="True"/>
+        <dxmvvm:UIWindowRegion x:Name="settingsService" RegionName="{x:Static local:Regions.Settings}" WindowShowMode="Dialog" SetWindowOwner="True">
+            <dxmvvm:UIWindowRegion.WindowFactory>
+                <DataTemplate>
+                    <dx:DXDialogWindow/>
+                </DataTemplate>
+            </dxmvvm:UIWindowRegion.WindowFactory>
+            <dxmvvm:UIWindowRegion.WindowStyle>
+                <Style TargetType="dx:DXDialogWindow">
+                    <Setter Property="Width" Value="1000"/>
+                    <Setter Property="Height" Value="800"/>
+                    <Setter Property="Title" Value="Settings"/>
+                    <Setter Property="CommandsSource" Value="{Binding DialogCommands}"/>
+                </Style>
+            </dxmvvm:UIWindowRegion.WindowStyle>
+        </dxmvvm:UIWindowRegion>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
