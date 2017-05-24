@@ -19,16 +19,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <dx:DXTabControl dxmvvm:UIRegion.Region="{x:Static local:Regions.SettingsContent}">
-            <!--<dx:DXTabItem Header="Application">
-            
-        </dx:DXTabItem>
-        <dx:DXTabItem Header="Repositories">
-            
-        </dx:DXTabItem>
-        <dx:DXTabItem Header="Wpf2Sl">
-            
-        </dx:DXTabItem>-->
-        </dx:DXTabControl>
+        <dx:DXTabControl dxmvvm:UIRegion.Region="{x:Static local:Regions.SettingsContent}"/>
     </Grid>
 </UserControl>

@@ -221,6 +221,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -244,8 +245,15 @@
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />
+    <Compile Include="Views\RepositoriesSettingsViewModel.cs">
+      <DependentUpon>RepositoriesSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\TrackRepositoryViewModel.cs" />
     <Compile Include="Views\ApplicationSettingsViewModel.cs">
       <DependentUpon>ApplicationSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RepositoriesSettingsView.xaml.cs">
+      <DependentUpon>RepositoriesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsViewModel.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -301,6 +309,10 @@
       <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\RepositoriesSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RepositoriesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -10,6 +10,7 @@ namespace DXVcs2Git.UI2 {
             RootContainer.RegisterType<IRepositoriesViewModel, RepositoriesViewModel>(new ContainerControlledLifetimeManager());
             RootContainer.RegisterType<ISettingsViewModel, SettingsViewModel>(new ContainerControlledLifetimeManager());
             RootContainer.RegisterType<IApplicationSettingsViewModel, ApplicationSettingsViewModel>(new TransientLifetimeManager());
+            RootContainer.RegisterType<IRepositoriesSettingsViewModel, RepositoriesSettingsViewModel>(new TransientLifetimeManager());
             RootContainer.RegisterType<IMifRegistrator, RepositoriesViewMifRegistrator>(new ContainerControlledLifetimeManager());
             RootContainer.RegisterType<IMergeRequestViewModel, MergeRequestViewModel>(new TransientLifetimeManager());
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(RootContainer));

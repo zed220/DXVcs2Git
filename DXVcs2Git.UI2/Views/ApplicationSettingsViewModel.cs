@@ -62,17 +62,7 @@ namespace DXVcs2Git.UI2 {
         public ApplicationSettingsViewModel(ISettingsViewModel settingsViewModel) {
             Config = settingsViewModel.Config;
             InitializeDefaults();
-            //ModuleManager.DefaultManager.GetEvents(this).NavigatedAway += ApplicationSettingsViewModel_NavigatedAway;
         }
-
-        //private void ApplicationSettingsViewModel_NavigatedAway(object sender, NavigationEventArgs e) {
-        //    Config.KeyGesture = KeyGesture;
-        //    Config.SupportsTesting = SupportsTesting;
-        //    Config.DefaultTheme = DefaultTheme;
-        //    Config.ScrollBarMode = (int)ScrollBarMode;
-        //    Config.AlwaysSure = AlwaysSure4;
-        //    Config.TestByDefault = TestByDefault;
-        //}
 
         void InitializeDefaults() {
             KeyGesture = Config.KeyGesture;

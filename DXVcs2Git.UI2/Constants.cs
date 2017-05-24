@@ -24,5 +24,6 @@ namespace DXVcs2Git.UI2 {
         public static string MergeRequestView => nameof(MergeRequestView);
         public static string SettingsView => nameof(SettingsView);
         public static string ApplicationSettingsView => nameof(ApplicationSettingsView);
+        public static string RepositorySettingsView => nameof(RepositorySettingsView);
     }
 }

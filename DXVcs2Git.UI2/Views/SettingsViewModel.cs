@@ -36,6 +36,7 @@ namespace DXVcs2Git.UI2 {
         void SettingsViewModel_Navigated(object sender, NavigationEventArgs e) {
             Config = ConfigSerializer.GetConfig();
             ModuleManager.DefaultManager.InjectOrNavigate(Regions.SettingsContent, Modules.ApplicationSettingsView);
+            ModuleManager.DefaultManager.InjectOrNavigate(Regions.SettingsContent, Modules.RepositorySettingsView);
         }
 
         void CreateCommands() {

@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="DXVcs2Git.UI2.RepositoriesSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:local="clr-namespace:DXVcs2Git.UI2"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <dxmvvm:Interaction.Behaviors>
+
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <dxg:GridControl ItemsSource="{Binding Path=Repositories}" SelectionMode="Row">
+            <dxmvvm:Interaction.Behaviors>
+                <dxg:GridDragDropManager/>
+            </dxmvvm:Interaction.Behaviors>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Name" Width="*"/>
+                <dxg:GridColumn FieldName="ConfigName" Width="2*">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ComboBoxEditSettings IsTextEditable="False" ItemsSource="{Binding AvailableConfigs}"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="LocalPath" Width="3*"/>
+                <dxg:GridColumn Header="{x:Static sys:String.Empty}" Width="20" AllowResizing="False" Focusable="False">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{DXCommand Execute='@c.RowData.Row.AskLocalPath()'}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <dx:DXImage Source="{dx:DXImageOffice2013 Image=Open_16x16.png}" Stretch="None"/>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="Token" Width="3*">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:ComboBoxEditSettings ItemsSource="{Binding Path=AvailableTokens}"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="Server" FieldName="Server" ReadOnly="True" Width="2*"/>
+                <dxg:GridColumn Header="{x:Static sys:String.Empty}" Width="20" AllowResizing="False" Focusable="False">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{DXCommand Execute='@c.View.DataContext.RemoveRepository(@c.RowData.Row)'}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <dx:DXImage Source="{dx:DXImageOffice2013 Image=Delete_16x16.png}" Stretch="None"/>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView EditorButtonShowMode="ShowAlways" 
+                               ShowDataNavigator="True" 
+                               ShowGroupPanel="False"
+                               AllowGrouping="False"
+                               EditorShowMode="MouseUp"/>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+        <Button Grid.Row="1" Content="Add New Repository" HorizontalAlignment="Right" Command="{DXCommand Execute='AddNewRepository()'}"/>
+    </Grid>
+</UserControl>

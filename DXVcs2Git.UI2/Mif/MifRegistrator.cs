@@ -11,6 +11,7 @@ namespace DXVcs2Git.UI2 {
             ModuleManager.DefaultManager.Register(Regions.Content, new Module(Modules.RepositoriesViewContent, ServiceLocator.Current.GetInstance<IRepositoriesViewModel>, typeof(RepositoriesView)));
             ModuleManager.DefaultManager.Register(Regions.Settings, new Module(Modules.SettingsView, ServiceLocator.Current.GetInstance<ISettingsViewModel>, typeof(SettingsView)));
             ModuleManager.DefaultManager.Register(Regions.SettingsContent, new Module(Modules.ApplicationSettingsView, ServiceLocator.Current.GetInstance<IApplicationSettingsViewModel>, typeof(ApplicationSettingsView)));
+            ModuleManager.DefaultManager.Register(Regions.SettingsContent, new Module(Modules.RepositorySettingsView, ServiceLocator.Current.GetInstance<IRepositoriesSettingsViewModel>, typeof(RepositoriesSettingsView)));
         }
 
         public static void Register() {
