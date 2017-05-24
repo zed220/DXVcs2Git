@@ -12,6 +12,7 @@ using LibGit2Sharp;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
 
 namespace DXVcs2Git.UI2 {
     public class RepositoryViewModel : ViewModelBase {
@@ -42,7 +43,7 @@ namespace DXVcs2Git.UI2 {
             Branches = new ObservableCollection<BranchViewModel>();
         }
 
-        public void LoadBranches() {
+        public void LoadBranches(Action<BranchViewModel> cleanBranchAction) {
             if(Origin == null) {
                 //Log.Error("Can`t find project");
                 return;
@@ -59,7 +60,7 @@ namespace DXVcs2Git.UI2 {
                     removedBranches.Add(branch);
             }
             foreach(var branch in removedBranches) {
-                BranchViewModel.UnselectBranch(branch);
+                cleanBranchAction?.Invoke(branch);
                 Branches.Remove(branch);
                 continue;
             }
@@ -70,6 +71,11 @@ namespace DXVcs2Git.UI2 {
             foreach(var branch in addedBranches)
                 Branches.Add(branch);
             IsLoading = false;
+        }
+
+        public void CleanBranches(Action<BranchViewModel> cleanBranchAction) {
+            foreach(var branch in Branches)
+                cleanBranchAction?.Invoke(branch);
         }
     }
 }

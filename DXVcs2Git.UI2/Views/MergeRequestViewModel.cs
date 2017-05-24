@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DXVcs2Git.UI2 {
-    public interface IMergeRequestViewModel { }
+    public interface IMergeRequestViewModel {
+        BranchViewModel Branch { get; }
+    }
 
     public class MergeRequestViewModel : ViewModelBase, IMergeRequestViewModel {
         public MergeRequest MergeRequest { get; private set; }
@@ -36,14 +38,14 @@ namespace DXVcs2Git.UI2 {
             set { SetProperty(() => Description, value, DescriptionChanged); }
         }
 
-        public MergeParameter MergeParameter { get { return Parameter as MergeParameter; } }
+        public BranchViewModel MergeParameter { get { return Parameter as BranchViewModel; } }
 
         public MergeRequestViewModel() {
         }
 
         void UpdateMergeRequest() {
-            Branch = MergeParameter.Item1;
-            MergeRequest = MergeParameter.Item2;
+            Branch = MergeParameter;
+            MergeRequest = Branch.MergeRequest;
             if(MergeRequest == null) {
                 Title = null;
                 SourceBranch = null;

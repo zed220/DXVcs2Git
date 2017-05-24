@@ -24,7 +24,7 @@
         <dxdo:DockLayoutManager Grid.Row="1">
             <dxdo:LayoutGroup Orientation="Horizontal">
                 <dxdo:LayoutPanel ItemWidth="200">
-                    <dxg:TreeListControl ItemsSource="{Binding Repositories}" ShowLoadingPanel="{Binding IsLoading}" ShowBorder="False">
+                    <dxg:TreeListControl ItemsSource="{Binding Repositories}" ShowLoadingPanel="{Binding IsLoading}" ShowBorder="False" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                         <dxmvvm:Interaction.Behaviors>
                             <local:TreeListControlSelectionBehavior/>
                         </dxmvvm:Interaction.Behaviors>

@@ -242,6 +242,8 @@
     <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
     <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
+    <Compile Include="NativeMethods\HotKeyHelper.cs" />
+    <Compile Include="NativeMethods\NativeMethods.cs" />
     <Compile Include="ViewModels\ApplicationSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\MergeRequestViewModel.cs">

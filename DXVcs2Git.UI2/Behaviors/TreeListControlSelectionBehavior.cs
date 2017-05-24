@@ -18,18 +18,13 @@ namespace DXVcs2Git.UI2 {
             AssociatedObject.SelectedItemChanged += AssociatedObject_SelectedItemChanged;
         }
 
-        async void AssociatedObject_SelectedItemChanged(object sender, SelectedItemChangedEventArgs e) {
+        void AssociatedObject_SelectedItemChanged(object sender, SelectedItemChangedEventArgs e) {
             RepositoryViewModel selectedRepository = e.NewItem as RepositoryViewModel;
             if(selectedRepository != null) {
                 e.Handled = true;
                 AssociatedObject.View.GetNodeByContent(selectedRepository).IsExpanded = true;
                 return;
             }
-            BranchViewModel selectedBranch = e.NewItem as BranchViewModel;
-            if(selectedBranch == null)
-                return;
-            e.Handled = true;
-            selectedBranch.RefreshMergeRequestAsync();
         }
 
         protected override void OnDetaching() {

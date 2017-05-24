@@ -25,10 +25,10 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => ScrollBarMode); }
             set { SetProperty(() => ScrollBarMode, value, () => Config.ScrollBarMode = (int)value); }
         }
-        public bool StartWithWindows {
-            get { return GetProperty(() => StartWithWindows); }
-            set { SetProperty(() => StartWithWindows, value); }
-        }
+        //public bool StartWithWindows {
+        //    get { return GetProperty(() => StartWithWindows); }
+        //    set { SetProperty(() => StartWithWindows, value); }
+        //}
         public string KeyGesture {
             get { return GetProperty(() => KeyGesture); }
             set { SetProperty(() => KeyGesture, value, () => Config.KeyGesture = value); }

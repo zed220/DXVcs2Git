@@ -7,9 +7,12 @@ namespace DXVcs2Git.Core.Configuration {
         public static readonly string AppPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static readonly string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\GitTools\\";
         static readonly string SettingsFile = "ui_settings.config";
+        static readonly string SettingsFile2 = "ui_settings_2.config";
         static string SettingsFilePath {
-            get { return SettingsPath + SettingsFile; }
+            get { return SettingsPath + (Version == 1 ? SettingsFile2 : SettingsFile); }
         }
+
+        public static int Version { get; set; } = 0;
 
         public static Config GetConfig() {
             if (!File.Exists(SettingsFilePath))

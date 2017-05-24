@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using DXVcs2Git.Core.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,7 +14,8 @@ namespace DXVcs2Git.UI2 {
     /// </summary>
     public partial class App : Application {
         public App() {
-            ApplicationThemeHelper.ApplicationThemeName = "Office2013";
+            ApplicationThemeHelper.UseLegacyDefaultTheme = true;
+            ConfigSerializer.Version = 1;
         }
 
         protected override void OnStartup(StartupEventArgs e) {

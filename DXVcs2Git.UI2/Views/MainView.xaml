@@ -10,7 +10,8 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             dx:ScrollBarExtensions.ScrollBarMode="{Binding ScrollBarMode}">
     <dxmvvm:Interaction.Behaviors>
         <!--<dxmvvm:WindowService x:Name="settingsService" AllowSetWindowOwner="True" WindowShowMode="Dialog">
             <dxmvvm:WindowService.ViewTemplate>

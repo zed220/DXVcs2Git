@@ -47,10 +47,10 @@ namespace DXVcs2Git.UI2 {
 
 
         bool IsChanged() {
-            return !ConfigSerializer.IsConfigEquals(ServiceLocator.Current.GetInstance<IMainViewModel>().Config, Config);
+            return !ConfigSerializer.IsConfigEquals(ConfigSerializer.GetConfig(), Config);
         }
         void Save() {
-            //ConfigSerializer.SaveConfig(Config);
+            ConfigSerializer.SaveConfig(Config);
         }
 
         void SettingsViewModel_ViewModelRemoving(object sender, ViewModelRemovingEventArgs e) {
