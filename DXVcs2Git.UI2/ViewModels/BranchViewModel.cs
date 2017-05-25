@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace DXVcs2Git.UI2 {
-    public class BranchViewModel : ViewModelBase {
+    public class BranchViewModel : ViewModelWorkerBase {
         readonly GitLabWrapper GitLabWrapper;
 
         public string Name { get; }
@@ -23,10 +23,7 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => MergeRequest); }
             set { SetProperty(() => MergeRequest, value); }
         }
-        public bool IsLoading {
-            get { return GetProperty(() => IsLoading); }
-            private set { SetProperty(() => IsLoading, value); }
-        }
+
         public bool SupportsTesting { get; }
 
         public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) {
