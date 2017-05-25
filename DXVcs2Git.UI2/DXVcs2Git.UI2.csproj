@@ -490,6 +490,18 @@
     <Content Include="Configs\XPF_Demos_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Configs\ASP_2017.2.config" />
+    <Content Include="Configs\Dashboard_2017.2.config" />
+    <Content Include="Configs\Diagram_2017.2.config" />
+    <Content Include="Configs\RealLife_Demos_2017.2.config" />
+    <Content Include="Configs\Reports_2017.2.config" />
+    <Content Include="Configs\Scheduler_2017.2.config" />
+    <Content Include="Configs\UWP_2017.2.config" />
+    <Content Include="Configs\Win_2017.2.config" />
+    <Content Include="Configs\Win_Demos_2017.2.config" />
+    <Content Include="Configs\XAF_2017.2.config" />
+    <Content Include="Configs\XPF_2017.2.config" />
+    <Content Include="Configs\XPF_Demos_2017.2.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

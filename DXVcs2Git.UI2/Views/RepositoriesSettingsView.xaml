@@ -31,17 +31,10 @@
                         <dxe:ComboBoxEditSettings IsTextEditable="False" ItemsSource="{Binding AvailableConfigs}"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn FieldName="LocalPath" Width="3*"/>
-                <dxg:GridColumn Header="{x:Static sys:String.Empty}" Width="20" AllowResizing="False" Focusable="False">
+                <dxg:GridColumn FieldName="LocalPath" Width="3*">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Command="{DXCommand Execute='@c.RowData.Row.AskLocalPath()'}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <dx:DXImage Source="{dx:DXImageOffice2013 Image=Open_16x16.png}" Stretch="None"/>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
+                            <dxe:ButtonEdit x:Name="PART_Editor" DefaultButtonClick="{DXEvent Handler='@c.RowData.Row.AskLocalPath()'}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
