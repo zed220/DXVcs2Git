@@ -57,7 +57,8 @@
                             GlyphSize="Large" 
                             Content="Settings"
                             Command="{DXCommand Execute='ShowSettings()'}"
-                            LargeGlyph="{dx:DXImageOffice2013 Image=Properties_32x32.png}">
+                            LargeGlyph="{dx:DXImageOffice2013 Image=Properties_32x32.png}"
+                            IsEnabled="{DXBinding '!IsLoading'}">
                         </dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>

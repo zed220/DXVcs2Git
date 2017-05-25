@@ -17,12 +17,7 @@ namespace DXVcs2Git.UI2 {
     public interface IRepositoriesViewModel {
     }
 
-    public class RepositoriesViewModel : ViewModelBase, IRepositoriesViewModel {
-        public bool IsLoading {
-            get { return GetProperty(() => IsLoading); }
-            set { SetProperty(() => IsLoading, value); }
-        }
-
+    public class RepositoriesViewModel :  ViewModelWorkerBase, IRepositoriesViewModel {
         public ObservableCollection<RepositoryViewModel> Repositories {
             get { return GetProperty(() => Repositories); }
             set { SetProperty(() => Repositories, value); }

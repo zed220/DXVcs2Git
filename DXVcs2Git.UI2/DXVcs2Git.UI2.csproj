@@ -37,6 +37,118 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.CodeParser.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.CodeParser.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Data.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Data.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Images.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Images.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Mvvm.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Printing.v17.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Accordion.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Accordion.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Controls.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Controls.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Core.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Docking.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Docking.v17.1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v17.1.Core, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v17.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v17.1.Extensions, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v17.1.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Layout.v17.1.Core, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Layout.v17.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.LayoutControl.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.PropertyGrid.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Ribbon.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Ribbon.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Base.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Base.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.DXStyle.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.DXStyle.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.HybridApp.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.HybridApp.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.LightGray.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.LightGray.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.MetropolisDark.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.MetropolisDark.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.MetropolisLight.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.MetropolisLight.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2007Black.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Black.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2007Blue.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Blue.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2007Silver.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Silver.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Black.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Black.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Blue.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Silver.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013DarkGray.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013LightGray.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2016Black.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016Black.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2016Colorful.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016Colorful.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016White.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Seven.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Seven.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.TouchlineDark.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.TouchlineDark.v17.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.VS2010.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
+      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.VS2010.v17.1.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310">
       <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
@@ -58,154 +170,6 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.CodeParser.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.CodeParser.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Accordion.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Accordion.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Data.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Data.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Images.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Images.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Mvvm.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Mvvm.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Printing.v17.1.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Controls.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Core.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Docking.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v17.1.Core, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v17.1.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v17.1.Extensions, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v17.1.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v17.1.Core, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Layout.v17.1.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.LayoutControl.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.LayoutControl.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.PropertyGrid.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Ribbon.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Ribbon.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Base.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Base.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.DXStyle.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.DXStyle.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.HybridApp.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.HybridApp.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.LightGray.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.LightGray.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.MetropolisDark.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.MetropolisDark.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.MetropolisLight.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.MetropolisLight.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2007Black.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Black.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2007Blue.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Blue.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2007Silver.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Silver.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Black.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Black.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Blue.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Silver.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013DarkGray.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013LightGray.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2016Black.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016Black.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2016Colorful.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016Colorful.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016White.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Seven.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Seven.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.TouchlineDark.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.TouchlineDark.v17.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VS2010.v17.1, Version=17.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.VS2010.v17.1.dll</HintPath>
     </Reference>
     <Reference Include="DXVCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -240,11 +204,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\HotKeyEditorBehavior.cs" />
     <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
     <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />
+    <Compile Include="ViewModels\ViewModelWorkerBase.cs" />
     <Compile Include="Views\RepositoriesSettingsViewModel.cs">
       <DependentUpon>RepositoriesSettingsView.xaml</DependentUpon>
     </Compile>

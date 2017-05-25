@@ -13,9 +13,11 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using DevExpress.Xpf.Layout.Core;
+using Microsoft.Practices.ServiceLocation;
 
 namespace DXVcs2Git.UI2 {
-    public class RepositoryViewModel : ViewModelBase {
+    public class RepositoryViewModel : ViewModelWorkerBase {
         public string Name { get; }
         public Project Origin { get; }
         public Project Upstream { get; }
@@ -26,10 +28,6 @@ namespace DXVcs2Git.UI2 {
         public ObservableCollection<BranchViewModel> Branches {
             get { return GetProperty(() => Branches); }
             set { SetProperty(() => Branches, value); }
-        }
-        public bool IsLoading {
-            get { return GetProperty(() => IsLoading); }
-            set { SetProperty(() => IsLoading, value); }
         }
 
         public RepositoryViewModel(string name, TrackRepository trackRepository, RepoConfig repoConfig) {

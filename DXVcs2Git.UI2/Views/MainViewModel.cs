@@ -6,18 +6,30 @@ using DevExpress.Mvvm.UI;
 using DXVcs2Git.Core.Configuration;
 using Microsoft.Practices.ServiceLocation;
 using DevExpress.Xpf.Core;
+using System.Collections.Generic;
 
 namespace DXVcs2Git.UI2{
+    public interface IWorker {
+        bool IsLoading { get; }
+    }
     public interface IMainViewModel {
         Config Config { get; }
+        void WorkStarted(IWorker worker);
+        void WorkFinished(IWorker worker);
     }
 
     public class MainViewModel : ViewModelBase, IMainViewModel {
         public Config Config { get; private set; }
 
+        List<IWorker> Workers { get; } = new List<IWorker>();
+
         public ScrollBarMode ScrollBarMode {
             get { return GetProperty(() => ScrollBarMode); }
             set { SetProperty(() => ScrollBarMode, value); }
+        }
+        public bool IsLoading {
+            get { return GetProperty(() => IsLoading); }
+            set { SetProperty(() => IsLoading, value); }
         }
 
         public MainViewModel() {
@@ -47,6 +59,22 @@ namespace DXVcs2Git.UI2{
         void UpdateAppearance() {
             ScrollBarMode = (ScrollBarMode)Config.ScrollBarMode;
             ApplicationThemeHelper.ApplicationThemeName = Config?.DefaultTheme ?? Theme.DefaultThemeName;
+            NativeMethods.HotKeyHelper.UnregisterHotKey();
+            NativeMethods.HotKeyHelper.RegisterHotKey(Config.KeyGesture);
+        }
+
+        public void WorkStarted(IWorker worker) {
+            if(Workers.Contains(worker))
+                throw new NotSupportedException("Unexpected Worker added");
+            Workers.Add(worker);
+            IsLoading = Workers.Count > 0;
+        }
+
+        public void WorkFinished(IWorker worker) {
+            if(!Workers.Contains(worker))
+                throw new NotSupportedException("Unexpected Worker added");
+            Workers.Remove(worker);
+            IsLoading = Workers.Count > 0;
         }
     }
 }
