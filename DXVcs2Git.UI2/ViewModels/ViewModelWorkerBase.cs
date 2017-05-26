@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DXVcs2Git.UI2 {
     public abstract class ViewModelWorkerBase : ViewModelBase, IWorker {
-        public bool IsLoading {
+        public virtual bool IsLoading {
             get { return GetProperty(() => IsLoading); }
             protected set { SetProperty(() => IsLoading, value, LoadingChanged); }
         }

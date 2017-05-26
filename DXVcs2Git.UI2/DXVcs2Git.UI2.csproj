@@ -184,6 +184,7 @@
       <HintPath>..\Lib\NGitLab\NGitLab.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -210,6 +211,7 @@
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />
+    <Compile Include="ViewModels\CommitViewModel.cs" />
     <Compile Include="ViewModels\ViewModelWorkerBase.cs" />
     <Compile Include="Views\RepositoriesSettingsViewModel.cs">
       <DependentUpon>RepositoriesSettingsView.xaml</DependentUpon>

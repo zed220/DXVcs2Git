@@ -3,6 +3,7 @@ using DevExpress.Mvvm.ModuleInjection;
 using DevExpress.Xpf.Layout.Core;
 using DXVcs2Git.Git;
 using Microsoft.Practices.ServiceLocation;
+using NGitLab;
 using NGitLab.Models;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,15 @@ namespace DXVcs2Git.UI2 {
             IsLoading = true;
             MergeRequest = GitLabWrapper.GetMergeRequests(Repository.Upstream, x => x.SourceProjectId == Repository.Origin.Id && x.SourceBranch == Name).FirstOrDefault();
             IsLoading = false;
+        }
+        public async Task<IEnumerable<Commit>> GetCommits() {
+            IsLoading = true;
+            var result = await Task.Run(() => GitLabWrapper.GetMergeRequestCommits(MergeRequest));
+            IsLoading = false;
+            return result;
+        }
+        public async Task<IEnumerable<Build>> GetBuilds(Sha1 sha) {
+            return await Task.Run(() => GitLabWrapper.GetBuilds(MergeRequest, sha));
         }
 
         protected bool Equals(BranchViewModel other) {

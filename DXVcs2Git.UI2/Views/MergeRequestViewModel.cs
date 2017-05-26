@@ -8,22 +8,23 @@ using System.Text;
 using DevExpress.Mvvm.Native;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace DXVcs2Git.UI2 {
     public interface IMergeRequestViewModel {
         BranchViewModel Branch { get; }
     }
 
-    public class MergeRequestViewModel : ViewModelBase, IMergeRequestViewModel {
+    public class MergeRequestViewModel : ViewModelWorkerBase, IMergeRequestViewModel {
         public MergeRequest MergeRequest { get; private set; }
         public BranchViewModel Branch { get; private set; }
         public string SourceBranch { get; private set; }
         public string TargetBranch { get; private set; }
         public string Author { get; private set; }
         public string Assignee { get; private set; }
-        public bool SupportsTesting { get; private set; }
-        protected override void OnParameterChanged(object parameter) {
-            UpdateMergeRequest();
+        public bool SupportsTesting {
+            get { return GetProperty(() => SupportsTesting); }
+            private set { SetProperty(() => SupportsTesting, value, OnSupportsTestingChanged); }
         }
         public bool IsModified {
             get { return GetProperty(() => IsModified); }
@@ -37,11 +38,18 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => Description); }
             set { SetProperty(() => Description, value, DescriptionChanged); }
         }
+        public ObservableCollection<CommitViewModel> Commits {
+            get { return GetProperty(() => Commits); }
+            private set { SetProperty(() => Commits, value); }
+        }
+
+        protected override void OnParameterChanged(object parameter) {
+            UpdateMergeRequest();
+        }
 
         public BranchViewModel MergeParameter { get { return Parameter as BranchViewModel; } }
 
-        public MergeRequestViewModel() {
-        }
+        public MergeRequestViewModel() { }
 
         void UpdateMergeRequest() {
             Branch = MergeParameter;
@@ -63,6 +71,33 @@ namespace DXVcs2Git.UI2 {
             Author = MergeRequest.Author.Username;
             Assignee = MergeRequest.Assignee?.Username;
             SupportsTesting = Branch?.SupportsTesting ?? false;
+        }
+
+        void OnSupportsTestingChanged() {
+            if(!SupportsTesting) {
+                //maybe remove commits
+                return;
+            }
+            if(Branch.MergeRequest == null) {
+                return;
+            }
+            Task.Run(() => LoadCommits());
+        }
+
+        async void LoadCommits() {
+            IsLoading = true;
+            Commits = new ObservableCollection<CommitViewModel>();
+            //Commits = Enumerable.Empty<CommitViewModel>();
+            (await Branch.GetCommits()).ToList().ForEach(c => Commits.Add(new CommitViewModel(c)));
+            await Task.Run(() => {
+                List<Task> loadCommitsTaskList = new List<Task>();
+                foreach (var commit in Commits) {
+                    loadCommitsTaskList.Add(Task.Run(() => commit.Update(Branch)));
+                }
+                //commits.ForEach(c => Commits.Add(CommitViewModel.Create(c, Branch)));
+                Task.WaitAll(loadCommitsTaskList.ToArray());
+            });
+            IsLoading = false;
         }
 
         public void Apply() {
