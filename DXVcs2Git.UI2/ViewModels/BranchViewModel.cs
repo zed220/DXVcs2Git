@@ -6,6 +6,7 @@ using Microsoft.Practices.ServiceLocation;
 using NGitLab;
 using NGitLab.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,6 +45,12 @@ namespace DXVcs2Git.UI2 {
         public async Task<IEnumerable<Commit>> GetCommits() {
             IsLoading = true;
             var result = await Task.Run(() => GitLabWrapper.GetMergeRequestCommits(MergeRequest));
+            IsLoading = false;
+            return result;
+        }
+        public async Task<IEnumerable<MergeRequestFileData>> GetMergeRequestChanges() {
+            IsLoading = true;
+            var result = await Task.Run(() => GitLabWrapper.GetMergeRequestChanges(MergeRequest));
             IsLoading = false;
             return result;
         }

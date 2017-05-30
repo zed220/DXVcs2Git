@@ -205,13 +205,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\AvalonEditTextBindingBehavior.cs" />
     <Compile Include="Behaviors\HotKeyEditorBehavior.cs" />
     <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
     <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />
+    <Compile Include="Native\DiffLineBackgroundRenderer.cs" />
     <Compile Include="ViewModels\CommitViewModel.cs" />
+    <Compile Include="ViewModels\MergeRequestFileDataViewModel.cs" />
     <Compile Include="ViewModels\ViewModelWorkerBase.cs" />
     <Compile Include="Views\RepositoriesSettingsViewModel.cs">
       <DependentUpon>RepositoriesSettingsView.xaml</DependentUpon>
@@ -308,6 +311,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\FileChangeMode\Renamed.png" />
+    <Resource Include="Images\FileChangeMode\New.png" />
+    <Resource Include="Images\FileChangeMode\Modified.png" />
+    <Resource Include="Images\FileChangeMode\Deleted.png" />
     <Resource Include="Icon.ico" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

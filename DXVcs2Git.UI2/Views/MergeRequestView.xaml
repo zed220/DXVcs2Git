@@ -8,10 +8,21 @@
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <dx:EnumToObjectConverter x:Key="FileChangeModeConverter">
+            <dx:EnumToObjectConverter.Values>
+                <dx:EnumObjectProvider x:Key="New" Value="..\Images\FileChangeMode\New.png" />
+                <dx:EnumObjectProvider x:Key="Deleted" Value="..\Images\FileChangeMode\Deleted.png" />
+                <dx:EnumObjectProvider x:Key="Modified" Value="..\Images\FileChangeMode\Modified.png" />
+                <dx:EnumObjectProvider x:Key="Renamed" Value="..\Images\FileChangeMode\Renamed.png" />
+            </dx:EnumToObjectConverter.Values>
+        </dx:EnumToObjectConverter>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -61,8 +72,8 @@
                                     <!--EditValue="{Binding Path=PerformTesting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
                                 </dxlc:LayoutItem>
                                 <!--<dxlc:LayoutItem>
-                            <dxe:CheckEdit ValidateOnTextInput="True" Content="{Binding Path=PerformTesting, Converter={StaticResource ShowAssignedToServiceMessageConverter}}" EditValue="{Binding Path=AssignedToService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </dxlc:LayoutItem>-->
+                                    <dxe:CheckEdit ValidateOnTextInput="True" Content="{Binding Path=PerformTesting, Converter={StaticResource ShowAssignedToServiceMessageConverter}}" EditValue="{Binding Path=AssignedToService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </dxlc:LayoutItem>-->
                                 <dxlc:LayoutItem>
                                     <Button Content="Apply" Command="{DXCommand Execute='Apply()'}" IsEnabled="{Binding IsModified}"/>
                                 </dxlc:LayoutItem>
@@ -78,7 +89,59 @@
                     </dxdo:LayoutGroup>
                 </dxdo:DockLayoutManager>
             </dx:DXTabItem>
-            <dx:DXTabItem Header="Merge request changes"/>
+            <dx:DXTabItem Header="Merge request changes">
+                <dxdo:DockLayoutManager>
+                    <dxdo:LayoutGroup>
+                        <dxdo:LayoutPanel ShowCaption="False" ShowBorder="False">
+                            <dxg:GridControl x:Name="grid" ItemsSource="{Binding Path=Changes}" MaxHeight="2000" AutoExpandAllGroups="True" ShowBorder="False">
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn Header="Status" FieldName="ChangeMode" FixedWidth="True" Width="20">
+                                        <dxg:GridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <dxe:ImageEdit Stretch="None" ShowBorder="False" HorizontalAlignment="Center" ShowMenu="False" IsReadOnly="True" Source="{Binding Path=Value, Converter={StaticResource FileChangeModeConverter}}"/>
+                                            </DataTemplate>
+                                        </dxg:GridColumn.CellTemplate>
+                                    </dxg:GridColumn>
+                                    <dxg:GridColumn FieldName="Path" Visible="False"/>
+                                    <dxg:GridColumn FieldName="FileName" Visible="True"/>
+                                    <dxg:GridColumn FieldName="DirName" Visible="False" GroupIndex="0"/>
+                                </dxg:GridControl.Columns>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView ShowColumnHeaders="False"
+                                                   ShowIndicator="False"
+                                                   ShowVerticalLines="False"
+                                                   ShowHorizontalLines="False"
+                                                   ShowGroupPanel="False" 
+                                                   NavigationStyle="Row" 
+                                                   AutoWidth="True">
+                                        <dxg:TableView.Resources>
+                                            <Style TargetType="{x:Type dxg:GroupValuePresenter}">
+                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type dxg:GroupValuePresenter}">
+                                                            <TextBlock Text="{Binding Path=GroupValue.Text}" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </dxg:TableView.Resources>
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </dxdo:LayoutPanel>
+                        <dxdo:LayoutPanel ShowCaption="False">
+                            <avalonedit:TextEditor 
+                                FontFamily="Consolas" 
+                                IsReadOnly="True">
+                                <dxmvvm:Interaction.Behaviors>
+                                    <local:AvalonEditTextBindingBehavior Text="{Binding Path=SelectedItem.Diff, ElementName=grid}"/>
+                                </dxmvvm:Interaction.Behaviors>
+                            </avalonedit:TextEditor>
+                        </dxdo:LayoutPanel>
+                    </dxdo:LayoutGroup>
+                </dxdo:DockLayoutManager>
+            </dx:DXTabItem>
         </dx:DXTabControl>
     </Grid>
 </UserControl>

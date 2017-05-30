@@ -24,7 +24,7 @@ namespace DXVcs2Git.UI2 {
         public string Assignee { get; private set; }
         public bool SupportsTesting {
             get { return GetProperty(() => SupportsTesting); }
-            private set { SetProperty(() => SupportsTesting, value, OnSupportsTestingChanged); }
+            private set { SetProperty(() => SupportsTesting, value); }
         }
         public bool IsModified {
             get { return GetProperty(() => IsModified); }
@@ -41,6 +41,10 @@ namespace DXVcs2Git.UI2 {
         public ObservableCollection<CommitViewModel> Commits {
             get { return GetProperty(() => Commits); }
             private set { SetProperty(() => Commits, value); }
+        }
+        public ObservableCollection<MergeRequestFileDataViewModel> Changes {
+            get { return GetProperty(() => Changes); }
+            private set { SetProperty(() => Changes, value); }
         }
 
         protected override void OnParameterChanged(object parameter) {
@@ -71,9 +75,19 @@ namespace DXVcs2Git.UI2 {
             Author = MergeRequest.Author.Username;
             Assignee = MergeRequest.Assignee?.Username;
             SupportsTesting = Branch?.SupportsTesting ?? false;
+            UpdateContent();
         }
 
-        void OnSupportsTestingChanged() {
+        void UpdateContent() {
+            Task.Run(() => {
+                IsLoading = true;
+                UpdateCommits();
+                LoadChanges();
+                IsLoading = false;
+            });
+        }
+
+        void UpdateCommits() {
             if(!SupportsTesting) {
                 //maybe remove commits
                 return;
@@ -85,7 +99,6 @@ namespace DXVcs2Git.UI2 {
         }
 
         async void LoadCommits() {
-            IsLoading = true;
             Commits = new ObservableCollection<CommitViewModel>();
             //Commits = Enumerable.Empty<CommitViewModel>();
             (await Branch.GetCommits()).ToList().ForEach(c => Commits.Add(new CommitViewModel(c)));
@@ -97,7 +110,10 @@ namespace DXVcs2Git.UI2 {
                 //commits.ForEach(c => Commits.Add(CommitViewModel.Create(c, Branch)));
                 Task.WaitAll(loadCommitsTaskList.ToArray());
             });
-            IsLoading = false;
+        }
+        async void LoadChanges() {
+            Changes = new ObservableCollection<MergeRequestFileDataViewModel>();
+            (await Branch.GetMergeRequestChanges()).ToList().ForEach(c => Changes.Add(new MergeRequestFileDataViewModel(c)));
         }
 
         public void Apply() {
