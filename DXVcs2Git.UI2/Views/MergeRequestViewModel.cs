@@ -9,6 +9,7 @@ using DevExpress.Mvvm.Native;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using Microsoft.Practices.ServiceLocation;
 
 namespace DXVcs2Git.UI2 {
     public interface IMergeRequestViewModel {
@@ -38,13 +39,13 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => Description); }
             set { SetProperty(() => Description, value, DescriptionChanged); }
         }
-        public ObservableCollection<CommitViewModel> Commits {
-            get { return GetProperty(() => Commits); }
-            private set { SetProperty(() => Commits, value); }
+        public ICommitsViewModel CommitsViewModel {
+            get { return GetProperty(() => CommitsViewModel); }
+            private set { SetProperty(() => CommitsViewModel, value); }
         }
-        public ObservableCollection<MergeRequestFileDataViewModel> Changes {
-            get { return GetProperty(() => Changes); }
-            private set { SetProperty(() => Changes, value); }
+        public IChangesViewModel ChangesViewModel {
+            get { return GetProperty(() => ChangesViewModel); }
+            private set { SetProperty(() => ChangesViewModel, value); }
         }
 
         protected override void OnParameterChanged(object parameter) {
@@ -77,45 +78,27 @@ namespace DXVcs2Git.UI2 {
             SupportsTesting = Branch?.SupportsTesting ?? false;
             UpdateContent();
         }
-
+        
         void UpdateContent() {
             Task.Run(() => {
-                IsLoading = true;
-                UpdateCommits();
+                LoadCommits();
+            });
+            Task.Run(() => {
                 LoadChanges();
-                IsLoading = false;
             });
         }
 
-        void UpdateCommits() {
-            if(!SupportsTesting) {
-                //maybe remove commits
+        void LoadCommits() {
+            if(!SupportsTesting)
                 return;
-            }
-            if(Branch.MergeRequest == null) {
-                return;
-            }
-            Task.Run(() => LoadCommits());
+            CommitsViewModel = ServiceLocator.Current.GetInstance<ICommitsViewModel>();
+            CommitsViewModel.Parameter = Branch;
         }
-
-        async void LoadCommits() {
-            Commits = new ObservableCollection<CommitViewModel>();
-            //Commits = Enumerable.Empty<CommitViewModel>();
-            (await Branch.GetCommits()).ToList().ForEach(c => Commits.Add(new CommitViewModel(c)));
-            await Task.Run(() => {
-                List<Task> loadCommitsTaskList = new List<Task>();
-                foreach (var commit in Commits) {
-                    loadCommitsTaskList.Add(Task.Run(() => commit.Update(Branch)));
-                }
-                //commits.ForEach(c => Commits.Add(CommitViewModel.Create(c, Branch)));
-                Task.WaitAll(loadCommitsTaskList.ToArray());
-            });
+        void LoadChanges() {
+            ChangesViewModel = ServiceLocator.Current.GetInstance<IChangesViewModel>();
+            ChangesViewModel.Parameter = Branch;
         }
-        async void LoadChanges() {
-            Changes = new ObservableCollection<MergeRequestFileDataViewModel>();
-            (await Branch.GetMergeRequestChanges()).ToList().ForEach(c => Changes.Add(new MergeRequestFileDataViewModel(c)));
-        }
-
+        
         public void Apply() {
             if(!IsModified)
                 return;

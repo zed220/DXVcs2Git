@@ -213,9 +213,21 @@
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />
     <Compile Include="Native\DiffLineBackgroundRenderer.cs" />
+    <Compile Include="Views\ChangesViewModel.cs">
+      <DependentUpon>ChangesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommitsViewModel.cs">
+      <DependentUpon>CommitsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CommitViewModel.cs" />
     <Compile Include="ViewModels\MergeRequestFileDataViewModel.cs" />
     <Compile Include="ViewModels\ViewModelWorkerBase.cs" />
+    <Compile Include="Views\ChangesView.xaml.cs">
+      <DependentUpon>ChangesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CommitsView.xaml.cs">
+      <DependentUpon>CommitsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RepositoriesSettingsViewModel.cs">
       <DependentUpon>RepositoriesSettingsView.xaml</DependentUpon>
     </Compile>
@@ -259,6 +271,14 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\ChangesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CommitsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MergeRequestView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
