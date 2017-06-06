@@ -31,8 +31,9 @@ namespace DXVcs2Git.UI2 {
                 Changes = new ObservableCollection<MergeRequestFileDataViewModel>();
                 return;
             }
-            Changes = new ObservableCollection<MergeRequestFileDataViewModel>();
-            (await Branch.GetMergeRequestChanges()).ToList().ForEach(c => Changes.Add(new MergeRequestFileDataViewModel(c)));
+            var changes = new ObservableCollection<MergeRequestFileDataViewModel>();
+            (await Branch.GetMergeRequestChanges()).ToList().ForEach(c => changes.Add(new MergeRequestFileDataViewModel(c)));
+            Changes = changes;
         }
     }
 }

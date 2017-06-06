@@ -34,15 +34,16 @@ namespace DXVcs2Git.UI2 {
                 Commits = new ObservableCollection<CommitViewModel>();
                 return;
             }
-            Commits = new ObservableCollection<CommitViewModel>();
-            (await Branch.GetCommits()).ToList().ForEach(c => Commits.Add(new CommitViewModel(c)));
+            var commits = new ObservableCollection<CommitViewModel>();
+            (await Branch.GetCommits()).ToList().ForEach(c => commits.Add(new CommitViewModel(c)));
             await Task.Run(() => {
                 List<Task> loadCommitsTaskList = new List<Task>();
-                foreach(var commit in Commits) {
+                foreach(var commit in commits) {
                     loadCommitsTaskList.Add(Task.Run(() => commit.Update(Branch)));
                 }
                 Task.WaitAll(loadCommitsTaskList.ToArray());
             });
+            Commits = commits;
         }
     }
 }
