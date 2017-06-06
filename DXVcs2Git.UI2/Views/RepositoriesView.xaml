@@ -31,6 +31,7 @@
                             GlyphSize="Large" 
                             Content="Create"
                             Command="{Binding Path=SelectedItem.CreateMergeRequestCommand}"
+                            IsEnabled="{Binding Path=SelectedItem.CanCreateMergeRequest}"
                             LargeGlyph="{dx:DXImageOffice2013 Image=NewTask_32x32.png}">
                         </dxb:BarButtonItem>
                         <dxb:BarButtonItem
@@ -38,6 +39,7 @@
                             GlyphSize="Large" 
                             Content="Close"
                             Command="{Binding Path=SelectedItem.CloseMergeRequestCommand}"
+                            IsEnabled="{Binding Path=SelectedItem.CanCloseMergeRequest}"
                             LargeGlyph="{dx:DXImageOffice2013 Image=Close_32x32.png}">
                         </dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>

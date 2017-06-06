@@ -10,10 +10,10 @@ namespace DXVcs2Git.UI2 {
     public abstract class ViewModelWorkerBase : ViewModelBase, IWorker {
         public virtual bool IsLoading {
             get { return GetProperty(() => IsLoading); }
-            protected set { SetProperty(() => IsLoading, value, LoadingChanged); }
+            protected set { SetProperty(() => IsLoading, value, OnLoadingChanged); }
         }
 
-        void LoadingChanged() {
+        protected virtual void OnLoadingChanged() {
             IMainViewModel vm = ServiceLocator.Current.GetInstance<IMainViewModel>();
             if(IsLoading)
                 vm.WorkStarted(this);

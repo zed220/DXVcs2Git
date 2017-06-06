@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DXVcs2Git.UI2 {
-    public interface ICommitsViewModel : ISupportParameter {
+    public interface ICommitsViewModel : ISupportParameter, IWorker {
 
     }
 

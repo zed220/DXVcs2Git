@@ -29,6 +29,14 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => Branches); }
             set { SetProperty(() => Branches, value); }
         }
+        public bool CanCreateMergeRequest {
+            get { return GetProperty(() => CanCreateMergeRequest); }
+            set { SetProperty(() => CanCreateMergeRequest, value); }
+        }
+        public bool CanCloseMergeRequest {
+            get { return GetProperty(() => CanCloseMergeRequest); }
+            set { SetProperty(() => CanCloseMergeRequest, value); }
+        }
 
         public ICommand CreateMergeRequestCommand { get; private set; }
         public ICommand CloseMergeRequestCommand { get; private set; }
@@ -46,15 +54,12 @@ namespace DXVcs2Git.UI2 {
         }
 
         void CreateCommands() {
-            CreateMergeRequestCommand = DelegateCommandFactory.Create(Empty, CanExecute);
-            CloseMergeRequestCommand = DelegateCommandFactory.Create(Empty, CanExecute);
+            CreateMergeRequestCommand = DelegateCommandFactory.Create(Empty);
+            CloseMergeRequestCommand = DelegateCommandFactory.Create(Empty);
         }
 
         void Empty() {
 
-        }
-        bool CanExecute() {
-            return false;
         }
 
         public void LoadBranches(Action<BranchViewModel> cleanBranchAction) {

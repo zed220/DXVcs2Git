@@ -2,6 +2,7 @@
 using DevExpress.Mvvm.ModuleInjection;
 using DevExpress.Mvvm.Native;
 using DevExpress.Xpf.Layout.Core;
+using DXVcs2Git.Core.Git;
 using DXVcs2Git.Git;
 using Microsoft.Practices.ServiceLocation;
 using NGitLab;
@@ -24,12 +25,49 @@ namespace DXVcs2Git.UI2 {
 
         public MergeRequest MergeRequest {
             get { return GetProperty(() => MergeRequest); }
-            set { SetProperty(() => MergeRequest, value); }
+            set { SetProperty(() => MergeRequest, value, UpdateCommands); }
+        }
+        public bool CanCreateMergeRequest {
+            get { return GetProperty(() => CanCreateMergeRequest); }
+            set { SetProperty(() => CanCreateMergeRequest, value); }
+        }
+        public bool CanCloseMergeRequest {
+            get { return GetProperty(() => CanCloseMergeRequest); }
+            set { SetProperty(() => CanCloseMergeRequest, value); }
         }
         public ICommand CreateMergeRequestCommand { get; private set; }
         public ICommand CloseMergeRequestCommand { get; private set; }
 
         public bool SupportsTesting { get; }
+
+        string GetBranchModuleName() {
+            return Repository.Name + Name;
+        }
+
+        public void ShowMergeRequest() {
+            string moduleName = GetBranchModuleName();
+            if(ModuleManager.DefaultManager.GetModule(Regions.MergeRequest, moduleName) == null) {
+                ModuleManager.DefaultManager.Register(Regions.MergeRequest, new Module(moduleName, () => {
+                    IMergeRequestViewModel mergeRequest = ServiceLocator.Current.GetInstance<IMergeRequestViewModel>();
+                    ModuleManager.DefaultManager.GetEvents(mergeRequest).ViewModelRemoved += RepositoriesViewModel_ViewModelRemoved;
+                    return mergeRequest;
+                }, typeof(MergeRequestView)));
+            }
+            ModuleManager.DefaultManager.InjectOrNavigate(Regions.MergeRequest, moduleName, this);
+        }
+        public void HideMergeRequest() {
+            if(MergeRequest == null)
+                return;
+            string moduleName = GetBranchModuleName();
+            if(ModuleManager.DefaultManager.GetModule(Regions.MergeRequest, moduleName) != null) {
+                ModuleManager.DefaultManager.Unregister(Regions.MergeRequest, moduleName);
+            }
+        }
+
+        void RepositoriesViewModel_ViewModelRemoved(object sender, ViewModelRemovedEventArgs e) {
+            IMergeRequestViewModel mergeRequest = (IMergeRequestViewModel)e.ViewModel;
+            ModuleManager.DefaultManager.GetEvents(mergeRequest).ViewModelRemoved -= RepositoriesViewModel_ViewModelRemoved;
+        }
 
         public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) {
             GitLabWrapper = gitLabWrapper;
@@ -45,16 +83,52 @@ namespace DXVcs2Git.UI2 {
         }
 
         void CreateMergeRequest() {
+            var branchInfo = GitLabWrapper.GetBranch(Repository.Origin, Name);
+            string message = branchInfo.Commit.Message;
+            string title = CalcMergeRequestTitle(message);
+            string description = CalcMergeRequestDescription(message);
+            string targetBranch = CalcTargetBranch();
+            if(targetBranch == null) {
+                //TODO: messagebox error
+                return;
+            }
+            MergeRequest = GitLabWrapper.CreateMergeRequest(Repository.Origin, Repository.Upstream, title, description, null, Name, targetBranch);
+            ShowMergeRequest();
+        }
 
+        string CalcTargetBranch() {
+            RepoConfig repoConfig = Repository.RepoConfig;
+            return repoConfig?.TargetBranch;
         }
-        bool CanCreateMergeRequest() {
-            return MergeRequest == null && !IsLoading;
+        static string CalcMergeRequestDescription(string message) {
+            if(string.IsNullOrEmpty(message))
+                return string.Empty;
+            var changes = message.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder sb = new StringBuilder();
+            changes.Skip(1).ForEach(x => sb.AppendLine(x.ToString()));
+            return sb.ToString();
         }
+        static string CalcMergeRequestTitle(string message) {
+            if(string.IsNullOrEmpty(message))
+                return string.Empty;
+            var changes = message.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var title = changes.FirstOrDefault();
+            return title;
+        }
+
+        void UpdateCommands() {
+            CanCreateMergeRequest = MergeRequest == null && !IsLoading;
+            CanCloseMergeRequest = MergeRequest != null && !IsLoading;
+        }
+        protected override void OnLoadingChanged() {
+            base.OnLoadingChanged();
+            UpdateCommands();
+        }
+
         void CloseMergeRequest() {
-
-        }
-        bool CanCloseMergeRequest() {
-            return MergeRequest != null && !IsLoading;
+            GitLabWrapper.CloseMergeRequest(MergeRequest);
+            HideMergeRequest();
+            MergeRequest = null;
         }
 
         public void RefreshMergeRequest() {
@@ -65,16 +139,10 @@ namespace DXVcs2Git.UI2 {
             IsLoading = false;
         }
         public async Task<IEnumerable<Commit>> GetCommits() {
-            IsLoading = true;
-            var result = await Task.Run(() => GitLabWrapper.GetMergeRequestCommits(MergeRequest));
-            IsLoading = false;
-            return result;
+            return await Task.Run(() => GitLabWrapper.GetMergeRequestCommits(MergeRequest));
         }
         public async Task<IEnumerable<MergeRequestFileData>> GetMergeRequestChanges() {
-            IsLoading = true;
-            var result = await Task.Run(() => GitLabWrapper.GetMergeRequestChanges(MergeRequest));
-            IsLoading = false;
-            return result;
+            return await Task.Run(() => GitLabWrapper.GetMergeRequestChanges(MergeRequest));
         }
         public async Task<IEnumerable<Build>> GetBuilds(Sha1 sha) {
             return await Task.Run(() => GitLabWrapper.GetBuilds(MergeRequest, sha));

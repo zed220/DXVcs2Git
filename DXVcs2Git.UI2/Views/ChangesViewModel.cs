@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DXVcs2Git.UI2 {
-    public interface IChangesViewModel : ISupportParameter { }
+    public interface IChangesViewModel : ISupportParameter, IWorker { }
 
     public class ChangesViewModel : ViewModelWorkerBase, IChangesViewModel {
         public ObservableCollection<MergeRequestFileDataViewModel> Changes {

@@ -57,6 +57,10 @@ namespace DXVcs2Git.UI2 {
         public MergeRequestViewModel() { }
 
         void UpdateMergeRequest() {
+            if(ChangesViewModel != null && ChangesViewModel.IsLoading)
+                return;
+            if(CommitsViewModel != null && CommitsViewModel.IsLoading)
+                return;
             Branch = MergeParameter;
             MergeRequest = Branch.MergeRequest;
             if(MergeRequest == null) {
