@@ -30,6 +30,9 @@ namespace DXVcs2Git.UI2 {
             set { SetProperty(() => Branches, value); }
         }
 
+        public ICommand CreateMergeRequestCommand { get; private set; }
+        public ICommand CloseMergeRequestCommand { get; private set; }
+
         public RepositoryViewModel(string name, TrackRepository trackRepository, RepoConfig repoConfig) {
             Name = name;
             TrackRepository = trackRepository;
@@ -39,6 +42,19 @@ namespace DXVcs2Git.UI2 {
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
             Branches = new ObservableCollection<BranchViewModel>();
+            CreateCommands();
+        }
+
+        void CreateCommands() {
+            CreateMergeRequestCommand = DelegateCommandFactory.Create(Empty, CanExecute);
+            CloseMergeRequestCommand = DelegateCommandFactory.Create(Empty, CanExecute);
+        }
+
+        void Empty() {
+
+        }
+        bool CanExecute() {
+            return false;
         }
 
         public void LoadBranches(Action<BranchViewModel> cleanBranchAction) {

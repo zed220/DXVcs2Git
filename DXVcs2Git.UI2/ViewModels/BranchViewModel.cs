@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.ModuleInjection;
+using DevExpress.Mvvm.Native;
 using DevExpress.Xpf.Layout.Core;
 using DXVcs2Git.Git;
 using Microsoft.Practices.ServiceLocation;
@@ -25,6 +26,8 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => MergeRequest); }
             set { SetProperty(() => MergeRequest, value); }
         }
+        public ICommand CreateMergeRequestCommand { get; private set; }
+        public ICommand CloseMergeRequestCommand { get; private set; }
 
         public bool SupportsTesting { get; }
 
@@ -33,6 +36,25 @@ namespace DXVcs2Git.UI2 {
             Repository = repository;
             Name = branch;
             SupportsTesting = ServiceLocator.Current.GetInstance<IMainViewModel>().Config.SupportsTesting && Repository.RepoConfig.SupportsTesting;
+            CreateCommands();
+        }
+
+        void CreateCommands() {
+            CreateMergeRequestCommand = DelegateCommandFactory.Create(CreateMergeRequest, CanCreateMergeRequest);
+            CloseMergeRequestCommand = DelegateCommandFactory.Create(CloseMergeRequest, CanCloseMergeRequest);
+        }
+
+        void CreateMergeRequest() {
+
+        }
+        bool CanCreateMergeRequest() {
+            return MergeRequest == null && !IsLoading;
+        }
+        void CloseMergeRequest() {
+
+        }
+        bool CanCloseMergeRequest() {
+            return MergeRequest != null && !IsLoading;
         }
 
         public void RefreshMergeRequest() {

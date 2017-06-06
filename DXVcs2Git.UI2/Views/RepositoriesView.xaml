@@ -12,6 +12,7 @@
              xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
@@ -21,6 +22,28 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <dxr:RibbonControl>
+            <dxr:RibbonDefaultPageCategory>
+                <dxr:RibbonPage Caption="Main" IsVisible="{Binding Path=SelectedItem, Converter={dxmvvm:ObjectToBooleanConverter}}">
+                    <dxr:RibbonPageGroup Caption="Merge Request">
+                        <dxb:BarButtonItem
+                            RibbonStyle="Large" 
+                            GlyphSize="Large" 
+                            Content="Create"
+                            Command="{Binding Path=SelectedItem.CreateMergeRequestCommand}"
+                            LargeGlyph="{dx:DXImageOffice2013 Image=NewTask_32x32.png}">
+                        </dxb:BarButtonItem>
+                        <dxb:BarButtonItem
+                            RibbonStyle="Large" 
+                            GlyphSize="Large" 
+                            Content="Close"
+                            Command="{Binding Path=SelectedItem.CloseMergeRequestCommand}"
+                            LargeGlyph="{dx:DXImageOffice2013 Image=Close_32x32.png}">
+                        </dxb:BarButtonItem>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
         <dxdo:DockLayoutManager Grid.Row="1">
             <dxdo:LayoutGroup Orientation="Horizontal">
                 <dxdo:LayoutPanel ItemWidth="200">
