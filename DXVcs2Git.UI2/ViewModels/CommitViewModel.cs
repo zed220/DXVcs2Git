@@ -33,13 +33,9 @@ namespace DXVcs2Git.UI2 {
         [Display(AutoGenerateField = false)]
         public override bool IsLoading { get => base.IsLoading; protected set => base.IsLoading = value; }
 
-        //public static CommitViewModel Create(Commit commit, BranchViewModel branch) {
-        //    CommitViewModel commitViewModel = new CommitViewModel();
-        //    commitViewModel.Update(commit, branch);
-        //    return commitViewModel;
-        //}
-
         public async void Update(BranchViewModel branch) {
+            if(IsLoading)
+                return;
             IsLoading = true;
             Title = Commit.Title;
             var builds = await branch.GetBuilds(Commit.Id);

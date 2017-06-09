@@ -209,6 +209,9 @@
     <Compile Include="Behaviors\HotKeyEditorBehavior.cs" />
     <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
     <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
+    <Compile Include="Common\RepositoryOrBranchCellTemplateSelector.cs" />
+    <Compile Include="Converters\BranchViewModelToVisibilityConverter.cs" />
+    <Compile Include="Converters\ContainsMergeRequestConverter.cs" />
     <Compile Include="Converters\RepositoryLoadingConverter.cs" />
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />

@@ -29,17 +29,6 @@ namespace DXVcs2Git.UI2 {
             get { return GetProperty(() => Branches); }
             set { SetProperty(() => Branches, value); }
         }
-        public bool CanCreateMergeRequest {
-            get { return GetProperty(() => CanCreateMergeRequest); }
-            set { SetProperty(() => CanCreateMergeRequest, value); }
-        }
-        public bool CanCloseMergeRequest {
-            get { return GetProperty(() => CanCloseMergeRequest); }
-            set { SetProperty(() => CanCloseMergeRequest, value); }
-        }
-
-        public ICommand CreateMergeRequestCommand { get; private set; }
-        public ICommand CloseMergeRequestCommand { get; private set; }
 
         public RepositoryViewModel(string name, TrackRepository trackRepository, RepoConfig repoConfig) {
             Name = name;
@@ -50,18 +39,8 @@ namespace DXVcs2Git.UI2 {
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
             Branches = new ObservableCollection<BranchViewModel>();
-            CreateCommands();
         }
-
-        void CreateCommands() {
-            CreateMergeRequestCommand = DelegateCommandFactory.Create(Empty);
-            CloseMergeRequestCommand = DelegateCommandFactory.Create(Empty);
-        }
-
-        void Empty() {
-
-        }
-
+        
         public void LoadBranches(Action<BranchViewModel> cleanBranchAction) {
             if(Origin == null) {
                 //Log.Error("Can`t find project");
@@ -87,8 +66,10 @@ namespace DXVcs2Git.UI2 {
                 if(!Branches.Contains(branch))
                     addedBranches.Add(branch);
             }
-            foreach(var branch in addedBranches)
+            foreach(var branch in addedBranches) {
                 Branches.Add(branch);
+                branch.RefreshMergeRequest();
+            }
             IsLoading = false;
         }
 
