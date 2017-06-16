@@ -38,6 +38,7 @@ namespace DXVcs2Git.UI2 {
         public ICommand CreateMergeRequestCommand { get; private set; }
         public ICommand CloseMergeRequestCommand { get; private set; }
 
+        public string TestServiceName;
         public bool SupportsTesting { get; }
 
         string GetBranchModuleName() {
@@ -74,6 +75,7 @@ namespace DXVcs2Git.UI2 {
             Repository = repository;
             Name = branch;
             SupportsTesting = ServiceLocator.Current.GetInstance<IMainViewModel>().Config.SupportsTesting && Repository.RepoConfig.SupportsTesting;
+            TestServiceName = Repository.RepoConfig.TestServiceName ?? Repository.RepoConfig.DefaultServiceName;
             CreateCommands();
         }
 
@@ -94,6 +96,17 @@ namespace DXVcs2Git.UI2 {
             }
             MergeRequest = GitLabWrapper.CreateMergeRequest(Repository.Origin, Repository.Upstream, title, description, null, Name, targetBranch);
             ShowMergeRequest();
+        }
+        public MergeRequest UpdateMergeRequest(string title, string description, string assignee) {
+            MergeRequest mergeRequest = null;
+            if(MergeRequest.Title != title || MergeRequest.Description != description)
+                mergeRequest = GitLabWrapper.UpdateMergeRequestTitleAndDescription(mergeRequest ?? MergeRequest, title, description);
+            if(MergeRequest.Assignee?.Name != assignee)
+                mergeRequest = GitLabWrapper.UpdateMergeRequestAssignee(mergeRequest ?? MergeRequest, assignee);
+            if(mergeRequest == null)
+                return null;
+            MergeRequest = mergeRequest;
+            return MergeRequest;
         }
 
         string CalcTargetBranch() {

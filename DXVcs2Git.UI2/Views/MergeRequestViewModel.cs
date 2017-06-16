@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.ServiceLocation;
+using System.Windows;
 
 namespace DXVcs2Git.UI2 {
     public interface IMergeRequestViewModel {
@@ -21,8 +22,15 @@ namespace DXVcs2Git.UI2 {
         public BranchViewModel Branch { get; private set; }
         public string SourceBranch { get; private set; }
         public string TargetBranch { get; private set; }
-        public string Author { get; private set; }
-        public string Assignee { get; private set; }
+
+        public string Author {
+            get { return GetProperty(() => Author); }
+            private set { SetProperty(() => Author, value); }
+        }
+        public string Assignee {
+            get { return GetProperty(() => Assignee); }
+            private set { SetProperty(() => Assignee, value); }
+        }
         public bool SupportsTesting {
             get { return GetProperty(() => SupportsTesting); }
             private set { SetProperty(() => SupportsTesting, value); }
@@ -46,6 +54,10 @@ namespace DXVcs2Git.UI2 {
         public IChangesViewModel ChangesViewModel {
             get { return GetProperty(() => ChangesViewModel); }
             private set { SetProperty(() => ChangesViewModel, value); }
+        }
+        public bool PerformTesting {
+            get { return GetProperty(() => PerformTesting); }
+            set { SetProperty(() => PerformTesting, value, PerformTestingChanged); }
         }
 
         protected override void OnParameterChanged(object parameter) {
@@ -110,7 +122,22 @@ namespace DXVcs2Git.UI2 {
         public void Apply() {
             if(!IsModified)
                 return;
+            if(GetService<IMessageBoxService>().Show("Are you sure?", "Update merge request", MessageBoxButton.OKCancel) != MessageBoxResult.OK)
+                return;
+            MergeRequest mergeRequest = Branch.UpdateMergeRequest(Title, Description, GetServiceName());
+            if(mergeRequest == null)
+                return;
+            MergeRequest = Branch.MergeRequest;
+            UpdateMergeRequest();
+        }
 
+        string GetServiceName() {
+            if(!PerformTesting)
+                return IsServiceUser(Assignee) ? Author : Assignee;
+            return Branch.TestServiceName;
+        }
+        static bool IsServiceUser(string assignee) {
+            return !string.IsNullOrEmpty(assignee) && assignee.StartsWith("dxvcs2git.");
         }
 
         void DescriptionChanged() {
@@ -121,6 +148,9 @@ namespace DXVcs2Git.UI2 {
         void TitleChanged() {
             if(Title == MergeRequest.Title)
                 return;
+            IsModified = true;
+        }
+        void PerformTestingChanged() {
             IsModified = true;
         }
     }

@@ -20,6 +20,7 @@
                 </DataTemplate>
             </dxmvvm:WindowService.ViewTemplate>
         </dxmvvm:WindowService>-->
+        <dx:DXMessageBoxService x:Name="messageBoxService"/>
         <dxmvvm:UIWindowRegion x:Name="settingsService" RegionName="{x:Static local:Regions.Settings}" WindowShowMode="Dialog" SetWindowOwner="True">
             <dxmvvm:UIWindowRegion.WindowFactory>
                 <DataTemplate>
