@@ -30,7 +30,7 @@ namespace DXVcs2Git.UI2 {
             set { SetProperty(() => Branches, value); }
         }
 
-        public RepositoryViewModel(string name, TrackRepository trackRepository, RepoConfig repoConfig) {
+        public RepositoryViewModel(string name, TrackRepository trackRepository, RepoConfig repoConfig) : base(ServiceLocator.Current.GetInstance<IMainViewModel>()) {
             Name = name;
             TrackRepository = trackRepository;
             RepoConfig = repoConfig;

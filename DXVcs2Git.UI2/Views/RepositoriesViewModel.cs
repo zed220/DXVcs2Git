@@ -32,11 +32,8 @@ namespace DXVcs2Git.UI2 {
         }
         public RepositoryViewModel SelectedRepository { get { return SelectedItem as RepositoryViewModel; } }
         public BranchViewModel SelectedBranch { get { return SelectedItem as BranchViewModel; } }
-
-        readonly IMainViewModel mainViewModel;
-
-        public RepositoriesViewModel(IMainViewModel mainViewModel) {
-            this.mainViewModel = mainViewModel;
+        
+        public RepositoriesViewModel(IMainViewModel mainViewModel) : base(mainViewModel) {
             ModuleManager.DefaultManager.GetEvents(this).Navigated += RepositoriesViewModel_Navigated;
             ModuleManager.DefaultManager.GetEvents(this).NavigatedAway += RepositoriesViewModel_NavigatedAway;
             
@@ -50,22 +47,24 @@ namespace DXVcs2Git.UI2 {
         }
 
         void RepositoriesViewModel_Navigated(object sender, NavigationEventArgs e) {
-            LoadRepositoriesAsync();
+            LoadRepositories();
         }
 
-        async void LoadRepositoriesAsync() {
+        void LoadRepositories() {
+            if(IsLoading)
+                return;
             IsLoading = true;
-            await Task.Run(() => {
+            Task.Run(() => {
                 RepoConfigs = new RepoConfigsReader();
                 Repositories = new ObservableCollection<RepositoryViewModel>();
                 List<Task> loadBranchesTaskList = new List<Task>();
-                foreach(var repo in mainViewModel.Config.Repositories.With(x => x.Where(IsValidConfig).Select(repo => new RepositoryViewModel(repo.Name, repo, RepoConfigs[repo.ConfigName])))) {
+                foreach(var repo in MainViewModel.Config.Repositories.With(x => x.Where(IsValidConfig).Select(repo => new RepositoryViewModel(repo.Name, repo, RepoConfigs[repo.ConfigName])))) {
                     Repositories.Add(repo);
                     loadBranchesTaskList.Add(Task.Run(new Action(() => repo.LoadBranches(b => b.HideMergeRequest()))));
                 }
                 Task.WaitAll(loadBranchesTaskList.ToArray());
+                IsLoading = false;
             });
-            IsLoading = false;
         }
 
         bool IsValidConfig(TrackRepository repo) {

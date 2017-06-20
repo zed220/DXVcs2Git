@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Practices.ServiceLocation;
 
 namespace DXVcs2Git.UI2 {
     public class CommitViewModel : ViewModelWorkerBase {
         readonly Commit Commit;
 
-        public CommitViewModel(Commit commit) {
+        public CommitViewModel(Commit commit) : base(ServiceLocator.Current.GetInstance<IMainViewModel>()) {
             Commit = commit;
         }
 

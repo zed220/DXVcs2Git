@@ -70,11 +70,11 @@ namespace DXVcs2Git.UI2 {
             ModuleManager.DefaultManager.GetEvents(mergeRequest).ViewModelRemoved -= RepositoriesViewModel_ViewModelRemoved;
         }
 
-        public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) {
+        public BranchViewModel(GitLabWrapper gitLabWrapper, RepositoryViewModel repository, string branch) : base(ServiceLocator.Current.GetInstance<IMainViewModel>()) {
             GitLabWrapper = gitLabWrapper;
             Repository = repository;
             Name = branch;
-            SupportsTesting = ServiceLocator.Current.GetInstance<IMainViewModel>().Config.SupportsTesting && Repository.RepoConfig.SupportsTesting;
+            SupportsTesting = MainViewModel.Config.SupportsTesting && Repository.RepoConfig.SupportsTesting;
             TestServiceName = Repository.RepoConfig.TestServiceName ?? Repository.RepoConfig.DefaultServiceName;
             CreateCommands();
         }

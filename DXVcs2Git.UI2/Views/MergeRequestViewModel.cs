@@ -23,6 +23,8 @@ namespace DXVcs2Git.UI2 {
         public string SourceBranch { get; private set; }
         public string TargetBranch { get; private set; }
 
+        public MergeRequestViewModel(IMainViewModel mainViewModel) : base(mainViewModel) { }
+
         public string Author {
             get { return GetProperty(() => Author); }
             private set { SetProperty(() => Author, value); }
@@ -65,8 +67,6 @@ namespace DXVcs2Git.UI2 {
         }
 
         public BranchViewModel MergeParameter { get { return Parameter as BranchViewModel; } }
-
-        public MergeRequestViewModel() { }
 
         void UpdateMergeRequest() {
             if(IsLoading)

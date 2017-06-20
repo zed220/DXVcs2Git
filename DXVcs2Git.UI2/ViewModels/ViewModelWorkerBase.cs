@@ -8,17 +8,22 @@ using System.Threading.Tasks;
 
 namespace DXVcs2Git.UI2 {
     public abstract class ViewModelWorkerBase : ViewModelBase, IWorker {
+        protected readonly IMainViewModel MainViewModel;
+
+        public ViewModelWorkerBase(IMainViewModel mainViewModel) {
+            MainViewModel = mainViewModel;
+        }
+
         public virtual bool IsLoading {
             get { return GetProperty(() => IsLoading); }
             protected set { SetProperty(() => IsLoading, value, OnLoadingChanged); }
         }
 
         protected virtual void OnLoadingChanged() {
-            IMainViewModel vm = ServiceLocator.Current.GetInstance<IMainViewModel>();
             if(IsLoading)
-                vm.WorkStarted(this);
+                MainViewModel.WorkStarted(this);
             else
-                vm.WorkFinished(this);
+                MainViewModel.WorkFinished(this);
         }
     }
 }

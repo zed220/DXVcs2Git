@@ -12,6 +12,8 @@ namespace DXVcs2Git.UI2 {
     }
 
     public class CommitsViewModel : ViewModelWorkerBase, ICommitsViewModel {
+        public CommitsViewModel(IMainViewModel mainViewModel) : base(mainViewModel) { }
+
         public ObservableCollection<CommitViewModel> Commits {
             get { return GetProperty(() => Commits); }
             private set { SetProperty(() => Commits, value); }

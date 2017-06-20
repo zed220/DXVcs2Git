@@ -10,6 +10,8 @@ namespace DXVcs2Git.UI2 {
     public interface IChangesViewModel : ISupportParameter, IWorker { }
 
     public class ChangesViewModel : ViewModelWorkerBase, IChangesViewModel {
+        public ChangesViewModel(IMainViewModel mainViewModel) : base(mainViewModel) { }
+
         public ObservableCollection<MergeRequestFileDataViewModel> Changes {
             get { return GetProperty(() => Changes); }
             private set { SetProperty(() => Changes, value); }
