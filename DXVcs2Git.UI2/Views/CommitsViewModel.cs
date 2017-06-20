@@ -24,19 +24,19 @@ namespace DXVcs2Git.UI2 {
         protected override void OnParameterChanged(object parameter) {
             if(IsLoading)
                 return;
+            IsLoading = true;
             Task.Run(() => {
-                IsLoading = true;
                 UpdateCommits();
                 IsLoading = false;
             });
         }
 
         async void UpdateCommits() {
+            var commits = new ObservableCollection<CommitViewModel>();
             if(Branch == null) {
-                Commits = new ObservableCollection<CommitViewModel>();
+                Commits = commits;
                 return;
             }
-            var commits = new ObservableCollection<CommitViewModel>();
             (await Branch.GetCommits()).ToList().ForEach(c => commits.Add(new CommitViewModel(c)));
             await Task.Run(() => {
                 List<Task> loadCommitsTaskList = new List<Task>();

@@ -19,8 +19,8 @@ using Microsoft.Practices.ServiceLocation;
 namespace DXVcs2Git.UI2 {
     public class RepositoryViewModel : ViewModelWorkerBase {
         public string Name { get; }
-        public Project Origin { get; }
-        public Project Upstream { get; }
+        public Project Origin { get; private set; }
+        public Project Upstream { get; private set; }
         public GitLabWrapper GitLabWrapper { get; }
         GitReaderWrapper GitReader { get; }
         public TrackRepository TrackRepository { get; }
@@ -36,17 +36,20 @@ namespace DXVcs2Git.UI2 {
             RepoConfig = repoConfig;
             GitLabWrapper = new GitLabWrapper(TrackRepository.Server, TrackRepository.Token);
             GitReader = new GitReaderWrapper(trackRepository.LocalPath);
-            Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
-            Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
             Branches = new ObservableCollection<BranchViewModel>();
         }
         
         public void LoadBranches(Action<BranchViewModel> cleanBranchAction) {
+            if(IsLoading)
+                return;
+            IsLoading = true;
+            Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             if(Origin == null) {
+                IsLoading = false;
                 //Log.Error("Can`t find project");
                 return;
             }
-            IsLoading = true;
+            Upstream = GitLabWrapper.FindProject(GitReader.GetUpstreamRepoPath());
             var branches = this.GitLabWrapper.GetBranches(Origin).ToList();
             var localBranches = GitReader.GetLocalBranches();
             var branchesVms = new ObservableCollection<BranchViewModel>(branches.Where(x => !x.Protected && localBranches.Any(local => local.FriendlyName == x.Name))

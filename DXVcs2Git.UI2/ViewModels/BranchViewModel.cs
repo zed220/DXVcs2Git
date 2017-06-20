@@ -145,10 +145,11 @@ namespace DXVcs2Git.UI2 {
         }
 
         public void RefreshMergeRequest() {
-            if(MergeRequest != null)
+            if(IsLoading)
                 return;
             IsLoading = true;
-            MergeRequest = GitLabWrapper.GetMergeRequests(Repository.Upstream, x => x.SourceProjectId == Repository.Origin.Id && x.SourceBranch == Name).FirstOrDefault();
+            if(MergeRequest == null)
+                MergeRequest = GitLabWrapper.GetMergeRequests(Repository.Upstream, x => x.SourceProjectId == Repository.Origin.Id && x.SourceBranch == Name).FirstOrDefault();
             IsLoading = false;
         }
         public async Task<IEnumerable<Commit>> GetCommits() {
