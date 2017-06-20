@@ -19,13 +19,9 @@ namespace DXVcs2Git.UI2 {
         public BranchViewModel Branch { get { return Parameter as BranchViewModel; } }
 
         protected override void OnParameterChanged(object parameter) {
-            if(IsLoading)
+            if(!StartLoading())
                 return;
-            Task.Run(() => {
-                IsLoading = true;
-                UpdateChanges();
-                IsLoading = false;
-            });
+            Task.Run(() => UpdateChanges());
         }
 
         async void UpdateChanges() {
@@ -36,6 +32,7 @@ namespace DXVcs2Git.UI2 {
             var changes = new ObservableCollection<MergeRequestFileDataViewModel>();
             (await Branch.GetMergeRequestChanges()).ToList().ForEach(c => changes.Add(new MergeRequestFileDataViewModel(c)));
             Changes = changes;
+            EndLoading();
         }
     }
 }

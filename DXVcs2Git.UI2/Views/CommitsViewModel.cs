@@ -22,30 +22,22 @@ namespace DXVcs2Git.UI2 {
         public BranchViewModel Branch { get { return Parameter as BranchViewModel; } }
 
         protected override void OnParameterChanged(object parameter) {
-            if(IsLoading)
+            if(!StartLoading())
                 return;
-            IsLoading = true;
-            Task.Run(() => {
-                UpdateCommits();
-                IsLoading = false;
-            });
+            Task.Run(() => UpdateCommits());
         }
 
-        async void UpdateCommits() {
-            var commits = new ObservableCollection<CommitViewModel>();
+        void UpdateCommits() {
+            Commits = new ObservableCollection<CommitViewModel>();
             if(Branch == null) {
-                Commits = commits;
                 return;
             }
-            (await Branch.GetCommits()).ToList().ForEach(c => commits.Add(new CommitViewModel(c)));
-            await Task.Run(() => {
-                List<Task> loadCommitsTaskList = new List<Task>();
-                foreach(var commit in commits) {
-                    loadCommitsTaskList.Add(Task.Run(() => commit.Update(Branch)));
-                }
-                Task.WaitAll(loadCommitsTaskList.ToArray());
-            });
-            Commits = commits;
+            Branch.GetCommits().ToList().ForEach(c => Commits.Add(new CommitViewModel(c)));
+            List<Task> loadCommitsTaskList = new List<Task>();
+            foreach(var commit in Commits)
+                loadCommitsTaskList.Add(Task.Run(() => commit.Update(Branch)));
+            Task.WaitAll(loadCommitsTaskList.ToArray());
+            EndLoading();
         }
     }
 }

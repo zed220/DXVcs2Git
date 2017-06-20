@@ -32,25 +32,24 @@ namespace DXVcs2Git.UI2 {
             private set { SetProperty(() => Duration, value); }
         }
         [Display(AutoGenerateField = false)]
-        public override bool IsLoading { get => base.IsLoading; protected set => base.IsLoading = value; }
+        public override bool IsLoading { get => base.IsLoading; }
 
-        public async void Update(BranchViewModel branch) {
-            if(IsLoading)
+        public void Update(BranchViewModel branch) {
+            if(!StartLoading())
                 return;
-            IsLoading = true;
             Title = Commit.Title;
-            var builds = await branch.GetBuilds(Commit.Id);
+            var builds = branch.GetBuilds(Commit.Id);
             var build = builds.FirstOrDefault();
-            if (build != null) {
+            if(build != null) {
                 BuildStatus = build.Status ?? BuildStatus.undefined;
                 Duration = GetDuration(build, BuildStatus);
             }
-            IsLoading = false;
+            EndLoading();
         }
 
         static string GetDuration(Build build, BuildStatus buildStatus) {
             if (build.StartedAt != null && (buildStatus == BuildStatus.success || buildStatus == BuildStatus.failed)) {
-                return ((build.FinishedAt ?? DateTime.Now) - build.StartedAt.Value).ToString("g");
+                return ((build.FinishedAt ?? DateTime.Now) - build.StartedAt.Value).ToString(@"hh\:mm\:ss");
             }
             else
                 return string.Empty;

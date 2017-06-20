@@ -49,7 +49,7 @@
             dxmvvm:UIRegion.Region="{x:Static local:Regions.Ribbon}" 
             dxb:MergingProperties.ElementMergingBehavior="All" />
         <dxr:RibbonControl Grid.Row="0" ToolbarShowMode="Hide" AllowCustomization="False" MinimizationButtonVisibility="Collapsed" RibbonHeaderVisibility="Collapsed" 
-                           RibbonStyle="Office2010" AsyncMergingEnabled="True">
+                           RibbonStyle="Office2010" AsyncMergingEnabled="True" IsEnabled="{DXBinding '!IsLoading'}">
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Main">
                     <dxr:RibbonPageGroup Caption="Settings">
@@ -58,8 +58,7 @@
                             GlyphSize="Large" 
                             Content="Settings"
                             Command="{DXCommand Execute='ShowSettings()'}"
-                            LargeGlyph="{dx:DXImageOffice2013 Image=Properties_32x32.png}"
-                            IsEnabled="{DXBinding '!IsLoading'}">
+                            LargeGlyph="{dx:DXImageOffice2013 Image=Properties_32x32.png}">
                         </dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>

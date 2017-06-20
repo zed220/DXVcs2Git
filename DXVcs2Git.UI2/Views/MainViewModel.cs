@@ -64,17 +64,21 @@ namespace DXVcs2Git.UI2{
         }
 
         public void WorkStarted(IWorker worker) {
-            if(Workers.Contains(worker))
-                throw new NotSupportedException("Try add already existing worker");
-            Workers.Add(worker);
-            IsLoading = Workers.Count > 0;
+            lock(this) {
+                if(Workers.Contains(worker))
+                    throw new NotSupportedException("Try add already existing worker");
+                Workers.Add(worker);
+                IsLoading = Workers.Count > 0;
+            }
         }
 
         public void WorkFinished(IWorker worker) {
-            if(!Workers.Contains(worker))
-                throw new NotSupportedException("Try remove missing worker");
-            Workers.Remove(worker);
-            IsLoading = Workers.Count > 0;
+            lock(this) {
+                if(!Workers.Contains(worker))
+                    throw new NotSupportedException("Try remove missing worker");
+                Workers.Remove(worker);
+                IsLoading = Workers.Count > 0;
+            }
         }
     }
 }

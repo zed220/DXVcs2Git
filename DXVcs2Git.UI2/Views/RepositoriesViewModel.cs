@@ -51,9 +51,8 @@ namespace DXVcs2Git.UI2 {
         }
 
         void LoadRepositories() {
-            if(IsLoading)
+            if(!StartLoading())
                 return;
-            IsLoading = true;
             Task.Run(() => {
                 RepoConfigs = new RepoConfigsReader();
                 Repositories = new ObservableCollection<RepositoryViewModel>();
@@ -63,7 +62,7 @@ namespace DXVcs2Git.UI2 {
                     loadBranchesTaskList.Add(Task.Run(new Action(() => repo.LoadBranches(b => b.HideMergeRequest()))));
                 }
                 Task.WaitAll(loadBranchesTaskList.ToArray());
-                IsLoading = false;
+                EndLoading();
             });
         }
 

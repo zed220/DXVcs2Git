@@ -4,12 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:ngitlab="clr-namespace:NGitLab.Models;assembly=NGitLab"
              xmlns:local="clr-namespace:DXVcs2Git.UI2"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <dxg:GridControl ItemsSource="{Binding Commits}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True">
+    <dxg:GridControl ItemsSource="{Binding Commits}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" ShowLoadingPanel="{Binding IsLoading}">
         <dxg:GridControl.View>
-            <dxg:TableView ShowGroupPanel="False" AllowGrouping="False" AllowSorting="False" ShowIndicator="False" NavigationStyle="Row" AutoWidth="True"/>
+            <dxg:TableView ShowGroupPanel="False" AllowGrouping="False" AllowSorting="False" ShowIndicator="False" NavigationStyle="Row" AutoWidth="True" AllowColumnFiltering="False">
+                <dxg:TableView.FormatConditions>
+                    <dxg:FormatCondition FieldName="BuildStatus" ValueRule="Equal" PredefinedFormatName="GreenFillWithDarkGreenText" ApplyToRow="True">
+                        <dxg:FormatCondition.Value1>
+                            <ngitlab:BuildStatus>success</ngitlab:BuildStatus>
+                        </dxg:FormatCondition.Value1>
+                    </dxg:FormatCondition>
+                    <dxg:FormatCondition FieldName="BuildStatus" ValueRule="Equal" PredefinedFormatName="LightRedFillWithDarkRedText" ApplyToRow="True">
+                        <dxg:FormatCondition.Value1>
+                            <ngitlab:BuildStatus>failed</ngitlab:BuildStatus>
+                        </dxg:FormatCondition.Value1>
+                    </dxg:FormatCondition>
+                    <dxg:FormatCondition FieldName="BuildStatus" ValueRule="Equal" PredefinedFormatName="YellowFillWithDarkYellowText" ApplyToRow="True">
+                        <dxg:FormatCondition.Value1>
+                            <ngitlab:BuildStatus>running</ngitlab:BuildStatus>
+                        </dxg:FormatCondition.Value1>
+                    </dxg:FormatCondition>
+                </dxg:TableView.FormatConditions>
+            </dxg:TableView>
         </dxg:GridControl.View>
     </dxg:GridControl>
 </UserControl>

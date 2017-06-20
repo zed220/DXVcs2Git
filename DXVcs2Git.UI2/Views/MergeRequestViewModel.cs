@@ -69,13 +69,12 @@ namespace DXVcs2Git.UI2 {
         public BranchViewModel MergeParameter { get { return Parameter as BranchViewModel; } }
 
         void UpdateMergeRequest() {
-            if(IsLoading)
+            if(!StartLoading())
                 return;
-            if(ChangesViewModel != null && ChangesViewModel.IsLoading)
+            if(ChangesViewModel != null && (ChangesViewModel.IsLoading || CommitsViewModel.IsLoading)) {
+                EndLoading();
                 return;
-            if(CommitsViewModel != null && CommitsViewModel.IsLoading)
-                return;
-            IsLoading = true;
+            }
             Branch = MergeParameter;
             MergeRequest = Branch.MergeRequest;
             if(MergeRequest == null) {
@@ -96,7 +95,7 @@ namespace DXVcs2Git.UI2 {
             Assignee = MergeRequest.Assignee?.Username;
             SupportsTesting = Branch?.SupportsTesting ?? false;
             UpdateContent();
-            IsLoading = false;
+            EndLoading();
         }
         
         void UpdateContent() {

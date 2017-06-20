@@ -40,12 +40,11 @@ namespace DXVcs2Git.UI2 {
         }
         
         public void LoadBranches(Action<BranchViewModel> cleanBranchAction) {
-            if(IsLoading)
+            if(!StartLoading())
                 return;
-            IsLoading = true;
             Origin = GitLabWrapper.FindProject(GitReader.GetOriginRepoPath());
             if(Origin == null) {
-                IsLoading = false;
+                EndLoading();
                 //Log.Error("Can`t find project");
                 return;
             }
@@ -73,7 +72,7 @@ namespace DXVcs2Git.UI2 {
                 Branches.Add(branch);
                 branch.RefreshMergeRequest();
             }
-            IsLoading = false;
+            EndLoading();
         }
 
         public void CleanBranches(Action<BranchViewModel> cleanBranchAction) {

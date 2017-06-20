@@ -145,21 +145,26 @@ namespace DXVcs2Git.UI2 {
         }
 
         public void RefreshMergeRequest() {
-            if(IsLoading)
+            if(!StartLoading())
                 return;
-            IsLoading = true;
             if(MergeRequest == null)
                 MergeRequest = GitLabWrapper.GetMergeRequests(Repository.Upstream, x => x.SourceProjectId == Repository.Origin.Id && x.SourceBranch == Name).FirstOrDefault();
-            IsLoading = false;
+            EndLoading();
         }
-        public async Task<IEnumerable<Commit>> GetCommits() {
+        public async Task<IEnumerable<Commit>> GetCommitsAsync() {
             return await Task.Run(() => GitLabWrapper.GetMergeRequestCommits(MergeRequest));
+        }
+        public IEnumerable<Commit> GetCommits() {
+            return GitLabWrapper.GetMergeRequestCommits(MergeRequest);
         }
         public async Task<IEnumerable<MergeRequestFileData>> GetMergeRequestChanges() {
             return await Task.Run(() => GitLabWrapper.GetMergeRequestChanges(MergeRequest));
         }
-        public async Task<IEnumerable<Build>> GetBuilds(Sha1 sha) {
+        public async Task<IEnumerable<Build>> GetBuildsAsync(Sha1 sha) {
             return await Task.Run(() => GitLabWrapper.GetBuilds(MergeRequest, sha));
+        }
+        public IEnumerable<Build> GetBuilds(Sha1 sha) {
+            return GitLabWrapper.GetBuilds(MergeRequest, sha);
         }
 
         protected bool Equals(BranchViewModel other) {
