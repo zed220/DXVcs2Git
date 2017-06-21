@@ -94,26 +94,21 @@ namespace DXVcs2Git.UI2 {
             Author = MergeRequest.Author.Username;
             Assignee = MergeRequest.Assignee?.Username;
             SupportsTesting = Branch?.SupportsTesting ?? false;
-            UpdateContent();
+            LoadCommits();
             EndLoading();
-        }
-        
-        void UpdateContent() {
-            Task.Run(() => {
-                LoadCommits();
-            });
-            Task.Run(() => {
-                LoadChanges();
-            });
         }
 
         void LoadCommits() {
             if(!SupportsTesting)
                 return;
+            if(CommitsViewModel != null)
+                return;
             CommitsViewModel = ServiceLocator.Current.GetInstance<ICommitsViewModel>();
             CommitsViewModel.Parameter = Branch;
         }
-        void LoadChanges() {
+        public void LoadChanges() {
+            if(ChangesViewModel != null)
+                return;
             ChangesViewModel = ServiceLocator.Current.GetInstance<IChangesViewModel>();
             ChangesViewModel.Parameter = Branch;
         }

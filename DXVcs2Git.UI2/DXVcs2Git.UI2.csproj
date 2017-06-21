@@ -207,6 +207,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\AvalonEditTextBindingBehavior.cs" />
     <Compile Include="Behaviors\HotKeyEditorBehavior.cs" />
+    <Compile Include="Behaviors\MergeRequestTabControlBehavior.cs" />
     <Compile Include="Behaviors\TreeListControlSelectionBehavior.cs" />
     <Compile Include="Behaviors\TreeListViewExpandFocusedNodeBehavior.cs" />
     <Compile Include="Common\RepositoryOrBranchCellTemplateSelector.cs" />

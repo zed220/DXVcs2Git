@@ -43,6 +43,9 @@
             </dxlc:LayoutGroup>
         </dxlc:LayoutControl>
         <dx:DXTabControl Grid.Row="1">
+            <dxmvvm:Interaction.Behaviors>
+                <local:MergeRequestTabControlBehavior ShowChangesCommand="{DXCommand Execute='LoadChanges()'}"/>
+            </dxmvvm:Interaction.Behaviors>
             <dx:DXTabItem Header="Merge request settings">
                 <dxdo:DockLayoutManager>
                     <dxdo:LayoutGroup>

@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace DXVcs2Git.UI2 {
     public interface ICommitsViewModel : ISupportParameter, IWorker {
@@ -32,9 +33,11 @@ namespace DXVcs2Git.UI2 {
             if(Branch == null) {
                 return;
             }
-            Branch.GetCommits().ToList().ForEach(c => Commits.Add(new CommitViewModel(c)));
+            var commits = new List<CommitViewModel>();
+            Branch.GetCommits().ToList().ForEach(c => commits.Add(new CommitViewModel(c)));
+            App.Current.Dispatcher.BeginInvoke(new Action(() => { Commits = new ObservableCollection<CommitViewModel>(commits); }));
             List<Task> loadCommitsTaskList = new List<Task>();
-            foreach(var commit in Commits)
+            foreach(var commit in commits)
                 loadCommitsTaskList.Add(Task.Run(() => commit.Update(Branch)));
             Task.WaitAll(loadCommitsTaskList.ToArray());
             EndLoading();

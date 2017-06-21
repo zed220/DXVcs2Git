@@ -25,7 +25,7 @@
     <dxdo:DockLayoutManager>
         <dxdo:LayoutGroup>
             <dxdo:LayoutPanel ShowCaption="False" ShowBorder="False">
-                <dxg:GridControl x:Name="grid" ItemsSource="{Binding Path=Changes}" MaxHeight="2000" AutoExpandAllGroups="True" ShowBorder="False">
+                <dxg:GridControl x:Name="grid" ItemsSource="{Binding Path=Changes}" MaxHeight="2000" AutoExpandAllGroups="True" ShowBorder="False" ShowLoadingPanel="{Binding IsLoading}">
                     <dxg:GridControl.Columns>
                         <dxg:GridColumn Header="Status" FieldName="ChangeMode" FixedWidth="True" Width="20">
                             <dxg:GridColumn.CellTemplate>
