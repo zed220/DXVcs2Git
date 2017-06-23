@@ -16,4 +16,16 @@ namespace DXVcs2Git.UI2 {
             throw new NotImplementedException();
         }
     }
+
+    public class TypeConverter : ConverterBase, IValueConverter {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if(value == null || parameter as Type == null)
+                return null;
+            return value.GetType() == (Type)parameter ? value : null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -57,21 +57,22 @@
         <dxr:RibbonControl>
             <dxr:RibbonDefaultPageCategory>
                 <dxr:RibbonPage Caption="Main">
-                    <dxr:RibbonPageGroup Caption="Merge Request" IsVisible="{Binding Path=SelectedItem, Converter={local:BranchViewModelToVisibilityConverter}}">
+                    <dxr:RibbonPageGroup DataContext="{Binding SelectedItem, Converter={local:TypeConverter}, ConverterParameter={x:Type local:BranchViewModel}}" 
+                                         Caption="Merge Request" IsVisible="{Binding Converter={dxmvvm:ObjectToBooleanConverter}}">
                         <dxb:BarButtonItem
                             RibbonStyle="Large" 
                             GlyphSize="Large" 
                             Content="Create"
-                            Command="{Binding Path=SelectedItem.CreateMergeRequestCommand}"
-                            IsEnabled="{Binding Path=SelectedItem.CanCreateMergeRequest}"
+                            Command="{Binding Path=CreateMergeRequestCommand}"
+                            IsEnabled="{Binding Path=CanCreateMergeRequest}"
                             LargeGlyph="{dx:DXImageOffice2013 Image=NewTask_32x32.png}">
                         </dxb:BarButtonItem>
                         <dxb:BarButtonItem
                             RibbonStyle="Large" 
                             GlyphSize="Large" 
                             Content="Close"
-                            Command="{Binding Path=SelectedItem.CloseMergeRequestCommand}"
-                            IsEnabled="{Binding Path=SelectedItem.CanCloseMergeRequest}"
+                            Command="{Binding Path=CloseMergeRequestCommand}"
+                            IsEnabled="{Binding Path=CanCloseMergeRequest}"
                             LargeGlyph="{dx:DXImageOffice2013 Image=Close_32x32.png}">
                         </dxb:BarButtonItem>
                     </dxr:RibbonPageGroup>
