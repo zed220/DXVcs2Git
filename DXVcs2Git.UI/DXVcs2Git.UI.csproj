@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\LibGit2Sharp.NativeBinaries.1.0.72\build\LibGit2Sharp.NativeBinaries.props" Condition="Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.72\build\LibGit2Sharp.NativeBinaries.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -10,28 +10,38 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DXVcs2Git.UI</RootNamespace>
     <AssemblyName>DXVcs2Git.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <PublishUrl>\\corp\internal\common\gittools\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Background</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <InstallUrl>\\corp\internal\common\gittools\</InstallUrl>
+    <SupportUrl>https://github.com/Xarlot/DXVcs2Git/issues</SupportUrl>
+    <ErrorReportUrl>https://github.com/Xarlot/DXVcs2Git/issues</ErrorReportUrl>
+    <ProductName>Git Tools</ProductName>
+    <PublisherName>Xarlot</PublisherName>
+    <SuiteName>Git Tools</SuiteName>
+    <MinimumRequiredVersion>1.3.1.0</MinimumRequiredVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.4.40.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,6 +53,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,165 +73,116 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>A2A6296FA5A73197BD32BF41951EBD06D46744A7</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>DXVcs2Git.UI_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ccnet.smart.plugin">
       <HintPath>..\Lib\DXFarm\ccnet.smart.plugin.dll</HintPath>
     </Reference>
     <Reference Include="CommandLine, Version=2.0.275.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommandLineParser.2.0.275-beta\lib\net45\CommandLine.dll</HintPath>
+      <HintPath>..\packages\CommandLineParser.2.1.1-beta\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.CodeParser.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.CodeParser.v18.1.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.CodeParser.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.CodeParser.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Data.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Data.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Data.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Data.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Diagram.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Diagram.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Images.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Images.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Dialogs.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Dialogs.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Mvvm.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Mvvm.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Images.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Images.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Printing.v16.1.Core, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Printing.v16.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Mvvm.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Mvvm.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Controls.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Controls.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Pdf.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Pdf.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Core.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Core.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Printing.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Docking.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Docking.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Accordion.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Accordion.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Controls.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Controls.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v16.1.Core, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v16.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Core.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Core.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Grid.v16.1.Extensions, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Grid.v16.1.Extensions.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Diagram.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Diagram.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Layout.v16.1.Core, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Layout.v16.1.Core.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Dialogs.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Dialogs.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.LayoutControl.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.LayoutControl.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Docking.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Docking.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.PropertyGrid.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.PropertyGrid.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.DocumentViewer.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.DocumentViewer.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Ribbon.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Ribbon.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Grid.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.DXStyle.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.DXStyle.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Grid.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Grid.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.HybridApp.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.HybridApp.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Layout.v18.1.Core, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Layout.v18.1.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.LightGray.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.LightGray.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.LayoutControl.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.MetropolisDark.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.MetropolisDark.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.NavBar.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.NavBar.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.MetropolisLight.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.MetropolisLight.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.PropertyGrid.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2007Black.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Black.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Ribbon.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Ribbon.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2007Blue.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Blue.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2007Silver.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2007Silver.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Black.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Black.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Blue.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2010Silver.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013DarkGray.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2013LightGray.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2016Black.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016Black.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2016Colorful.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016Colorful.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Office2016White.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Seven.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.Seven.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.TouchlineDark.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.TouchlineDark.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VisualStudio2015Blue.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.VisualStudio2015Blue.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VisualStudio2015Dark.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.VisualStudio2015Dark.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VisualStudio2015Light.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.VisualStudio2015Light.v16.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.VS2010.v16.1, Version=16.1.0.0, Culture=neutral, PublicKeyToken=79868b8147b5eae4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\DX\DevExpress.Xpf.Themes.VS2010.v16.1.dll</HintPath>
+    <Reference Include="DevExpress.Xpf.Themes.Super.v18.1, Version=18.1.202.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <HintPath>..\packages\ThemeRush_UI_Addin_Dependencies.18.1.0.6\lib\net40\DevExpress.Xpf.Themes.Super.v18.1.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="DXVCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -252,6 +214,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\log4net\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Logify.Client.Core">
+      <HintPath>..\Lib\Logify\Logify.Client.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Logify.Client.Wpf">
+      <HintPath>..\Lib\Logify\Logify.Client.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -271,9 +239,8 @@
     <Reference Include="NetReflector">
       <HintPath>..\Lib\DXFarm\NetReflector.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NGitLab, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -284,7 +251,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Dynamic" />
     <Reference Include="System.Runtime.Serialization" />
@@ -325,18 +294,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AtomFeed\FeedWorker.cs" />
-    <Compile Include="AtomFeed\VsixElementExtension.cs" />
     <Compile Include="Behaviors\AvalonEditInstallSearchPanelBehavior.cs" />
+    <Compile Include="Behaviors\GridSummaryChangeModeBehavior.cs" />
     <Compile Include="Behaviors\HotKeyEditorBehavior.cs" />
     <Compile Include="Behaviors\RibbonWindowButtonsInjectionBehavior.cs" />
     <Compile Include="Behaviors\TaskBarIconBehavior.cs" />
     <Compile Include="Behaviors\ValidateEditConfigBehavior.cs" />
+    <Compile Include="Behaviors\WebBrowserBindingBehavior.cs" />
     <Compile Include="Converters\ShowAssignedToServiceMessageConverter.cs" />
+    <Compile Include="Converters\TestsLogPassedToCriteriaConverter.cs" />
     <Compile Include="DefaultInitializer.cs" />
     <Compile Include="Extensions\IoCExtension.cs" />
     <Compile Include="NativeMethods\AdministratorMethods.cs" />
-    <Compile Include="Farm\DXCCTrayHelpers.cs" />
     <Compile Include="NativeMethods\EntryPoint.cs" />
     <Compile Include="NativeMethods\HotKeyHelper.cs" />
     <Compile Include="NativeMethods\NativeMethods.cs" />
@@ -349,9 +318,12 @@
     <Compile Include="Selectors\MergeRequestTestsControlSelector.cs" />
     <Compile Include="Selectors\RepositoriesControlImageSelector.cs" />
     <Compile Include="Services\FolderBrowserCustomDialogService.cs" />
+    <Compile Include="Services\UpdateAppService.cs" />
     <Compile Include="UIStartupOptions.cs" />
     <Compile Include="ViewModels\ArtifactsViewModel.cs" />
     <Compile Include="ViewModels\BuildLogViewModel.cs" />
+    <Compile Include="ViewModels\ServerLogViewModel.cs" />
+    <Compile Include="ViewModels\XmlLogViewModel.cs" />
     <Compile Include="ViewModels\CreateMergeRequestViewModel.cs" />
     <Compile Include="ViewModels\EditBranchViewModel.cs" />
     <Compile Include="ViewModels\EditBuildLogsViewModel.cs" />
@@ -361,7 +333,6 @@
     <Compile Include="ViewModels\ModificationsViewModel.cs" />
     <Compile Include="ViewModels\TestCaseViewModel.cs" />
     <Compile Include="ViewModels\TestLogViewModel.cs" />
-    <Compile Include="ViewModels\UriDownloaderViewModel.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="ViewModels\EditBranchChangesViewModel.cs" />
     <Compile Include="ViewModels\EditBranchDescriptionViewModel.cs" />
@@ -490,6 +461,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Configs\Office_2017.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Office_2017.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Office_2016.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\Office_2016.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\PipelineStatus\canceled.svg" />
+    <Resource Include="Images\PipelineStatus\failed.svg" />
+    <Resource Include="Images\PipelineStatus\pending.svg" />
+    <Resource Include="Images\PipelineStatus\running.svg" />
+    <Resource Include="Images\PipelineStatus\success.svg" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -497,82 +486,162 @@
     <None Include="app.manifest" Condition="'$(Configuration)'=='Release'">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Configs\Common_2015.1.config">
+    <EmbeddedResource Include="..\packages\libgit2sharp.nativebinaries.1.0.72\libgit2\windows\x86\git2-4d6362b.dll">
+      <Link>costura32\git2-4d6362b.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\packages\libgit2sharp.nativebinaries.1.0.72\libgit2\windows\amd64\git2-4d6362b.dll">
+      <Link>costura64\git2-4d6362b.dll</Link>
+    </EmbeddedResource>
+    <Content Include="Configs\Dashboard_2016.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Common_2015.2.config">
+    </Content>
+    <Content Include="Configs\Dashboard_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Common_2016.2.config">
+    </Content>
+    <Content Include="Configs\UWP_2015.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Common_2016.1.config">
+    </Content>
+    <Content Include="Configs\UWP_2015.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\DataAccess_2015.1_New.config">
+    </Content>
+    <Content Include="Configs\UWP_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\DataAccess_2015.2_New.config">
+    </Content>
+    <Content Include="Configs\UWP_2016.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\DataAccess_2016.1_New.config">
+    </Content>
+    <Content Include="Configs\UWP_2016.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Diagram_2015.2.config">
+    </Content>
+    <Content Include="Configs\Dashboard_2016.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Diagram_2016.2.config">
+    </Content>
+    <Content Include="Configs\XAF_2016.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Diagram_2016.1.config">
+    </Content>
+    <Content Include="Configs\XAF_2016.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\UWP_2015.1.config">
+    </Content>
+    <Content Include="Configs\XAF_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\UWP_2015.2.config">
+    </Content>
+    <Content Include="Configs\Reports_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\UWP_2016.2.config">
+    </Content>
+    <Content Include="Configs\Reports_2016.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\UWP_2016.1.config">
+    </Content>
+    <Content Include="Configs\Reports_2016.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\Dashboard_2016.2.config">
+    </Content>
+    <Content Include="Configs\ASP_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_2016.2.config">
+    </Content>
+    <Content Include="Configs\ASP_2016.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_Demos_2016.1.config">
+    </Content>
+    <Content Include="Configs\ASP_2017.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_Demos_2015.2.config">
+    </Content>
+    <Content Include="Configs\Dashboard_2017.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_Demos_2015.1.config">
+    </Content>
+    <Content Include="Configs\Reports_2017.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_2016.1.config">
+    </Content>
+    <Content Include="Configs\UWP_2017.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_2015.2.config">
+    </Content>
+    <Content Include="Configs\XAF_2017.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\XPF_2015.1.config">
+    </Content>
+    <Content Include="Configs\Common_2017.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Common_2016.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Common_2017.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_2016.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_2017.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Configs\DataAccess_2015.1.config">
+    </Content>
+    <Content Include="Configs\CrossPlatform_2017.2.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\DataAccess_2015.2.config">
+    </Content>
+    <Content Include="Configs\ASP_2018.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Configs\DataAccess_2016.1.config">
+    </Content>
+    <Content Include="Configs\Common_2018.1.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="Configs\CrossPlatform_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Dashboard_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configs\Office_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Reports_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\UWP_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\XAF_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\DemosCrossPlatform_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\DemosCrossPlatform_2017.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\DemosCrossPlatform_2017.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\DemosCrossPlatform_2016.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_Utils_2018.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_Utils_2016.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_Utils_2017.2.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_Utils_2017.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\Common_2019.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\ASP_2019.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_2019.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\CrossPlatform_Utils_2019.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\DemosCrossPlatform_2019.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\XAF_2019.1.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="DXVcs2Git.UI_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -586,9 +655,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -619,10 +688,260 @@
     <Resource Include="Images\yellow.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="unittests.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Xsl\cruisecontrol.css" />
+    <EmbeddedResource Include="Xsl\dxbuild.xsl" />
     <Resource Include="Images\FileChangeMode\Deleted.png" />
     <Resource Include="Images\FileChangeMode\Modified.png" />
     <Resource Include="Images\FileChangeMode\New.png" />
     <Resource Include="Images\FileChangeMode\Renamed.png" />
+    <EmbeddedResource Include="Xsl\fxcop-report_10_0.xsl" />
+    <EmbeddedResource Include="Xsl\header.xsl" />
+    <EmbeddedResource Include="Xsl\help.xsl" />
+    <EmbeddedResource Include="Xsl\installtest.xsl" />
+    <EmbeddedResource Include="Xsl\modifications.xsl" />
+    <EmbeddedResource Include="Xsl\MsTestSummary2008.xsl" />
+    <EmbeddedResource Include="Xsl\screenshot.xsl" />
+    <EmbeddedResource Include="Xsl\unittests.xsl" />
+    <EmbeddedResource Include="Xsl\XafTestReport.xsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="DevExpress.Xpf.Themes.DXStyle.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.LightGray.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.MetropolisDark.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.MetropolisLight.v17.2">
+      <Visible>False</Visible>
+      <Group>mokhovikov</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2007Black.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2007Blue.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2007Silver.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2010Black.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2010Blue.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2010Silver.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2013.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2013DarkGray.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2013LightGray.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016Black.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016BlackSE.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016Colorful.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016ColorfulSE.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016DarkGraySE.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016White.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Office2016WhiteSE.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.Seven.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.TouchlineDark.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.VS2010.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.VS2017Blue.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.VS2017Dark.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.Xpf.Themes.VS2017Light.v17.2">
+      <Visible>False</Visible>
+      <Group>themes</Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Auto</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -630,7 +949,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.72\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LibGit2Sharp.NativeBinaries.1.0.72\build\LibGit2Sharp.NativeBinaries.props'))" />
+    <Error Condition="!Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
   </Target>
+  <Import Project="..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

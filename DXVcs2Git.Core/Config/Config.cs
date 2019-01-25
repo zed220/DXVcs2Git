@@ -11,7 +11,9 @@ namespace DXVcs2Git.Core.Configuration {
         public string KeyGesture { get; set; }
         public bool AlwaysSure { get; set; }
         public string DefaultTheme { get; set; }
+        public int ScrollBarMode { get; set; }
         public bool SupportsTesting { get; set; }
+        public bool TestByDefault { get; set; }
 
         public static Config GenerateDefault() {
             var result = Validate(new Config());

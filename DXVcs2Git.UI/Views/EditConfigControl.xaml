@@ -10,6 +10,7 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:services="clr-namespace:DXVcs2Git.UI.Services"
              xmlns:behaviors="clr-namespace:DXVcs2Git.UI.Behaviors"
+             xmlns:viewModels="clr-namespace:DXVcs2Git.UI.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -24,17 +25,24 @@
                         <dxe:ComboBoxEdit 
                             EditValue="{Binding Path=DefaultTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             IsTextEditable="False"
+                            NullText="{x:Static viewModels:RootViewModel.DefaultThemeName}"
                             ItemsSource="{x:Static dx:Theme.Themes}" 
                             DisplayMember="FullName" 
                             ValueMember="Name">
                         </dxe:ComboBoxEdit>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="Update delay: " VerticalAlignment="Center">
-                        <dxe:ButtonEdit EditValue="{Binding Path=UpdateDelay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AllowDefaultButton="False">
-                            <dxe:ButtonEdit.Buttons>
-                                <dxe:ButtonInfo GlyphKind="Refresh" IsDefaultButton="True" Command="{Binding RefreshUpdateCommand}" Content="Check for updates" />
-                            </dxe:ButtonEdit.Buttons>
-                        </dxe:ButtonEdit>
+                    <dxlc:LayoutItem Label="Use touch scrollbars: " VerticalAlignment="Center">
+                        <dxe:CheckEdit>
+                                <dxe:CheckEdit.EditValue>
+                                <Binding Path="ScrollBarMode" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.Converter>
+                                        <dxmvvm:ObjectToObjectConverter DefaultSource="Standard" DefaultTarget="False">
+                                            <dxmvvm:MapItem Source="TouchOverlap" Target="True"/>
+                                        </dxmvvm:ObjectToObjectConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </dxe:CheckEdit.EditValue>
+                        </dxe:CheckEdit>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Run on Windows startup: " VerticalAlignment="Center">
                         <dxe:CheckEdit EditValue="{Binding Path=StartWithWindows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -46,11 +54,14 @@
                             </dxmvvm:Interaction.Behaviors>
                         </dxe:TextEdit>
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="Are you always sure?" VerticalAlignment="Center">
-                        <dxe:CheckEdit EditValue="{Binding Path=AlwaysSure1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="Allow testing merge requests: " VerticalAlignment="Center">
                         <dxe:CheckEdit EditValue="{Binding Path=SupportsTesting, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Allow auto assign merge request to test service: " VerticalAlignment="Center">
+                        <dxe:CheckEdit EditValue="{Binding Path=TestByDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Are you always sure?" VerticalAlignment="Center">
+                        <dxe:CheckEdit EditValue="{Binding Path=AlwaysSure1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutGroup Orientation="Vertical" Visibility="{Binding AlwaysSure1, Converter={dxmvvm:BooleanToVisibilityConverter}}">
                         <dxlc:LayoutItem Label="Really sure?" VerticalAlignment="Center">
@@ -72,9 +83,6 @@
             </dx:DXTabItem>
             <dx:DXTabItem Header="Repositories">
                 <dxg:GridControl ItemsSource="{Binding Path=Repositories}" SelectionMode="Row">
-                    <dxmvvm:Interaction.Behaviors>
-                        <dxg:GridDragDropManager/>
-                    </dxmvvm:Interaction.Behaviors>
                     <dxg:GridControl.Columns>
                         <dxg:GridColumn FieldName="Name" Width="*"/>
                         <dxg:GridColumn FieldName="ConfigName" Width="2*">
@@ -115,7 +123,8 @@
                             ShowDataNavigator="True" 
                             ShowGroupPanel="False"
                             AllowGrouping="False"
-                            EditorShowMode="MouseUp">
+                            EditorShowMode="MouseUp"
+                            AllowDragDrop="True">
                             <dxmvvm:Interaction.Behaviors>
                                 <behaviors:ValidateEditConfigBehavior/>
                             </dxmvvm:Interaction.Behaviors>

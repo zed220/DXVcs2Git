@@ -46,6 +46,9 @@ namespace DXVcs2Git.Core.GitLab {
 //	}
 //}
 
+    public class NotificationHookClient : ProjectHookClient {
+        
+    }
     [DataContract]
     public class BuildHookClient : ProjectHookClient {
         [DataMember(Name = "build_id")]
@@ -53,7 +56,7 @@ namespace DXVcs2Git.Core.GitLab {
         [DataMember(Name = "build_name")]
         public string BuildName;
         [DataMember(Name = "build_status")]
-        public BuildStatus Status;
+        public PipelineStatus Status;
         [DataMember(Name = "commit")]
         public BuildHookCommit Commit;
         [DataMember(Name = "project_id")]

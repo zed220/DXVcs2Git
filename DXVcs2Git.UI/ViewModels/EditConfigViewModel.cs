@@ -10,6 +10,7 @@ using System.Windows.Input;
 using DXVcs2Git.Core.Git;
 using Microsoft.Win32;
 using System.IO;
+using DevExpress.Xpf.Core;
 
 namespace DXVcs2Git.UI.ViewModels {
     public class EditConfigViewModel : ViewModelBase {
@@ -20,13 +21,17 @@ namespace DXVcs2Git.UI.ViewModels {
             get { return GetProperty(() => DefaultTheme); }
             set { SetProperty(() => DefaultTheme, value); }
         }
-        public int UpdateDelay {
-            get { return GetProperty(() => UpdateDelay); }
-            set { SetProperty(() => UpdateDelay, value, OnUpdateDelayChanged); }
+        public ScrollBarMode ScrollBarMode {
+            get { return GetProperty(() => ScrollBarMode); }
+            set { SetProperty(() => ScrollBarMode, value); }
         }
         public bool SupportsTesting {
             get { return GetProperty(() => SupportsTesting); }
             set { SetProperty(() => SupportsTesting, value); }
+        }
+        public bool TestByDefault {
+            get { return GetProperty(() => TestByDefault); }
+            set { SetProperty(() => TestByDefault, value); }
         }
         public bool StartWithWindows {
             get { return GetProperty(() => StartWithWindows); }
@@ -90,7 +95,6 @@ namespace DXVcs2Git.UI.ViewModels {
         }
 
         public IEnumerable<RepoConfig> Configs { get; }
-        public ICommand RefreshUpdateCommand { get; private set; }
         public bool HasUIValidationErrors {
             get { return GetProperty(() => HasUIValidationErrors); }
             set { SetProperty(() => HasUIValidationErrors, value); }
@@ -105,7 +109,6 @@ namespace DXVcs2Git.UI.ViewModels {
             private set { SetProperty(() => AvailableConfigs, value); }
         }
         void OnUpdateDelayChanged() {
-            AtomFeed.FeedWorker.UpdateDelay = UpdateDelay;
             StartWithWindows = GetStartWithWindows();
         }
         const string registryValueName = "DXVcs2Git";
@@ -139,15 +142,15 @@ namespace DXVcs2Git.UI.ViewModels {
             KeyGesture = config.KeyGesture;
             SupportsTesting = config.SupportsTesting;
             DefaultTheme = config.DefaultTheme;
+            ScrollBarMode = (ScrollBarMode)config.ScrollBarMode;
             Configs = this.configsReader.RegisteredConfigs;
-            UpdateDelay = AtomFeed.FeedWorker.UpdateDelay;
-            RefreshUpdateCommand = DelegateCommandFactory.Create(AtomFeed.FeedWorker.Update);
             CommonXaml = GetWpf2SlKey("Common");
             DiagramXaml = GetWpf2SlKey("Diagram");
             XPFGITXaml = GetWpf2SlKey("XPF");
             Repositories = CreateEditRepositories(config);
             Repositories.CollectionChanged += RepositoriesOnCollectionChanged;
             AlwaysSure4 = AlwaysSure3 = AlwaysSure2 = AlwaysSure1 = config.AlwaysSure;
+            TestByDefault = config.TestByDefault;
             UpdateWpf2SLProperties = new AsyncCommand(OnUpdateWpf2SLProperties);
             UpdateTokens();
         }
@@ -160,9 +163,11 @@ namespace DXVcs2Git.UI.ViewModels {
             UpdateTokens();
         }
         ObservableCollection<EditTrackRepository> CreateEditRepositories(Config config) {
-            return config.Repositories.Return(x => new ObservableCollection<EditTrackRepository>(config.Repositories.Select(CreateEditRepository)), () => new ObservableCollection<EditTrackRepository>());
+            return config.Repositories.Return(x => new ObservableCollection<EditTrackRepository>(config.Repositories.Select(CreateEditRepository).Where(y => y != null)), () => new ObservableCollection<EditTrackRepository>());
         }
         EditTrackRepository CreateEditRepository(TrackRepository repo) {
+            if (!this.configsReader.HasConfig(repo.ConfigName))
+                return null;
             return new EditTrackRepository() {
                 Name = repo.Name,
                 ConfigName = repo.ConfigName,
@@ -173,11 +178,12 @@ namespace DXVcs2Git.UI.ViewModels {
         }
         public void UpdateConfig() {
             config.Repositories = Repositories.With(x => x.Select(repo => new TrackRepository() { Name = repo.Name, ConfigName = repo.ConfigName, LocalPath = repo.LocalPath, Server = repo.RepoConfig.Server, Token = repo.Token }).ToArray());
-            config.UpdateDelay = UpdateDelay;
             config.KeyGesture = KeyGesture;
             config.AlwaysSure = AlwaysSure4;
             config.SupportsTesting = SupportsTesting;
-            this.config.DefaultTheme = DefaultTheme;
+            config.ScrollBarMode = (int)ScrollBarMode;
+            config.DefaultTheme = DefaultTheme;
+            config.TestByDefault = TestByDefault;
         }
         public void UpdateTokens() {
             AvailableTokens = Repositories.Return(x => new ObservableCollection<string>(x.Select(repo => repo.Token).Distinct()), () => new ObservableCollection<string>());

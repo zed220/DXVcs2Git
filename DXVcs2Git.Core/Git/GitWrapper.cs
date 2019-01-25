@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using DXVcs2Git.Core;
 using User = DXVcs2Git.Core.User;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace DXVcs2Git {
@@ -64,7 +66,7 @@ namespace DXVcs2Git {
 
         public void ShallowClone(string localPath, string branch, string remote) {
             var args = new[] {
-                "-c", "filter.lfs.smudge=", "-c", "filter.lfs.required=false", "clone", "--depth", "1", "--branch", branch, Escape(remote), Escape(localPath)
+               "clone", "--branch", branch, Escape(remote), Escape(localPath)
             };
             string output, errors;
             var code = WaitForProcess(gitPath, ".", out output, out errors, args);
@@ -101,7 +103,10 @@ namespace DXVcs2Git {
                 return comment;
             return comment.Replace("\"", "\\\"");
         }
-
+        public void AddRemote(string repoPath, string remote, string path) {
+            var code = WaitForProcess(gitPath, repoPath, out string output, out string errors, "remote add", remote, path);
+            CheckFail(code, output, errors);
+        }
         public void ResetHard(string repoPath) {
             string output, errors;
             var code = WaitForProcess(gitPath, repoPath, out output, out errors, "reset", "--hard");
@@ -109,7 +114,7 @@ namespace DXVcs2Git {
         }
         public void Pull(string repoPath) {
             var args = new[] {
-                "-c", "filter.lfs.smudge=", "-c", "filter.lfs.required=false", "pull", "--depth", "2"
+                "pull", "--depth", "2"
             };
 
             string output, errors;
@@ -127,9 +132,10 @@ namespace DXVcs2Git {
             CheckFail(code, output, errors);
         }
 
-        public void Checkout(string repoPath, string branch) {
+        public void Checkout(string repoPath, string branch, bool track = true) {
             string output, errors;
-            var code = WaitForProcess(gitPath, repoPath, out output, out errors, "checkout", "-B", branch);
+            string args = track ? "checkout -B " : "checkout";
+            var code = WaitForProcess(gitPath, repoPath, out output, out errors, args, branch, $"origin/{branch}");
             CheckFail(code, output, errors);
         }
 
@@ -138,18 +144,66 @@ namespace DXVcs2Git {
             var code = WaitForProcess(gitPath, repoPath, out output, out errors, "init");
             CheckFail(code, output, errors);
         }
+        public void FetchRemoteBranch(string repoPath, string remote, string branch) {
+            var code = WaitForProcess(gitPath, repoPath, out string output, out string errors, "fetch", remote, $@"{branch}:refs/remotes/{remote}/{branch}");
+            CheckFail(code, output, errors);
+        }
+        public void DiffWithRemoteBranch(string repoPath, string remote, string branch) {
+            var code = WaitForProcess(gitPath, repoPath, out string output, out string errors, "diff --name-status", branch, $@"{remote}/{branch}");
+            CheckFail(code, output, errors);
+        }
+        public GitDiff[] Diff(string repoPath, string from, string to) { 
+            var args = new[] {
+                "diff",
+                "--name-status",
+                from,
+                to
+            };
+            string output, errors;
+            var code = WaitForProcess(gitPath, repoPath, out output, out errors, args);
+            CheckFail(code, output, errors);
+            var strings = output.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var status = new List<GitDiff>(strings.Length);
+            foreach (var s in strings) {
+                string path = s.Remove(0, s.IndexOf('\t') + 1);
+                if (s.StartsWith("R")) {
+                    var paths = path.Split('\t').ToArray();
+                    status.Add(new GitDiff() {Status = GitDiffStatus.Moved, OldPath = paths[0], NewPath = paths[1]});
+                }
+                else {
+                    var gitDiff = new GitDiff() {OldPath = path, NewPath = path};
+                    gitDiff.Status = CalcGitDiffStatus(s);
+                    status.Add(gitDiff);
+                }
+            }
+            return status.ToArray();
+        }
+        GitDiffStatus CalcGitDiffStatus(string line) {
+            if (line.StartsWith("M", StringComparison.InvariantCultureIgnoreCase))
+                return GitDiffStatus.Modified;
+            if (line.StartsWith("A", StringComparison.InvariantCultureIgnoreCase))
+                return GitDiffStatus.Added;
+            if (line.StartsWith("D", StringComparison.InvariantCultureIgnoreCase))
+                return GitDiffStatus.Removed;
+            throw new ArgumentException("GitDiffStatus");
+        }
         public void Fetch(string remote, string repoPath, bool tags) {
             string output, errors;
             var args = new List<string>();
             args.Add("fetch");
-            args.Add("--depth");
-            args.Add("1");
-            if (!string.IsNullOrEmpty(remote))
+            if (!string.IsNullOrEmpty(remote)) {
+                args.Add("origin");
                 args.Add(remote);
+            }
+            else {
+                args.Add("--all");
+                args.Add("--depth");
+                args.Add("1");
+            }
             if (tags) {
                 args.Add("--tags");
             }
-            var code = WaitForProcess(gitPath, repoPath, out output, out errors, "fetch");
+            var code = WaitForProcess(gitPath, repoPath, out output, out errors, args.ToArray());
             CheckFail(code, output, errors);
         }
         public void Merge(string repoPath, string remote, string targetBranch, string sourceBranch) {
@@ -160,7 +214,7 @@ namespace DXVcs2Git {
         string GetLog(string repoPath, int from, string format) {
             var args = new[] {
                 "log",
-                
+
                 string.Format("HEAD~{0}", from),
                 "-1",
                 string.Format("--pretty=format:\"{0}\"", format)
@@ -185,6 +239,33 @@ namespace DXVcs2Git {
                 }
             ).FirstOrDefault(pred);
         }
+        public void Config(string repoPath, string property, string value) {
+            var code = WaitForProcess(gitPath, repoPath, out string output, out string errors, "config", property, value);
+            CheckFail(code, output, errors);
+        }
+        public void SparseCheckout(string repoPath, string branch, string sparseCheckoutFile) {
+            string sparseCheckoutPath = Path.Combine(repoPath, ".git", "info", "sparse-checkout");
+            File.WriteAllText(sparseCheckoutPath, sparseCheckoutFile);
+            Checkout(repoPath, branch);
+        }
+        public void ReadTree(string repoPath, string sparseCheckoutFile) {
+            string sparseCheckoutPath = Path.Combine(repoPath, ".git", "info", "sparse-checkout");
+            File.WriteAllText(sparseCheckoutPath, sparseCheckoutFile);
+            var code = WaitForProcess(gitPath, repoPath, out string output, out string errors, "read-tree -mu HEAD");
+            CheckFail(code, output, errors);
+        }
+    }
+
+    public enum GitDiffStatus {
+        Added,
+        Modified,
+        Moved,
+        Removed,
+    }
+    public class GitDiff {
+        public GitDiffStatus Status { get; set; }
+        public string OldPath { get; set; }
+        public string NewPath { get; set; }
     }
 
     public class GitCommit {
@@ -216,13 +297,12 @@ namespace DXVcs2Git {
             }
             else {
                 GitClone(branch);
-                LFSPull();
             }
             Log.Message("End initializing git repo");
         }
         public void GitInit(string branch) {
-            gitCmd.Init(localPath);
-            CheckOut(branch);
+            Fetch();
+            CheckOut(branch, false);
         }
         void GitClone(string branch) {
             gitCmd.ShallowClone(localPath, branch, remotePath);
@@ -230,11 +310,21 @@ namespace DXVcs2Git {
         }
         public void Dispose() {
         }
+        public void AddRemote(string remote, string path) {
+            gitCmd.AddRemote(localPath, remote, path);
+        }
         public void Fetch(string remote = "", bool updateTags = false) {
             gitCmd.Fetch(remote, localPath, updateTags);
         }
+        public void FetchRemoteBranch(string remote, string branch) {
+            gitCmd.FetchRemoteBranch(localPath, remote, branch);
+        }
+        public void DiffWithRemoteBranch(string remote, string branch) {
+            gitCmd.DiffWithRemoteBranch(localPath, remote, branch);
+        }
         public void Pull() {
-            gitCmd.Pull(localPath);;
+            gitCmd.Pull(localPath);
+            ;
         }
         public void LFSPull() {
             gitCmd.LFSPull(localPath);
@@ -254,7 +344,7 @@ namespace DXVcs2Git {
         string GetOriginName(string name) {
             return $"origin/{name}";
         }
-        public void CheckOut(string branch) {
+        public void CheckOut(string branch, bool track = true) {
             gitCmd.Checkout(localPath, branch);
             Log.Message($"Git repo {localPath} was checked out for branch {branch}.");
         }
@@ -266,6 +356,18 @@ namespace DXVcs2Git {
         }
         public void Merge(string upstream, string targetBranch, string sourceBranch) {
             gitCmd.Merge(localPath, upstream, targetBranch, sourceBranch);
+        }
+        public void Config(string property, string value) {
+            gitCmd.Config(localPath, property, value);
+        }
+        public void SparseCheckout(string branch, string sparseCheckoutFile) {
+            gitCmd.SparseCheckout(localPath, branch, sparseCheckoutFile);
+        }
+        public void ReadTree(string sparseCheckoutFile) {
+            gitCmd.ReadTree(localPath, sparseCheckoutFile);
+        }
+        public GitDiff[] Diff(string from, string to) {
+            return gitCmd.Diff(localPath, from, to);
         }
     }
 }

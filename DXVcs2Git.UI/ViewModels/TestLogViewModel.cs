@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using DevExpress.CCNetSmart.Lib;
 using DevExpress.Mvvm;
@@ -17,10 +16,15 @@ namespace DXVcs2Git.UI.ViewModels {
             get { return GetProperty(() => Tests); }
             private set { SetProperty(() => Tests, value); }
         }
+        public bool Passed {
+            get { return GetProperty(() => Passed); }
+            private set { SetProperty(() => Passed, value); }
+        }
         public TestLogViewModel(ArtifactsViewModel model) {
             this.model = model;
 
-            Tests = GetTests(model.TestLog);
+            Tests = GetTests(model.WorkerLog);
+            Passed = Tests.All(x => x.Passed);
         }
         List<TestCaseViewModel> GetTests(string buildLog) {
             if (string.IsNullOrEmpty(buildLog))

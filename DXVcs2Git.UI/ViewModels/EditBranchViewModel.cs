@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -13,6 +14,8 @@ namespace DXVcs2Git.UI.ViewModels {
     public class EditBranchViewModel : ViewModelBase {
         public ICommand CreateMergeRequestCommand { get; }
         public ICommand CloseMergeRequestCommand { get; }
+        public ICommand ShowMergeRequestCommand { get; }
+        public ICommand CopyMergeRequestLinkCommand { get; }
         public ICommand ForceBuildCommand { get; }
         RepositoriesViewModel RepositoriesViewModel => ServiceLocator.Current.GetInstance<RepositoriesViewModel>();
         IMessageBoxService MessageBoxService => GetService<IMessageBoxService>();
@@ -42,8 +45,31 @@ namespace DXVcs2Git.UI.ViewModels {
 
             CreateMergeRequestCommand = DelegateCommandFactory.Create(PerformCreateMergeRequest, CanPerformCreateMergeRequest);
             CloseMergeRequestCommand = DelegateCommandFactory.Create(PerformCloseMergeRequest, CanPerformCloseMergeRequest);
+            ShowMergeRequestCommand = DelegateCommandFactory.Create(PerformShowMergeRequest, CanShowMergeRequest);
+            CopyMergeRequestLinkCommand = DelegateCommandFactory.Create(PerformCopyMergeRequestLink, CanCopyMergeRequestLink);
             ForceBuildCommand = DelegateCommandFactory.Create(PerformForceBuild, CanPerformForceBuild);
             RefreshSelectedBranch();
+        }
+        bool CanCopyMergeRequestLink() {
+            return Branch?.MergeRequest != null;
+        }
+        void PerformCopyMergeRequestLink() {
+            var mergeRequestUri = GetMergeLink();
+            Clipboard.SetData(DataFormats.Text, mergeRequestUri);
+        }
+        bool CanShowMergeRequest() {
+            return Branch?.MergeRequest != null;
+        }
+        void PerformShowMergeRequest() {
+            var mergeRequestUri = GetMergeLink();
+            Process.Start(mergeRequestUri);
+        }
+        string GetMergeLink() {
+            var mergeRequest = Branch.MergeRequest;
+            var repository = Branch.Repository;
+            var config = repository.RepoConfig;
+            string mergeRequestUri = $"{config.Server}/{repository.Upstream.PathWithNamespace}/merge_requests/{mergeRequest.MergeRequest.Iid}";
+            return mergeRequestUri;
         }
         bool CanPerformForceBuild() {
             return Branch?.MergeRequest != null && (FarmStatus.ActivityStatus == ActivityStatus.Sleeping || FarmStatus.ActivityStatus == ActivityStatus.Pending);
@@ -70,15 +96,22 @@ namespace DXVcs2Git.UI.ViewModels {
                 MessageBoxService.Show("Can`t create merge request. Target branch not found.", "Create merge request error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            Branch.CreateMergeRequest(title, description, null, Branch.Name, targetBranch);
+            string user = Branch.Repositories.Config.SupportsTesting && Branch.Repository.RepoConfig.SupportsTesting && Branch.Repositories.Config.TestByDefault
+                ? Branch.Repository.RepoConfig.TestServiceName
+                : null;
+            Branch.CreateMergeRequest(title, description, user, Branch.Name, targetBranch);
         }
         string CalcMergeRequestDescription(string message) {
+            if (string.IsNullOrEmpty(message))
+                return string.Empty;
             var changes = message.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             StringBuilder sb = new StringBuilder();
             changes.Skip(1).ForEach(x => sb.AppendLine(x.ToString()));
             return sb.ToString();
         }
         string CalcMergeRequestTitle(string message) {
+            if (string.IsNullOrEmpty(message))
+                return string.Empty;
             var changes = message.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             var title = changes.FirstOrDefault();
             return title;

@@ -1,4 +1,7 @@
-﻿using DXVcs2Git.Git;
+﻿using System;
+using System.IO;
+using System.IO.Packaging;
+using DXVcs2Git.Git;
 using NUnit.Framework;
 
 namespace DXVcs2Git.Tests {
@@ -20,6 +23,12 @@ namespace DXVcs2Git.Tests {
             GitLabWrapper wrapper = new GitLabWrapper(TestCredentials.GitServer, TestCredentials.GitLabToken);
             var project = wrapper.FindProject("tester/testxpfall");
             var requests = wrapper.GetMergeRequests(project, x => x.TargetBranch == "test2");
+        }
+        [Test]
+        public void UnescapeDataString() {
+            Assert.AreEqual("/Test 20/Test.bat", Uri.UnescapeDataString("/Test 20/Test.bat"));
+            Assert.AreEqual("/Test 20/Test.bat", Uri.UnescapeDataString("/Test%2020/Test.bat"));
+            Assert.AreEqual("/Test 20/ Test.bat", Uri.UnescapeDataString("/Test%2020/%20Test.bat"));
         }
     }
 }

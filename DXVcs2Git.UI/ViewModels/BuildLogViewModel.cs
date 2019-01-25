@@ -5,13 +5,12 @@ namespace DXVcs2Git.UI.ViewModels {
         ArtifactsViewModel model;
         public BuildLogViewModel(ArtifactsViewModel model) {
             this.model = model;
-            Text = model.HasContent ? model.BuildLog : "Text";
+            Text = model.HasContent ? model.WorkerLog : "Text";
         }
 
         public string Text {
             get { return GetProperty(() => Text); }
             private set { SetProperty(() => Text, value); }
         }
-
     }
 }

@@ -4,11 +4,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Threading;
 using DevExpress.CCNetSmart.Lib;
 using DevExpress.DXCCTray;
 using DXVcs2Git.Core;
+using Newtonsoft.Json;
 using ThoughtWorks.CruiseControl.Remote;
 
 namespace DXVcs2Git.UI.Farm {
@@ -45,8 +46,11 @@ namespace DXVcs2Git.UI.Farm {
         public static FarmExtendedStatus GetExtendedTaskStatus(string task) {
             return Instance.GetExtendedTaskStatus(task);
         }
-        public static void SendNotification(string farmTaskName, string recepient, string message) {
-            Instance.SendNotification(farmTaskName, recepient, message);
+        public static void SendNotification(string server, string farmTaskName, string recepient, string message) {
+            Instance.SendNotificationFast(server, farmTaskName, recepient, message);
+        }
+        public static string FindTask(string path) {
+            return Instance.FindTaskByTag(path);
         }
     }
 
@@ -107,6 +111,14 @@ namespace DXVcs2Git.UI.Farm {
             lock (this.syncLocker) {
                 return CalcExtendedTaskStatus(task);
             }
+        }
+        public string FindTaskByTag(string path) {
+            lock (this.syncLocker) {
+                return FindTaskInternal(path);
+            }
+        }
+        string FindTaskInternal(string path) {
+            return this.projectTagTable.FirstOrDefault(x => x.tag == path)?.name;
         }
         FarmExtendedStatus CalcExtendedTaskStatus(string task) {
             var farmStatus = new FarmExtendedStatus();
@@ -268,6 +280,21 @@ namespace DXVcs2Git.UI.Farm {
                 return server;
             return this.serverTable.FirstOrDefault(x => string.Compare(x.HyperName, project, StringComparison.InvariantCultureIgnoreCase) == 0);
         }
+        public bool SendNotificationFast(string server, string farmTaskName, string recipient, string message) {
+            lock (syncLocker) {
+                var integrator = GetIntegratorFast(server);
+                if (integrator == null) {
+                    Log.Error("Can`t send message. Integrator not found.");
+                    return false;
+                }
+                bool result = integrator.SendNotification(farmTaskName, recipient, message);
+                if (result)
+                    Log.Message($"Message sent to: server = {server} project = {farmTaskName} recipient = {recipient}");
+                else
+                    Log.Message("Can`t send message. Integrator returns error.");
+                return result;
+            }
+        }
         public bool SendNotification(string farmTaskName, string recipient, string message) {
             lock (syncLocker) {
                 ProjectTagI tag = FindTask(farmTaskName);
@@ -293,6 +320,9 @@ namespace DXVcs2Git.UI.Farm {
                     Log.Message("Can`t send message. Integrator returns error.");
                 return result;
             }
+        }
+        DXCCTrayIntegrator GetIntegratorFast(string server) {
+            return integratorList.FirstOrDefault(integrator => server.Equals(integrator.Url, StringComparison.InvariantCultureIgnoreCase));
         }
         DXCCTrayIntegrator GetIntegrator(string server) {
             return integratorList.FirstOrDefault(integrator => server.Equals(integrator.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -590,9 +620,6 @@ namespace DXVcs2Git.UI.Farm {
         }
 
         protected void integrator_OnNotificationListChanged(DXCCTrayIntegrator integrator) {
-            List<string> balloonMessages = new List<string>();
-            bool balloonFailState = false;
-            BuildNotification lastNotification = null;
             lock (integrator.Notifications) {
                 foreach (BuildNotification bn in integrator.Notifications) {
                     bool bnExists = false;
@@ -607,33 +634,16 @@ namespace DXVcs2Git.UI.Farm {
                     if (bnExists) {
                         continue;
                     }
-                    string projectName;
-                    string buildName;
-                    DXCCTrayHelper.ParseBuildUrl(bn.BuildUrl, out projectName, out buildName);
-                    var balloonMessage = CalcBalloonMessage(projectName, bn);
-                    balloonMessages.Add(balloonMessage);
-                    if (bn.BuildStatus != BuildIntegrationStatus.Success) {
-                        balloonFailState = true;
-                    }
-                    lastNotification = bn;
                     buildNotifications.Insert(0, new BuildNotificationViewInfo(bn));
-                    RaiseRefreshed(new NotificationReceivedEventArgs(balloonMessage));
+                    RaiseRefreshed(new NotificationReceivedEventArgs(bn));
                 }
                 integrator.Notifications.Clear();
-                if (balloonMessages.Count > 0) {
-                    ShowBalloonTip(string.Join(Environment.NewLine, balloonMessages), balloonFailState, balloonMessages.Count > 1 ? null : lastNotification);
-                }
             }
             lock (buildNotifications) {
                 while (buildNotifications.Count > NotificationsMaxCount) {
                     buildNotifications.RemoveAt(NotificationsMaxCount);
                 }
             }
-        }
-        static string CalcBalloonMessage(string projectName, BuildNotification bn) {
-            if (bn.Recipient.StartsWith("dxvcs2git"))
-                return bn.Sender;
-            return $"{projectName} - {(bn.BuildChangeStatus == BuildChangeStatus.None ? bn.BuildStatus.ToString() : bn.BuildChangeStatus.ToString())}";
         }
         const int NotificationsMaxCount = 100;
         void integrator_OnServersChanged(DXCCTrayIntegrator integrator) {
@@ -833,20 +843,45 @@ namespace DXVcs2Git.UI.Farm {
             //}
         }
         #endregion
+
     }
 
     public enum FarmRefreshType {
-        notification
+        notification,
     }
     public abstract class FarmRefreshedEventArgs : EventArgs {
         public abstract FarmRefreshType RefreshType { get; }
+
+        public abstract void Parse();
     }
 
     public class NotificationReceivedEventArgs : FarmRefreshedEventArgs {
-        public string Message { get; }
-        public NotificationReceivedEventArgs(string message) {
-            Message = message;
+        public string Message { get; private set; }
+        readonly BuildNotification buildNotification;
+        public string ProjectName { get; private set; }
+        public string BuildName { get; private set; }
+        public string Sender { get; private set; }
+        public bool IsServiceUser => Sender?.StartsWith("dxvcs2git") ?? false;
+        public NotificationReceivedEventArgs(BuildNotification buildNotification) {
+            this.buildNotification = buildNotification;
         }
         public override FarmRefreshType RefreshType => FarmRefreshType.notification;
+
+        public override void Parse() {
+            string projectName;
+            string buildName;
+            DXCCTrayHelper.ParseBuildUrl(buildNotification.BuildUrl, out projectName, out buildName);
+            Sender = buildNotification.Recipient;
+            ProjectName = projectName;
+            BuildName = buildName;
+            Message = CalcBalloonMessage(projectName, buildNotification);
+        }
+        string CalcBalloonMessage(string projectName, BuildNotification bn) {
+            if (IsServiceUser) {
+                var bytes = Convert.FromBase64String(bn.Sender);
+                return Encoding.UTF8.GetString(bytes);
+            }
+            return $"{projectName} - {(bn.BuildChangeStatus == BuildChangeStatus.None ? bn.BuildStatus.ToString() : bn.BuildChangeStatus.ToString())}";
+        }
     }
 }

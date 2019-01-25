@@ -15,11 +15,6 @@
     <UserControl.DataContext>
         <extensions:IoC TargetType="{x:Type viewModels:EditRepositoriesViewModel}"/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <selectors:RepositoriesControlImageSelector x:Key="imageSelector"/>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <dxg:GridControl ShowBorder="False" ItemsSource="{Binding Path=Items}" SelectedItem="{Binding Path=SelectedItem, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
             <dxg:GridControl.Columns>
@@ -30,8 +25,7 @@
                     ShowVerticalLines="False"
                     ShowHorizontalLines="False"
                     ImageFieldName="HasMergeRequest"
-                    ShowNodeImages="False"
-                    NodeImageSelector="{StaticResource imageSelector}"
+                    ShowNodeImages="false"
                     ShowColumnHeaders="False"
                     AutoExpandAllNodes="True" 
                     TreeDerivationMode="ChildNodesSelector" 
